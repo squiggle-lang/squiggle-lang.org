@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Brian Mock">
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" type="text/css" href="{{ site.url }}/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css">
 </head>
 <body>
 
@@ -15,8 +15,8 @@ Squiggle
 </header>
 
 <nav>
-    <a href="/">Home</a>
-    <a href="/tutorial">Tutorial</a>
+    <a href="{{ site.baseurl }}">Home</a>
+    <a href="{{ site.baseurl }}/tutorial">Tutorial</a>
 </nav>
 
 <main>
