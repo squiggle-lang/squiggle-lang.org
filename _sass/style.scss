@@ -1,0 +1,59 @@
+$bg: #fff;
+$fg: #333;
+
+$codeBlockBg: #eee;
+$codeBlockFg: #000;
+
+$codeInlineFg: #80a;
+$codeInlineBg: rgba($codeInlineFg, 0.10);
+
+$fontNormal: Helvetica, sans-serif;
+$fontCode: Menlo, Consolas, monospace;
+
+html {
+    padding: 20px 10px;
+    margin: 0;
+
+    background: $bg;
+    color: $fg;
+
+    font-family: $fontNormal;
+}
+
+h1, h2 {
+    padding-bottom: 10px;
+}
+
+h1 {
+    border-bottom: 2px solid #ccc;
+}
+
+h2 {
+    border-bottom: 2px solid #eee;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+body {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+code {
+    color: $codeInlineFg;
+    background: $codeInlineBg;
+}
+
+pre code {
+    display: block;
+    padding: 20px 10px;
+
+    font-family: $fontCode;
+
+    background: $codeBlockBg;
+    color: $codeBlockFg;
+}
