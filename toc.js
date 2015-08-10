@@ -60,41 +60,51 @@
         }
         if (h.children) {
             var container = document.createElement("ul");
-            level = levelDown(level);
+            level = levelDescend(level);
             h.children.forEach(function(hh) {
                 render_(level, container, hh);
-                level = levelNext(level);
+                level = levelStep(level);
             });
-            level = levelUp(level);
+            level = levelAscend(level);
             e.appendChild(container);
         }
     }
 
-    function txt(s) {
-        return document.createTextNode(s);
-    }
-
-    function formatEntry(level, h) {
-        var s = txt(level.join(".") + " " + elementText(h));
-        var e = document.createElement("li");
-        var a = document.createElement("a");
-        a.href = "#" + h.id;
-        a.appendChild(s);
-        e.appendChild(a);
+    function E(type, attrs, children) {
+        attrs = attrs || {};
+        children = children || [];
+        var e = document.createElement(type);
+        for (var k in attrs) {
+            e.setAttribute(k, attrs[k]);
+        }
+        children.forEach(function(kid) {
+            if (typeof kid === "string") {
+                kid = document.createTextNode(kid);
+            }
+            e.appendChild(kid);
+        });
         return e;
     }
 
-    function levelNext(l) {
-        var init = levelUp(l);
+    function formatEntry(level, h) {
+        return E("li", null, [
+            E("a", {href: "#" + h.id}, [
+                level.join(".") + " " + elementText(h)
+            ])
+        ]);
+    }
+
+    function levelStep(l) {
+        var init = levelAscend(l);
         var last = l[l.length - 1];
         return init.concat([last + 1]);
     }
 
-    function levelDown(l) {
+    function levelDescend(l) {
         return l.concat([1]);
     }
 
-    function levelUp(l) {
+    function levelAscend(l) {
         return l.slice(0, l.length - 1);
     }
 
