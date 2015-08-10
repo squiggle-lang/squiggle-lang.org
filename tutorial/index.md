@@ -129,6 +129,200 @@ error. Functions use `fn` and don't use braces or `return`.
     fn(x, y) x + y
     fn() Math.floor(Math.random() * 100)
 
+Let's take `fn(x, y) x + y` as an example and compare that with how you'd
+express the same thing in JavaScript. It might look a lot like this function:
+
+    function(x, y) { return x + y; }
+
+But arity checking means that it's actually more like this JavaScript function:
+
+    function(x, y) {
+        if (arguments.length !== 2) {
+            throw new Error("wrong number of arguments");
+        }
+        return x + y;
+    }
+
+JavaScript's usual relaxed rules around argument count can lead to extremely
+subtle and hard to detect bugs.  It's potentially more flexible the JavaScript
+way, but much more error-prone.
+
+## Operators
+
+The golden rule of Squiggle, and especially of operators, is "it works like how JavaScript probably should work, in my opinion."
+
+Here are the binary operators in order, from Squiggle:
+
+- `|>`
+- `and` / `or`
+- `>=` / `<=` / `<` / `>` / `=` / `!=`
+- `++`
+- `+` / `-`
+- `*` / `/`
+
+### Pipe operator
+
+The pipe operator (`|>`) is like calling a function but backwards. Normally you would write `g(f(x))`, but with the pipe operator you can write `x |> f |> g`. This allows you to think left-to-right about your function pipelines.
+
+### Logical operators
+
+The logical operators (`and` and `or`) work like their JavaScript counterparts
+(`&&` and `||`). They short-circuit just like in JavaScript, but if they
+evaluate a non-boolean value on either side, they throw an exception. That means
+you can't do `x || defaultValue`. But that is an error prone construct anyway:
+take for example `0 || 123`. You probably only wanted 123 if x was undefined,
+not if it was 0.
+
+### Comparison operators
+
+The operators `<`, `<=`, `>`, and `>=` work like JavaScript, except they throw
+an error unless both values are strings or both values are numbers. It doesn't
+make much sense to ask if an array or an object is less than something else, so
+this helps avoid subtle bugs.
+
+The operator `=` is a deep equality operator. It works like JavaScript `===` for
+the purpose of comparising strings, numbers, `true`, `false`, `undefined`,
+`null`, and functions, but differs for arrays, and objects.
+
+For arrays, it checks to see if all elements of both arrays are equal to each
+other based on the Squiggle `=` operator. It is not aware of sparse arrays.
+
+For objects, it checks all keys returned by `Object.keys` on both objects for
+equality using the Squiggle `=` operator.
+
+As for `!=`, it's like `=` but returns the opposite value.
+
+### Concatenation operators
+
+The operator `++` is basically just syntax sugar for calling the `.concat`
+method. As such, it works on arrays or strings, like `[1] ++ [2, 3]` or `"abc"
+++ "xyz"`. It will throw an error unless the arguments are either both strings
+or both arrays.
+
+### Addition and subtraction operators
+
+The operators `+` and `-` work like JavaScript except they throw an error unless
+both arguments are numbers.
+
+### Multiplication and division operators
+
+The operators `*` and `/` work like JavaScript except they throw an error unless
+both arguments are numbers.
+
+# Let bindings
+
+At this point you know enough to use Squiggle as a basic calculator, but you still don't know how to do *variables*.
+
+Squiggle doesn't have variables in the traditional sense that variables can
+*vary* over time, that is, their value can be changed. In Squiggle, the keyword
+`let` introduces bindings that cannot be changed. That is why we can use `=` as
+an equality operator instead of assignment, because there is only assignment
+inside of `let`.
+
+Here's an example of a `let` binding:
+
+    let (x = 3) x + x
+
+This evaluates to the number 6. Note this is all part of one larger expressions.
+In Squiggle, it's expressions all the way down.
+
+You can bind multiple things within a `let` also:
+
+    let (x = 4, y = 5) x + y
+
+This evaluates to the number 9.
+
+Another interesting use of this is function definitions:
+
+    let (
+        inc = fn(x) x + 1,
+        printPlus1 = fn(x) console.log(inc(x))
+    ) printPlus1(4)
+
+Note in this use `printPlus1` is able to see `inc` because it's part of the same
+`let` binding. That code compiles to JavaScript like this:
+
+    (function() {
+        var inc = function(x) {
+            return x + 1;
+        };
+        var printPlus1 = function(x) {
+            return console.log(inc(x));
+        };
+        return printPlus1(4);
+    }())
+
+# Property access
+
+Property access is written just like JavaScript. The only difference is that in
+Squiggle these will throw exceptions if `property` is not an own-property of
+`object`.
+
+    object.property
+    object["property"]
+    let (name = "property") in object[name]
+
+There will eventually be useful functions for dealing with optionally present
+values.
+
+# Function and method calls
+
+Function and method calls work pretty much exactly like in JavaScript:
+
+    foo(1, 2, 3)
+    bar()
+    console.log("Hello!", "world")
+    document.querySelector("body .myClass")
+
+# Method binding
+
+In JavaScript, the implicit parameter `this` to functions is easy to mess up.
+Take for example the following code which will throw an exception in most
+browsers:
+
+    console.log("this works!");
+    var log = console.log;
+    log("this doesn't...");
+
+The call to `log` fails because it *forgets* the function came from `console`
+--- that is, the `this` parameter is not set to `console`.
+
+Two correct ways to solve this in JavaScript are as follows:
+
+    var log1 = function() {
+        return console.log.apply(this, arguments);
+    };
+    var log2 = console.log.bind(console);
+
+These are both rather wordy, and in practice they're easy to forget or avoid due
+to their clunkinesss. Squiggle offers a simple operator to solve this: `::`.
+
+    let (safeLog = console::log) safeLog("ok!")
+
+Currently there is no support for computed names (like `console["log"]` vs
+`console.log`) with the `::` operator, but it is likely to be added eventually.
+
+# If-expression
+
+Squiggle has keywords `if` and `else`, but they're actually like JavaScript's
+ternary operator (`p ? x : y`), with the exception that Squiggle throws an error
+if the value being checked is not a boolean.
+
+    let (x = if (true) 3 else 4) console.log(x)
+
+This will log 3 to the console.
+
+You can nest them just like in JavaScript:
+
+    let (
+        numberToEnglish = fn(n)
+            if (n = 1) "one"
+            else if (n = 2) "two"
+            else if (n = 3) "three"
+            else if (n = 4) "four"
+            else "some other number"
+    ) console.log(numberToEnglish(2))
+
 [npm]: https://www.npmjs.com/
 [semver]: http://semver.org/
 [node.js]: https://nodejs.org/

@@ -1,12 +1,6 @@
 $bg: #fff;
 $fg: #333;
 
-$codeBlockBg: #eee;
-$codeBlockFg: #000;
-
-$codeInlineFg: #80a;
-$codeInlineBg: rgba($codeInlineFg, 0.10);
-
 $fontNormal: Helvetica, sans-serif;
 $fontCode: Menlo, Consolas, monospace;
 
@@ -44,8 +38,8 @@ body {
 }
 
 code {
-    color: $codeInlineFg;
-    background: $codeInlineBg;
+    color: #222;
+    background: #eee;
 }
 
 pre code {
@@ -53,7 +47,10 @@ pre code {
     padding: 20px 10px;
 
     font-family: $fontCode;
+    line-height: 1.2;
 
-    background: $codeBlockBg;
-    color: $codeBlockFg;
+    white-space: pre-wrap;
+
+    background: #444;
+    color: #eee;
 }
