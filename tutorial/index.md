@@ -3,6 +3,8 @@ layout: default
 title: "Tutorial :: Squiggle"
 ---
 
+<div id="toc"></div>
+
 # Introduction
 
 ## About this tutorial
@@ -322,6 +324,12 @@ You can nest them just like in JavaScript:
             else if (n = 4) "four"
             else "some other number"
     ) console.log(numberToEnglish(2))
+
+<script src="{{ site.baseurl }}/toc.js"></script>
+
+<script>
+    toc(document.querySelector("#toc"));
+</script>
 
 [npm]: https://www.npmjs.com/
 [semver]: http://semver.org/
