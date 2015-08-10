@@ -363,6 +363,18 @@ function bodies.
 Statements within a `do` expression must be ended with a semicolon. There is no
 automatic semicolon insertion, like JavaScript.
 
+# Built-in linter
+
+TODO
+
+# Using with Node.js
+
+TODO
+
+# Using in the browser
+
+TODO
+
 <script src="{{ site.baseurl }}/toc.js"></script>
 
 <script>
