@@ -49,7 +49,7 @@
     }
 
     function render(h) {
-        var e = document.createElement("ul");
+        var e = document.createDocumentFragment();
         render_([], e, {children: h});
         return e;
     }
