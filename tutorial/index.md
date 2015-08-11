@@ -3,7 +3,7 @@ layout: default
 title: "Tutorial :: Squiggle"
 ---
 
-<div id="toc"></div>
+<div id="toc" class="toc"></div>
 
 # Introduction
 
@@ -172,6 +172,8 @@ Here are the binary operators in order, from Squiggle:
 
 The pipe operator (`|>`) is like calling a function but backwards. Normally you would write `g(f(x))`, but with the pipe operator you can write `x |> f |> g`. This allows you to think left-to-right about your function pipelines.
 
+    [1, 2, 3] |> reverse |> console::log
+
 ### Logical operators
 
 The logical operators (`and` and `or`) work like their JavaScript counterparts
@@ -180,6 +182,16 @@ evaluate a non-boolean value on either side, they throw an exception. That means
 you can't do `x || defaultValue`. But that is an error prone construct anyway:
 take for example `0 || 123`. You probably only wanted 123 if x was undefined,
 not if it was 0.
+
+    true and false # => false
+    true or false # => true
+    true or do {
+        console.log(
+            "I would be an error, " ++
+            "but I don't get evaluated!"
+        )
+        "potato";
+    } # => true
 
 ### Comparison operators
 
@@ -200,6 +212,12 @@ equality using the Squiggle `=` operator.
 
 As for `!=`, it's like `=` but returns the opposite value.
 
+    [] = [] # => true
+    [2] = [1 + 1] # => true
+    ["abc", "xyz"] = ["abc", "xy" ++ "z"] # => true
+    {"a": "b"} = {"a": "b"} # => true
+    {} = Object.create(null) # => true
+
 ### Concatenation operators
 
 The operator `++` is basically just syntax sugar for calling the `.concat`
@@ -207,17 +225,28 @@ method. As such, it works on arrays or strings, like `[1] ++ [2, 3]` or `"abc"
 ++ "xyz"`. It will throw an error unless the arguments are either both strings
 or both arrays.
 
+    "abc" ++ "123" # => "abc123"
+    [0, 1] ++ [2, 3] # => [0, 1, 2, 3]
+    [] ++ "" # => error
+    1 ++ [1, 2] # => error
+
 ### Addition and subtraction operators
 
 The operators `+` and `-` work like JavaScript except they throw an error unless
 both arguments are numbers.
+
+    1 + 2 # => 3
+    10 - 1 # => 9
 
 ### Multiplication and division operators
 
 The operators `*` and `/` work like JavaScript except they throw an error unless
 both arguments are numbers.
 
-# Let bindings
+    2 * 3 # => 6
+    1 / 2 # => 0.5
+
+## Let bindings
 
 At this point you know enough to use Squiggle as a basic calculator, but you still don't know how to do *variables*.
 
@@ -260,7 +289,7 @@ Note in this use `printPlus1` is able to see `inc` because it's part of the same
         return printPlus1(4);
     }())
 
-# Property access
+## Property access
 
 Property access is written just like JavaScript. The only difference is that in
 Squiggle these will throw exceptions if `property` is not an own-property of
@@ -273,7 +302,7 @@ Squiggle these will throw exceptions if `property` is not an own-property of
 There will eventually be useful functions for dealing with optionally present
 values.
 
-# Function and method calls
+## Function and method calls
 
 Function and method calls work pretty much exactly like in JavaScript:
 
@@ -282,7 +311,7 @@ Function and method calls work pretty much exactly like in JavaScript:
     console.log("Hello!", "world")
     document.querySelector("body .myClass")
 
-# Method binding
+## Method binding
 
 In JavaScript, the implicit parameter `this` to functions is easy to mess up.
 Take for example the following code which will throw an exception in most
@@ -310,7 +339,7 @@ to their clunkinesss. Squiggle offers a simple operator to solve this: `::`.
 Currently there is no support for computed names (like `console["log"]` vs
 `console.log`) with the `::` operator, but it is likely to be added eventually.
 
-# If-expression
+## If-expression
 
 Squiggle has keywords `if` and `else`, but they're actually like JavaScript's
 ternary operator (`p ? x : y`), with the exception that Squiggle throws an error
@@ -331,7 +360,7 @@ You can nest them just like in JavaScript:
             else "some other number"
     ) console.log(numberToEnglish(2))
 
-# Do-expression
+## Do-expression
 
 In Squiggle, everything is an expression, but sometimes you still need to call
 functions purely for their side effects. For example, take this function in
@@ -363,15 +392,46 @@ function bodies.
 Statements within a `do` expression must be ended with a semicolon. There is no
 automatic semicolon insertion, like JavaScript.
 
-# Built-in linter
+# Goodies
+
+## JavaScript interoperability
+
+JavaScript and Squiggle are friends. Because Squiggle just compiles down to
+JavaScript files, it's trivial to call Squiggle code from JavaScript, or vice-
+versa. Squiggle uses all the same data as JavaScript, so you don't even have to convert anything.
+
+The main gotchas are that Squiggle data is frozen by default, so if JavaScript
+tries to modify it, it will either throw (if in strict mode) or silently fail.
+
+Also, keep in mind that Squiggle functions check their arity, but many JavaScript functions are built assuming variadic functions. For example:
+
+    # file increment.squiggle
+    export fn(x) x + 1
+
+    // file main.js
+    var increment = require("./increment");
+    console.log([1, 2, 3].map(increment));
+
+This will fail because `Array.prototype.map` actually passes *three* parameters to its callback function: *data*, *index*, and *array*. In scenarios like this, you can wrap the Squiggle function like so:
+
+    console.log([1, 2, 3].map(function(x) {
+        return increment(x);
+    }));
+
+In order to assist with interop, the standard functions from Squiggle will
+probably eventually be exposed as an npm library.
+
+## Built-in linter
 
 TODO
 
-# Using with Node.js
+# Use it for your own stuff
+
+## Using with Node.js
 
 TODO
 
-# Using in the browser
+## Using in the browser
 
 TODO
 

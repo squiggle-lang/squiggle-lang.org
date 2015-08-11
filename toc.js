@@ -17,7 +17,7 @@
 
         var h = hs[0];
         var hh = hs.slice(1);
-        var xs = partition(function(x) {
+        var xs = splitWhere(function(x) {
             return getLevel(x) === getLevel(h);
         }, hh);
         var ret = {
@@ -28,7 +28,7 @@
         return [ret].concat(nest(xs[1]));
     }
 
-    function partition(f, xs) {
+    function splitWhere(f, xs) {
         var i = 0;
         var n = xs.length;
         while (i < n && !f(xs[i])) {
