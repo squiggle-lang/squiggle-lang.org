@@ -499,6 +499,42 @@ Here is an example compilation script in Bash:
         squiggle "$f" -o "../out/$name.js"
     done
 
+Squiggle has a keyword for creating Node.js modules: `export`
+
+    export 1
+
+This is equivalent to the following JavaScript:
+
+    module.exports = 1;
+
+So a common pattern for creating modules is:
+
+    export let (
+        a = 1,
+        b = 2,
+        cSecret = 3,
+        dSecret = 4,
+        e = 5
+    ) {
+        "a": a,
+        "b": b,
+        "e": e
+    }
+
+This is like the following JavaScript:
+
+    var a = 1;
+    var b = 2;
+    var cSecret = 3;
+    var dSecret = 4;
+    var e = 5;
+
+    module.exports = {
+        a: a,
+        b: b,
+        e: e
+    };
+
 ## Using in the browser
 
 The current way is to follow the Node.js steps and then use Browserify. There
