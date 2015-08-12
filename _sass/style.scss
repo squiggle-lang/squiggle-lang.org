@@ -20,7 +20,7 @@ html {
 
 .toc ul li       { font-size: 1.6em; font-weight: bold; }
 .toc ul ul li    { font-size: 1.2em; font-weight: normal; }
-.toc ul ul ul li { font-size: 1.0em; font-weight: normal; }
+.toc ul ul ul li { font-style: italic; }
 
 .toc ul li {
     list-style: none;
@@ -55,6 +55,10 @@ h2 {
 p {
     font-size: 16px;
     line-height: 1.5;
+}
+
+.chapter-number {
+    font-weight: bold;
 }
 
 body {

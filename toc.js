@@ -89,7 +89,10 @@
     function formatEntry(level, h) {
         return E("li", null, [
             E("a", {href: "#" + h.id}, [
-                level.join(".") + " " + elementText(h)
+                E("span", {"class": "chapter-number"}, [
+                    level.join(".")
+                ]),
+                " " + elementText(h)
             ])
         ]);
     }
@@ -124,12 +127,7 @@
     function toc(elem) {
         var headings = $$("h1, h2, h3");
         var nestedHeadings = nest(headings);
-        // console.log("FLAT HEADINGS");
-        // console.log(headings);
-        console.log("NESTED HEADINGS");
-        console.log(JSON.stringify(nestedHeadings, null, 2));
         var tocElem = render(nestedHeadings);
-        // debugger;
         setChild(elem, tocElem);
     }
 
