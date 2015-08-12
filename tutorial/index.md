@@ -423,8 +423,8 @@ in Squiggle. Squiggle does not expose a syntax like `x.y = z` to assign
 properties, but it does have a `set` function.
 
     let (
-        a = Array(),
-        o = Object()
+        a = global.Array(),
+        o = global.Object()
     ) do {
         set(0, "hi", a);
         set("key", "value", o);
