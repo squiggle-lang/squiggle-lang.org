@@ -561,7 +561,16 @@ standard JavaScript function methods `.apply` or `.call`:
 If you want to use the value of `this` in a function, you can wrap your function
 in `method` which makes it available as the first parameter:
 
-    TODO
+    let (
+        setName = fn(name, obj)
+            set("name", name, obj),
+        person = Object.create({
+            "setName": method(setName)
+        })
+    ) do {
+        person.setName("Simone");
+        console.log(person.name);
+    }
 
 ## An argument about `arguments`
 
@@ -579,7 +588,15 @@ Oops! It may seem gratuitous, but the Squiggle way would be having
 
 The function `variadic` can be used to return a new function of any amount of arguments, where the arguments are passed an as a single array (real array, not array-like `arguments` object).
 
-    TODO
+    let (
+        numberToString = variadic(fn(args)
+            if (args.length = 1) args[0].toString()
+            else args[0].toString(args[1])
+        )
+    ) do {
+        console.log(numberToString(10)); # "10"
+        console.log(numberToString(10, 16)); # "a"
+    }
 
 # Goodies
 
