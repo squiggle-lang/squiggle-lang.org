@@ -71,7 +71,7 @@ order to use the REPL, simply run Squiggle as follows:
     squiggle -i
 
 Squiggle explains everything you need to know from there. It's a great way to
-quickly try something on your mind, without having to save y our work.
+quickly try something on your mind, without having to save your work.
 
 ## Language overview
 
