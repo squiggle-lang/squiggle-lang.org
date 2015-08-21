@@ -1,0 +1,22 @@
+{
+  "name": "squiggle-gh-pages",
+  "version": "0.0.0",
+  "description": "",
+  "main": "toc.js",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saikobee/squiggle.git"
+  },
+  "author": "Brian Mock <brian@mockbrian.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/saikobee/squiggle/issues"
+  },
+  "homepage": "https://github.com/saikobee/squiggle#readme"
+}

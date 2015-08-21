@@ -1,1 +1,2 @@
 baseurl: /squiggle
+exclude: [node_modules]
