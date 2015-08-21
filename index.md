@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Squiggle
+bodyClass: narrow
 ---
 
 Hello, world!

@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "Tutorial :: Squiggle"
+bodyClass: narrow
 ---
 
 <div id="toc" class="toc"></div>

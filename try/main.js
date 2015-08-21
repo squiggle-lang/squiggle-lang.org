@@ -2,6 +2,7 @@
 
 var CM = global.CodeMirror;
 var S = require("squiggle");
+var debounce = require("lodash/function/debounce");
 
 function sel(sel) {
     return document.querySelector(sel);
@@ -13,8 +14,20 @@ var editors = {
 };
 
 function compile(code) {
-    code = "// " + code.replace(/\n/g, "\n// ") + "\n";
-    return code + "console.log(Math.random());\n";
+    clearConsole();
+    var ast;
+    try {
+        ast = S.parse(code);
+    } catch (e) {
+        replacementConsole.log(e.message);
+        return "// error\n";
+    }
+    S.lint(ast).forEach(function(warning) {
+        replacementConsole.log(warning);
+    });
+    var es = S.transformAst(ast);
+    var js = S.compile(es);
+    return js;
 }
 
 function compileAndUpdate() {
@@ -24,6 +37,10 @@ function compileAndUpdate() {
 }
 
 var theConsole = sel("#console");
+
+function clearConsole() {
+    theConsole.innerHTML = "";
+}
 
 var replacementConsole = {
     log: function() {
@@ -43,16 +60,18 @@ function runWithReplacedConsole(js) {
 
 function run() {
     var javascriptCode = editors.javascript.getValue();
-    runWithReplacedConsole(javascriptCode);
+    try {
+        runWithReplacedConsole(javascriptCode);
+    } catch (e) {
+        replacementConsole.log(e);
+    }
 }
 
 compileAndUpdate();
-editors.squiggle.on("change", compileAndUpdate);
+editors.squiggle.on("change", debounce(compileAndUpdate, 300));
 
 editors.squiggle.setOption("extraKeys", {
   "Ctrl-Enter": run
 });
 
 sel("#run").onclick = run;
-
-global.S = editors.squiggle;
