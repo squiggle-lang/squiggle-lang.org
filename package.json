@@ -4,6 +4,7 @@
   "description": "",
   "main": "toc.js",
   "dependencies": {
+    "squiggle": "saikobee/squiggle"
   },
   "devDependencies": {},
   "scripts": {
