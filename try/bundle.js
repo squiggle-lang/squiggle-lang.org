@@ -29811,13 +29811,26 @@ var CM = global.CodeMirror;
 var S = require("squiggle");
 var debounce = require("lodash/function/debounce");
 
+var squiggleCodeOpts = {
+    lineWrapping: true,
+    lineNumbers: true,
+    mode: "text/plain",
+};
+
+var javascriptCodeOpts = {
+    lineWrapping: true,
+    lineNumbers: true,
+    readOnly: true,
+    mode: "application/javascript",
+};
+
 function sel(sel) {
     return document.querySelector(sel);
 }
 
 var editors = {
-    squiggle: CM.fromTextArea(sel("#squiggle-code")),
-    javascript: CM.fromTextArea(sel("#javascript-code")),
+    squiggle: CM.fromTextArea(sel("#squiggle-code"), squiggleCodeOpts),
+    javascript: CM.fromTextArea(sel("#javascript-code"), javascriptCodeOpts),
 };
 
 function compile(code) {
@@ -29840,7 +29853,13 @@ function compile(code) {
 function compileAndUpdate() {
     var squiggleCode = editors.squiggle.getValue();
     var js = compile(squiggleCode);
+    setJs(js);
+}
+
+function setJs(js) {
     editors.javascript.setValue(js);
+    var info = editors.javascript.getScrollInfo();
+    editors.javascript.scrollTo(0, info.height);
 }
 
 var theConsole = sel("#console");
@@ -29866,12 +29885,15 @@ function runWithReplacedConsole(js) {
 }
 
 function run() {
-    var javascriptCode = editors.javascript.getValue();
-    try {
-        runWithReplacedConsole(javascriptCode);
-    } catch (e) {
-        replacementConsole.log(e);
-    }
+    clearConsole();
+    setTimeout(function() {
+        var javascriptCode = editors.javascript.getValue();
+        try {
+            runWithReplacedConsole(javascriptCode);
+        } catch (e) {
+            replacementConsole.log(e);
+        }
+    }, 100);
 }
 
 compileAndUpdate();

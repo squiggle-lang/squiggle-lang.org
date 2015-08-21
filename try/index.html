@@ -6,10 +6,10 @@ bodyClass: wide
 
 <div class="workspace">
     <section class="code">
-        <textarea id="squiggle-code"></textarea>
+        <textarea class="hidden" id="squiggle-code"></textarea>
     </section>
     <section class="code">
-        <textarea id="javascript-code"></textarea>
+        <textarea class="hidden" id="javascript-code"></textarea>
     </section>
     <section>
         <button id="run" class="run">Run</button>
@@ -19,6 +19,6 @@ bodyClass: wide
 
 <script src="{{ site.baseurl }}/vendor/codemirror-5.6/lib/codemirror.js"></script>
 <link rel="stylesheet" href="{{ site.baseurl }}/vendor/codemirror-5.6/lib/codemirror.css">
-<!-- <script src="{{ site.baseurl }}/vendor/codemirror-5.6/mode/javascript/javascript.js"></script> -->
+<script src="{{ site.baseurl }}/vendor/codemirror-5.6/mode/javascript/javascript.js"></script>
 
 <script src="{{ site.baseurl }}/try/bundle.js"></script>
