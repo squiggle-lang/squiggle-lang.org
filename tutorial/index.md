@@ -559,19 +559,11 @@ standard JavaScript function methods `.apply` or `.call`:
     someFn.call(myThisValue, param1, param2)
     someFn.apply(myThisValue, [param1, param2])
 
-If you want to use the value of `this` in a function, you can wrap your function
-in `method` which makes it available as the first parameter:
+There is currently no way to use `this` within Squiggle, because I believe it
+causes more harm than good, and is not necessary for making objects.
 
-    let (
-        setName = fn(name, obj)
-            set("name", name, obj),
-        person = Object.create({
-            "setName": method(setName)
-        })
-    ) do {
-        person.setName("Simone");
-        console.log(person.name);
-    }
+`new` is harder to do away with since many APIs require its use to create an
+instance. I'm still working on how I want to support that feature.
 
 ## An argument about `arguments`
 
@@ -587,17 +579,8 @@ passes the array `index` as the second parameter, which is used by `parseInt`.
 Oops! It may seem gratuitous, but the Squiggle way would be having
 `parseInt(string)` and `parseIntWithBase(string, number)` as separate functions.
 
-The function `variadic` can be used to return a new function of any amount of arguments, where the arguments are passed an as a single array (real array, not array-like `arguments` object).
-
-    let (
-        numberToString = variadic(fn(args)
-            if (args.length = 1) args[0].toString()
-            else args[0].toString(args[1])
-        )
-    ) do {
-        console.log(numberToString(10)); # "10"
-        console.log(numberToString(10, 16)); # "a"
-    }
+Variadic functions can still be used via Squiggle, but there is currently no
+support for creating them, since I believe they cause more harm than good.
 
 # Goodies
 
