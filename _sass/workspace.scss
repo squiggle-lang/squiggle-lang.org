@@ -13,6 +13,10 @@
 
         margin: $gap;
 
+        &.code {
+            background: #263238;
+        }
+
         .console,
         &.code {
             border: 2px solid #ccc;
@@ -41,18 +45,19 @@
             height: 150px;
             overflow: auto;
             padding: 0;
-            background: white;
+            background: #f8f8f8;
+            resize: vertical;
 
             font-family: $fontCode;
 
-            & > *:first-child {
-                border: 0;
-            }
-
             & > * {
-                border-top: 1px solid #eee;
+                border-bottom: 1px solid #ddd;
                 padding: 10px 15px;
-                box-shadow: inset 5px 0 0 #eee;
+                box-shadow: inset 5px 0 0 #ddd;
+
+                &:last-child {
+                    border: 0;
+                }
             }
         }
     }
