@@ -1,0 +1,29 @@
+// @mixin shadow3D($width, $color) {
+//     position: relative;
+//     &:after,
+//     &:before {
+//         content: '';
+//         position: absolute;
+//     }
+//     &:after {
+//         width: 100%;
+//         height: ($width * 2);
+//         left: $width;
+//         bottom: 0;
+//         background: darken($color, 12%);
+//         transform: translatey(100%) skewx(45deg);
+//     }
+//     &:before {
+//         width: ($width * 2);
+//         height: 100%;
+//         right: 0;
+//         background: darken($color, 4%);
+//         transform: translatex(100%) skewy(45deg);
+//         top: $width;
+//     }
+// }
+
+@mixin inlineColored {
+    padding: 2px 8px;
+    border-radius: 4px;
+}

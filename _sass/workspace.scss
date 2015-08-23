@@ -1,11 +1,12 @@
 .workspace {
+    $gap: 5px;
     display: flex;
     flex-flow: row wrap;
 
     section {
         flex: 1 1 40%;
 
-        margin: 3px;
+        margin: $gap;
 
         .console,
         &.code {
@@ -23,7 +24,7 @@
         }
 
         .console {
-            margin-top: 6px;
+            margin-top: ($gap * 2);
             height: 150px;
             overflow: auto;
             padding: 0;

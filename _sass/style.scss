@@ -4,18 +4,79 @@ $fg: #333;
 $fontNormal: Helvetica, sans-serif;
 $fontCode: Menlo, Consolas, monospace;
 
-html {
-    padding: 20px 10px;
-    margin: 0;
+$primary: #e72;
+$link: #08a;
 
+@import "mixins";
+
+:focus {
+    outline: 6px solid rgba(#0aa, 0.8);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+html {
     background: $bg;
     color: $fg;
 
     font-family: $fontNormal;
 }
 
+header {
+    $bg: #eee;
+    $fg: #333;
+
+    background: $bg;
+    color: $fg;
+    font-size: 4em;
+    padding: 0.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    margin: 1em;
+    color: #888;
+    a {
+        color: inherit;
+    }
+}
+
+nav {
+    $bg: $primary;
+    $fg: white;
+
+    text-align: center;
+    background: $bg;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    border: 2px solid darken($bg, 10%);
+    border-left: 0;
+    border-right: 0;
+
+    a {
+        flex: initial;
+        display: block;
+        margin: 0;
+        padding: 1em 2em;
+        color: $fg;
+        text-decoration: none;
+        font-weight: bold;
+
+        &:hover {
+            background: rgba($fg, 0.20);
+        }
+    }
+}
+
 .toc ul li a {
     padding-left: 40px;
+    background: none;
 }
 
 .toc ul li       { font-size: 1.6em; font-weight: bold; }
@@ -24,6 +85,7 @@ html {
 
 .toc ul li {
     list-style: none;
+    margin: 0;
 }
 
 .toc ul li a {
@@ -40,7 +102,7 @@ html {
     color: inherit;
 }
 
-h1, h2 {
+h1, h2, h3 {
     padding-bottom: 10px;
 }
 
@@ -48,23 +110,47 @@ h1 {
     border-bottom: 2px solid #ccc;
 }
 
-h2 {
+h2,
+h3 {
     border-bottom: 2px solid #eee;
 }
 
+ul li {
+    margin: 1em 0;
+}
+
 p {
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 18px;
+    line-height: 1.7;
+    a {
+        text-decoration: none;
+        background: rgba($link, 0.10);
+        color: $link;
+        font-weight: bold;
+
+        @include inlineColored;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 .chapter-number {
     font-weight: bold;
 }
 
-body.narrow {
-    max-width: 600px;
+main {
     margin: 0 auto;
-    padding: 0;
+}
+
+body.wide main {
+    padding: 10px;
+}
+
+body.narrow main {
+    max-width: 600px;
+    padding: 20px 10px;
 }
 
 .hidden {
@@ -75,18 +161,28 @@ code {
     color: #222;
     background: #eee;
     font-family: $fontCode;
+    font-weight: bold;
+    @include inlineColored;
 }
 
 pre code {
+    $bg: #555;
+    $fg: #eee;
+
     display: block;
     padding: 0.8em;
+    border-radius: 0;
+
+    font-weight: normal;
 
     line-height: 1.2;
 
     white-space: pre-wrap;
 
-    background: #444;
-    color: #eee;
+    background: $bg;
+    color: $fg;
+
+    border-radius: 4px;
 }
 
 @import "workspace";
