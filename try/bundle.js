@@ -29815,6 +29815,7 @@ var squiggleCodeOpts = {
     lineWrapping: true,
     lineNumbers: true,
     mode: "text/plain",
+    theme: "material",
 };
 
 var javascriptCodeOpts = {
@@ -29822,6 +29823,7 @@ var javascriptCodeOpts = {
     lineNumbers: true,
     readOnly: true,
     mode: "application/javascript",
+    theme: "material",
 };
 
 function sel(sel) {

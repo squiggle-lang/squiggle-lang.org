@@ -3,6 +3,11 @@
     display: flex;
     flex-flow: row wrap;
 
+    .CodeMirror {
+        font-family: $fontCode;
+        font-size: 12px;
+    }
+
     section {
         flex: 1 1 40%;
 
