@@ -158,22 +158,25 @@ way, but much more error-prone.
 
 ## Operators
 
-The golden rule of Squiggle, and especially of operators, is "it works like how JavaScript probably should work, in my opinion."
+The golden rule of Squiggle, and especially of operators, is *it works like how JavaScript probably should work, in my opinion*.
 
 Here are the binary operators in order, from Squiggle:
 
 - `|>`
-- `and` / `or`
-- `>=` / `<=` / `<` / `>` / `=` / `!=`
+- `and`, `or`
+- `>=`, `<=`, `<`, `>`, `=`, `!=`
 - `++`
-- `+` / `-`
-- `*` / `/`
+- `+`, `-`
+- `*`, `/`
 
 ### Pipe operator
 
-The pipe operator (`|>`) is like calling a function but backwards. Normally you would write `g(f(x))`, but with the pipe operator you can write `x |> f |> g`. This allows you to think left-to-right about your function pipelines.
+The pipe operator (`|>`) is like calling a function but backwards and without
+parentheses. Normally you would write `g(f(x))`, but with the pipe operator you
+can write `x |> f |> g`. This allows you to think left-to-right about your
+function pipelines.
 
-    [1, 2, 3] |> reverse |> console::log
+    Math.random() * 10 |> Math.floor |> console::log
 
 ### Logical operators
 
@@ -346,7 +349,7 @@ Squiggle has keywords `if` and `else`, but they're actually like JavaScript's
 ternary operator (`p ? x : y`), with the exception that Squiggle throws an error
 if the value being checked is not a boolean.
 
-    let (x = if (true) 3 else 4) console.log(x)
+    console.log(if (true) 3 else 4)
 
 This will log 3 to the console.
 
@@ -360,6 +363,9 @@ You can nest them just like in JavaScript:
             else if (n = 4) "four"
             else "some other number"
     ) console.log(numberToEnglish(2))
+
+This would be better written with a match-expression, but more on that in a
+later chapter.
 
 ## Do-expression
 
@@ -378,7 +384,7 @@ Given that Squiggle automatically returns the body of a function, there has to b
     let (
         sneakyAdd = fn(x, y) do {
             console.log("add was called with", x, y);
-            return x + y;
+            x + y;
         }
     ) sneakyAdd(3, 4)
 
@@ -392,6 +398,44 @@ function bodies.
 
 Statements within a `do` expression must be ended with a semicolon. There is no
 automatic semicolon insertion, like JavaScript.
+
+## Match-expression
+
+Overall structure looks like:
+
+    match (V) {
+      case P1 => X1
+      case P2 => X2
+      case P3 => X3
+    }
+
+The inidividual pieces look like this:
+
+    [p1, p2, p3]
+
+Matches an array of size 3 and binds the three patterns inside.
+
+    {a, b, "c": p1}
+
+Matches an object with at least the properties "a", "b", and "c", applying the p1 pattern to the value at "c".
+
+    x
+
+Just a plain variable name. Always passes and is bound with the value at its position in the pattern.
+
+    _x
+    _
+
+Technically also just a variable name pattern, but used to ignore values.
+
+    "hello"
+    342
+    true
+    false
+    undefined
+    null
+
+Assert the value at that position in the pattern is equal to that.
 
 # Predefined functions
 
