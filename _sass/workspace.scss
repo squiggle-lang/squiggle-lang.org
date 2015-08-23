@@ -10,8 +10,9 @@
 
         .console,
         &.code {
-            border: 1px solid #ccc;
+            border: 2px solid #ccc;
             height: 300px;
+            border-radius: 4px;
         }
 
         button.run {
@@ -19,8 +20,15 @@
             width: 100%;
             height: 2em;
             font-size: 1.3em;
-            background: #eee;
-            border: 1px solid #ccc;
+            border: 0;
+            background: $green;
+            color: white;
+            font-weight: bold;
+            border-radius: 4px;
+
+            &:focus {
+                outline: 0;
+            }
         }
 
         .console {
@@ -28,6 +36,7 @@
             height: 150px;
             overflow: auto;
             padding: 0;
+            background: white;
 
             font-family: $fontCode;
 

@@ -29898,6 +29898,14 @@ function run() {
 
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
+editors.squiggle.setValue(
+"let (\n" +
+"    m = global.Math,\n" +
+"    rand = m.random,\n" +
+"    floor = m.floor,\n" +
+"    log = console::log\n" +
+") rand() * 100 |> floor |> log\n"
+)
 
 editors.squiggle.setOption("extraKeys", {
   "Ctrl-Enter": run
