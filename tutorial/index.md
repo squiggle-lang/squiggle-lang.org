@@ -2,6 +2,7 @@
 layout: default
 title: "Tutorial :: Squiggle"
 bodyClass: narrow
+cssTab2: focus
 ---
 
 <div id="toc" class="toc"></div>

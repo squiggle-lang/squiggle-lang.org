@@ -4,7 +4,7 @@ $fg: #333;
 $fontNormal: Helvetica, sans-serif;
 $fontCode: Menlo, Consolas, monospace;
 
-$primary: #e72;
+$primary: #e84;
 $link: #08a;
 
 @import "mixins";
@@ -26,8 +26,8 @@ html {
 }
 
 header {
-    $bg: #eee;
-    $fg: #333;
+    $bg: $primary;
+    $fg: white;
 
     background: $bg;
     color: $fg;
@@ -47,7 +47,7 @@ footer {
 }
 
 nav {
-    $bg: $primary;
+    $bg: mix(white, $primary, 10%);
     $fg: white;
 
     text-align: center;
@@ -55,21 +55,26 @@ nav {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    border: 2px solid darken($bg, 10%);
-    border-left: 0;
-    border-right: 0;
+    padding: 0 2px;
 
     a {
-        flex: initial;
+        flex: 0 1 100px;
         display: block;
-        margin: 0;
+        margin: 4px 2px;
         padding: 1em 2em;
         color: $fg;
         text-decoration: none;
         font-weight: bold;
+        border-radius: 8px;
+
+        &.focus {
+            background: white;
+            color: $bg;
+        }
 
         &:hover {
             background: rgba($fg, 0.20);
+            color: $fg;
         }
     }
 }
@@ -174,9 +179,8 @@ pre code {
     border-radius: 0;
 
     font-weight: normal;
-
+    font-size: inherit;
     line-height: 1.2;
-
     white-space: pre-wrap;
 
     background: $bg;
