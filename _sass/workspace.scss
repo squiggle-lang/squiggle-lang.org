@@ -9,9 +9,9 @@
     }
 
     section {
-        flex: 1 1 40%;
+        flex: 1 1 50%;
 
-        margin: $gap;
+        margin: 0;
 
         &.code {
             background: #263238;
@@ -19,9 +19,7 @@
 
         .console,
         &.code {
-            border: 2px solid #ccc;
             height: 300px;
-            border-radius: 4px;
         }
 
         button.run {
@@ -30,10 +28,14 @@
             height: 2em;
             font-size: 1.3em;
             border: 0;
-            background: $green;
-            color: white;
             font-weight: bold;
-            border-radius: 4px;
+            border-left: 0;
+            border-right: 0;
+
+            &.run {
+                background: $green;
+                color: white;
+            }
 
             &:focus {
                 outline: 0;
@@ -41,24 +43,24 @@
         }
 
         .console {
-            margin-top: ($gap * 2);
             height: 150px;
             overflow: auto;
             padding: 0;
             background: #f8f8f8;
             resize: vertical;
+            border-bottom: 2px solid #ccc;
 
             font-family: $fontCode;
 
             & > * {
-                border-bottom: 1px solid #ddd;
+                border-left: 5px solid transparent;
+                box-shadow: 0 2px 0 0 #eee;
                 padding: 10px 15px;
-                box-shadow: inset 5px 0 0 #ddd;
-
-                &:last-child {
-                    border: 0;
-                }
             }
+
+            & > .warn  { @include borderAndTextColor(#aa2); }
+            & > .error { @include borderAndTextColor(#c00); }
+            & > .info  { @include borderAndTextColor(#88f); }
         }
     }
 }

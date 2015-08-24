@@ -29870,16 +29870,23 @@ function clearConsole() {
     theConsole.innerHTML = "";
 }
 
-var replacementConsole = {
-    log: function() {
+function loggerMaker(type) {
+    return function() {
         var str = [].map.call(arguments, String).join(" ");
         var txtNode = document.createTextNode(str);
         var element = document.createElement("div");
-        element.className = "log";
+        element.className = type;
         element.appendChild(txtNode);
         theConsole.appendChild(element);
         theConsole.scrollTop = theConsole.scrollHeight;
-    }
+    };
+}
+
+var replacementConsole = {
+    log: loggerMaker("log"),
+    warn: loggerMaker("warn"),
+    error: loggerMaker("error"),
+    info: loggerMaker("info"),
 }
 
 function runWithReplacedConsole(js) {

@@ -12,6 +12,10 @@ $link: #08a;
 
 @import "mixins";
 
+* {
+    box-sizing: border-box;
+}
+
 :focus {
     outline: 6px solid rgba(#0aa, 0.8);
 }
@@ -153,7 +157,7 @@ main {
 }
 
 body.wide main {
-    padding: 10px;
+    padding: 0;
 }
 
 body.narrow main {

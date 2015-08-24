@@ -27,3 +27,8 @@
     padding: 2px 8px;
     border-radius: 4px;
 }
+
+@mixin borderAndTextColor($c) {
+    border-color: $c;
+    color: $c;
+}
