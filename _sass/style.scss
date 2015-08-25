@@ -132,17 +132,12 @@ p {
     font-family: $fontParagraph;
 
     a {
-        @include inlineColored;
-
-        text-decoration: none;
-        background: rgba($link, 0.10);
-        color: $link;
-        font-weight: bold;
-
-        &:hover {
-            text-decoration: underline;
-        }
+        @include prettyLinks;
     }
+}
+
+.chapter-nav a {
+    @include prettyLinks;
 }
 
 .chapter-number {

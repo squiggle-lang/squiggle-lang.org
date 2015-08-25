@@ -32,3 +32,16 @@
     border-color: $c;
     color: $c;
 }
+
+@mixin prettyLinks {
+    @include inlineColored;
+
+    text-decoration: none;
+    background: rgba($link, 0.10);
+    color: $link;
+    font-weight: bold;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
