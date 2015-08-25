@@ -9,14 +9,34 @@ cssTab2: focus
 
 <div class="chapter-nav">
     {% if page.previous %}
-    <a href="{{ site.baseurl }}/tutorial/chapter/{{ page.previous }}/">Previous</a>
+    <a
+        class="prev"
+        href="{{ site.baseurl }}/tutorial/chapter/{{ page.previous }}/"
+    >&larr; Previous</a>
     {% endif %}
-    <a href="{{ site.baseurl }}/tutorial/">Table of Contents</a>
     {% if page.next %}
-    <a href="{{ site.baseurl }}/tutorial/chapter/{{ page.next }}/">Next</a>
+    <a
+        class="next"
+        href="{{ site.baseurl }}/tutorial/chapter/{{ page.next }}/"
+    >Next &rarr;</a>
     {% endif %}
 </div>
 
 <h1>{{ a }}.{{ b }} {{ page.title }}</h1>
 
 {{ content }}
+
+<div class="chapter-nav">
+    {% if page.previous %}
+    <a
+        class="prev"
+        href="{{ site.baseurl }}/tutorial/chapter/{{ page.previous }}/"
+    >&larr; Previous</a>
+    {% endif %}
+    {% if page.next %}
+    <a
+        class="next"
+        href="{{ site.baseurl }}/tutorial/chapter/{{ page.next }}/"
+    >Next &rarr;</a>
+    {% endif %}
+</div>
