@@ -32,11 +32,13 @@ module TableOfContents
                 i = toc.index(n)
                 n_prev = _chapter_plus_n(toc, i, -1)
                 n_next = _chapter_plus_n(toc, i, +1)
-                d = page.data
-                d["section"] = section
-                d["subsection"] = subsection
-                d["next"] = n_next
-                d["previous"] = n_prev
+                page.data.merge!({
+                    "layout" => "chapter",
+                    "section" => section,
+                    "subsection" => subsection,
+                    "next" => n_next,
+                    "previous" => n_prev,
+                })
             }
         end
 

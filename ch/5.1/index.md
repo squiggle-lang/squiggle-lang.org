@@ -1,8 +1,5 @@
 ---
 title: Built-in linter
-layout: chapter
-section: 5
-subsection: 1
 ---
 
 Many programming languages have tools built around them called linters. Usually

@@ -1,8 +1,5 @@
 ---
 title: "Operators"
-layout: chapter
-section: 2
-subsection: 6
 ---
 
 The golden rule of Squiggle, and especially of operators, is *it works like how JavaScript probably should work, in my opinion*.

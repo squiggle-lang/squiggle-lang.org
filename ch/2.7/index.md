@@ -1,8 +1,5 @@
 ---
 title: "Property access"
-layout: chapter
-section: 2
-subsection: 7
 ---
 
 Property access is written just like JavaScript. The only difference is that in

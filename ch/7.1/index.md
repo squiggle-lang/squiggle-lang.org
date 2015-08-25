@@ -1,8 +1,5 @@
 ---
 title: RPN calculator
-layout: chapter
-section: 6
-subsection: 2
 ---
 
 This example is for an [RPN][] calculator. The Squiggle version does not use any

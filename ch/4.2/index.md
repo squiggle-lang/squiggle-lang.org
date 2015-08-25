@@ -1,8 +1,5 @@
 ---
 title: "Arity problems"
-layout: chapter
-section: 4
-subsection: 1
 ---
 
 Squiggle functions check their arity, but many

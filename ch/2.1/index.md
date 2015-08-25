@@ -1,8 +1,5 @@
 ---
 title: "Hello world"
-layout: chapter
-section: 2
-subsection: 1
 ---
 
 If you haven't read the introduction section, I highly recommend going back and

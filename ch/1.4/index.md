@@ -1,8 +1,5 @@
 ---
 title: "What about browsers?"
-layout: chapter
-section: 1
-subsection: 4
 ---
 
 

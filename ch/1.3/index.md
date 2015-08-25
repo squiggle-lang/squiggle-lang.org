@@ -1,8 +1,5 @@
 ---
 title: "Getting started"
-layout: chapter
-section: 1
-subsection: 3
 ---
 
 Squiggle can be installed via npm:

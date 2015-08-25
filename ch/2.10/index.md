@@ -1,8 +1,5 @@
 ---
 title: "If-expression"
-layout: chapter
-section: 2
-subsection: 10
 ---
 
 Squiggle has keywords `if` and `else`, but they're actually like JavaScript's

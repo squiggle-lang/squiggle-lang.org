@@ -1,8 +1,5 @@
 ---
 title: "Language overview"
-layout: chapter
-section: 2
-subsection: 3
 ---
 
 Squiggle does not invent its own world separate from JavaScript, Node.js, npm,

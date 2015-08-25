@@ -1,8 +1,5 @@
 ---
 title: "Interactive mode"
-layout: chapter
-section: 2
-subsection: 2
 ---
 
 Using Squiggle to compile a JavaScript file is the primary use case, but it also

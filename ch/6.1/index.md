@@ -1,8 +1,5 @@
 ---
 title: Using with Node.js
-layout: chapter
-section: 6
-subsection: 1
 ---
 
 Currently the best way to use Squiggle with Node.js is to (unfortunately)

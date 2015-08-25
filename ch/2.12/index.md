@@ -1,8 +1,5 @@
 ---
 title: "Match-expression"
-layout: chapter
-section: 2
-subsection: 12
 ---
 
 Overall structure looks like:

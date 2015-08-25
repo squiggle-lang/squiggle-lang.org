@@ -1,8 +1,5 @@
 ---
 title: "Predefined functions"
-layout: chapter
-section: 3
-subsection: 1
 ---
 
 Unless otherwise stated, all predefined functions throw an error if called with

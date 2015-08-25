@@ -1,8 +1,5 @@
 ---
 title: "Do-expression"
-layout: chapter
-section: 2
-subsection: 11
 ---
 
 In Squiggle, everything is an expression, but sometimes you still need to call

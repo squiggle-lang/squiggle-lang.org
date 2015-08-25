@@ -1,8 +1,5 @@
 ---
 title: "Mutability problems"
-layout: chapter
-section: 4
-subsection: 3
 ---
 
 Sometimes you need mutable data. Fortunately, it's still possible to create it

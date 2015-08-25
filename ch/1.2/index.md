@@ -1,8 +1,5 @@
 ---
 title: "Prerequisites"
-layout: chapter
-section: 1
-subsection: 2
 ---
 
 If you have never used [Node.js][] or [npm][], you should learn those first.

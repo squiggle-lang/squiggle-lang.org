@@ -1,8 +1,5 @@
 ---
 title: "This New Problem"
-layout: chapter
-section: 4
-subsection: 4
 ---
 
 ## `this` `new` problem

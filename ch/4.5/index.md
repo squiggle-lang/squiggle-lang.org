@@ -1,8 +1,5 @@
 ---
 title: "An argument about arguments"
-layout: chapter
-section: 4
-subsection: 5
 ---
 
 Variadic functions are another source of confusion and not much value in

@@ -1,8 +1,5 @@
 ---
 title: "Method binding"
-layout: chapter
-section: 2
-subsection: 9
 ---
 
 In JavaScript, the implicit parameter `this` to functions is easy to mess up.

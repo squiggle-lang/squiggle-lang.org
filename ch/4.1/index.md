@@ -1,8 +1,5 @@
 ---
 title: "JavaScript interoperability"
-layout: chapter
-section: 4
-subsection: 1
 ---
 
 JavaScript and Squiggle are friends. Because Squiggle just compiles down to

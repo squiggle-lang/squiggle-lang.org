@@ -1,8 +1,5 @@
 ---
 title: "Literals"
-layout: chapter
-section: 2
-subsection: 5
 ---
 
 

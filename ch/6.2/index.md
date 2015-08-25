@@ -1,8 +1,5 @@
 ---
 title: Using in the browser
-layout: chapter
-section: 6
-subsection: 2
 ---
 
 The current way is to follow the Node.js steps and then use Browserify. There
