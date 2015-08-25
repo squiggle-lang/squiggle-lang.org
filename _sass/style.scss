@@ -84,32 +84,29 @@ nav {
     }
 }
 
-.toc ul li a {
-    padding-left: 40px;
-    background: none;
-}
+ul.toc {
+    li a {
+        padding-left: 40px;
+        background: none;
+        display: block;
+        margin: 0;
+        padding: 0.3em 0;
+        text-decoration: none;
+        color: inherit;
 
-.toc ul li       { font-size: 1.6em; font-weight: bold; }
-.toc ul ul li    { font-size: 1.2em; font-weight: normal; }
-.toc ul ul ul li { font-style: italic; }
-
-.toc ul li {
-    list-style: none;
-    margin: 0;
-}
-
-.toc ul li a {
-    display: block;
-    margin: 0;
-    padding: 0.3em 0;
-    text-decoration: none;
-    &:focus, &:hover {
-        text-decoration: underline;
+        &:focus, &:hover {
+            text-decoration: underline;
+        }
     }
-}
 
-.toc ul li a {
-    color: inherit;
+    li       { font-size: 1.6em; font-weight: bold; }
+    ul li    { font-size: 1.2em; font-weight: normal; }
+    ul ul li { font-style: italic; }
+
+    li {
+        list-style: none;
+        margin: 0;
+    }
 }
 
 h1, h2, h3 {
