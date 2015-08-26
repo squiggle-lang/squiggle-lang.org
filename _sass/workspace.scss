@@ -8,6 +8,10 @@
         font-size: 14px;
     }
 
+    & > section:nth-child(2) .CodeMirror {
+        border-left: 1px solid rgba(white, 0.20);
+    }
+
     section {
         flex: 1 1 50%;
 
@@ -15,6 +19,7 @@
 
         &.code {
             background: #263238;
+            border-top: 1px solid black;
         }
 
         .console,
@@ -27,8 +32,8 @@
             width: 100%;
             height: 2em;
             font-size: 1.3em;
-            border: 0;
             font-weight: bold;
+            border: 2px solid rgba(black, 0.10);
             border-left: 0;
             border-right: 0;
 
