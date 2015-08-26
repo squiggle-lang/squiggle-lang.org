@@ -1,1 +1,1 @@
-Website for <https://github.com/saikobee/squiggle>
+Website for <http://mockbrian.com/squiggle/>
