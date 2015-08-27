@@ -45,7 +45,15 @@ module TableOfContents
                 i = toc.index(n)
                 n_prev = _chapter_plus_n(toc, i, -1)
                 n_next = _chapter_plus_n(toc, i, +1)
+                old_title = page.data["title"]
+                new_title = format(
+                    "%d.%d %s - Squiggle",
+                    section,
+                    subsection,
+                    old_title
+                )
                 page.data.merge!({
+                    "title" => new_title,
                     "layout" => "chapter",
                     "section" => section,
                     "subsection" => subsection,
