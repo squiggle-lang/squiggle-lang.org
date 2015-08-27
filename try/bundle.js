@@ -3050,6 +3050,12 @@ module.exports = (function() {
           { type: "literal", value: "in", description: "\"in\"" },
           "do",
           { type: "literal", value: "do", description: "\"do\"" },
+          "try",
+          { type: "literal", value: "try", description: "\"try\"" },
+          "throw",
+          { type: "literal", value: "throw", description: "\"throw\"" },
+          "error",
+          { type: "literal", value: "error", description: "\"error\"" },
           "match",
           { type: "literal", value: "match", description: "\"match\"" },
           "case",
@@ -3077,6 +3083,9 @@ module.exports = (function() {
           { type: "literal", value: ")", description: "\")\"" },
           function(p, t, f) { return ast.If(p, t, f); },
           function(b, e) { return ast.Let(b, e); },
+          function(e) { return ast.Try(e); },
+          function(e) { return ast.Throw(e); },
+          function(e) { return ast.Error(e); },
           function(e, b) { return ast.Match(e, b); },
           "=>",
           { type: "literal", value: "=>", description: "\"=>\"" },
@@ -3212,64 +3221,64 @@ module.exports = (function() {
           peg$decode("!7Y+V$.!\"\"2!3\"+F%7Y+<%7$+2%7Y+(%4%6#%!!%$%#  $$#  $##  $\"#  \"#  *# \"7!"),
           peg$decode("!7Y+<$7$+2%7Y+(%4#6$#!!%$##  $\"#  \"#  "),
           peg$decode("!7Y+V$.%\"\"2%3&+F%7Y+<%74+2%7Y+(%4%6'%!!%$%#  $$#  $##  $\"#  \"#  *\xA5 \"!7Y+A$.(\"\"2(3)+1%7Y+'%4#6*# %$##  $\"#  \"#  *v \"!7Y+A$.+\"\"2+3,+1%7Y+'%4#6-# %$##  $\"#  \"#  *G \"!7Y+<$7$+2%7Y+(%4#6.#!!%$##  $\"#  \"#  "),
-          peg$decode("./\"\"2/30*\xA1 \".1\"\"2132*\x95 \".3\"\"2334*\x89 \".5\"\"2536*} \".7\"\"2738*q \".9\"\"293:*e \".;\"\"2;3<*Y \".=\"\"2=3>*M \".?\"\"2?3@*A \".A\"\"2A3B*5 \".C\"\"2C3D*) \".!\"\"2!3\""),
-          peg$decode("!.7\"\"2738+\xD3$7Y+\xC9%.E\"\"2E3F+\xB9%7Y+\xAF% G!7$+B$.H\"\"2H3I+2%7Y+(%4#6J#!\"%$##  $\"#  \"#  +P$,M&!7$+B$.H\"\"2H3I+2%7Y+(%4#6J#!\"%$##  $\"#  \"#  \"\"\"  +B%.K\"\"2K3L+2%7Y+(%4'6M'!\"%$'#  $&#  $%#  $$#  $##  $\"#  \"#  *# \"7%"),
-          peg$decode("!./\"\"2/30+\xA0$7Y+\x96%.N\"\"2N3O+\x86%7Y+|%7;+r%.P\"\"2P3Q+b%7Y+X%7$+N%.1\"\"2132+>%7Y+4%7$+*%4+6R+#&# %$+#  $*#  $)#  $(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  *# \"7&"),
-          peg$decode("!.3\"\"2334+{$7Y+q%.N\"\"2N3O+a%7Y+W%73+M%.P\"\"2P3Q+=%7Y+3%7$+)%4(6S(\"# %$(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  *) \"7'*# \"7;"),
-          peg$decode("!.9\"\"293:+\xBE$7Y+\xB4%.N\"\"2N3O+\xA4%7Y+\x9A%7$+\x90%.P\"\"2P3Q+\x80%7Y+v%.E\"\"2E3F+f%7Y+\\% G7(+&$,#&7(\"\"\"  +C%.K\"\"2K3L+3%7Y+)%4,6T,\"'\"%$,#  $+#  $*#  $)#  $(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  "),
-          peg$decode("!.;\"\"2;3<+a$7Y+W%7)+M%.U\"\"2U3V+=%7Y+3%7$+)%4&6W&\"# %$&#  $%#  $$#  $##  $\"#  \"#  "),
+          peg$decode("./\"\"2/30*\xC5 \".1\"\"2132*\xB9 \".3\"\"2334*\xAD \".5\"\"2536*\xA1 \".7\"\"2738*\x95 \".9\"\"293:*\x89 \".;\"\"2;3<*} \".=\"\"2=3>*q \".?\"\"2?3@*e \".A\"\"2A3B*Y \".C\"\"2C3D*M \".E\"\"2E3F*A \".G\"\"2G3H*5 \".I\"\"2I3J*) \".!\"\"2!3\""),
+          peg$decode("!.7\"\"2738+\xD3$7Y+\xC9%.K\"\"2K3L+\xB9%7Y+\xAF% M!7$+B$.N\"\"2N3O+2%7Y+(%4#6P#!\"%$##  $\"#  \"#  +P$,M&!7$+B$.N\"\"2N3O+2%7Y+(%4#6P#!\"%$##  $\"#  \"#  \"\"\"  +B%.Q\"\"2Q3R+2%7Y+(%4'6S'!\"%$'#  $&#  $%#  $$#  $##  $\"#  \"#  *# \"7%"),
+          peg$decode("!./\"\"2/30+\xA0$7Y+\x96%.T\"\"2T3U+\x86%7Y+|%7;+r%.V\"\"2V3W+b%7Y+X%7$+N%.1\"\"2132+>%7Y+4%7$+*%4+6X+#&# %$+#  $*#  $)#  $(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  *# \"7&"),
+          peg$decode("!.3\"\"2334+{$7Y+q%.T\"\"2T3U+a%7Y+W%73+M%.V\"\"2V3W+=%7Y+3%7$+)%4(6Y(\"# %$(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  *\xB9 \"!.9\"\"293:+<$7Y+2%7$+(%4#6Z#! %$##  $\"#  \"#  *\x89 \"!.;\"\"2;3<+<$7Y+2%7$+(%4#6[#! %$##  $\"#  \"#  *Y \"!.=\"\"2=3>+<$7Y+2%7$+(%4#6\\#! %$##  $\"#  \"#  *) \"7'*# \"7;"),
+          peg$decode("!.?\"\"2?3@+\xBE$7Y+\xB4%.T\"\"2T3U+\xA4%7Y+\x9A%7$+\x90%.V\"\"2V3W+\x80%7Y+v%.K\"\"2K3L+f%7Y+\\% M7(+&$,#&7(\"\"\"  +C%.Q\"\"2Q3R+3%7Y+)%4,6],\"'\"%$,#  $+#  $*#  $)#  $(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  "),
+          peg$decode("!.A\"\"2A3B+a$7Y+W%7)+M%.^\"\"2^3_+=%7Y+3%7$+)%4&6`&\"# %$&#  $%#  $$#  $##  $\"#  \"#  "),
           peg$decode("7**# \"7+"),
           peg$decode("7,*# \"7-"),
           peg$decode("7.*# \"70"),
-          peg$decode("!7W*) \"7X*# \"7V+' 4!6X!! %"),
-          peg$decode("!7Q+' 4!6Y!! %"),
-          peg$decode("!.Z\"\"2Z3[+\\$7Y+R%7/*# \" \\+B%.]\"\"2]3^+2%7Y+(%4%6_%!\"%$%#  $$#  $##  $\"#  \"#  "),
-          peg$decode("!7)+\x8F$ G!.`\"\"2`3a+<$7Y+2%7)+(%4#6b#! %$##  $\"#  \"#  ,M&!.`\"\"2`3a+<$7Y+2%7)+(%4#6b#! %$##  $\"#  \"#  \"+)%4\"6c\"\"! %$\"#  \"#  "),
-          peg$decode("!.E\"\"2E3F+\\$7Y+R%71*# \" \\+B%.K\"\"2K3L+2%7Y+(%4%6d%!\"%$%#  $$#  $##  $\"#  \"#  "),
-          peg$decode("!72+\x8F$ G!.`\"\"2`3a+<$7Y+2%72+(%4#6b#! %$##  $\"#  \"#  ,M&!.`\"\"2`3a+<$7Y+2%72+(%4#6b#! %$##  $\"#  \"#  \"+)%4\"6c\"\"! %$\"#  \"#  "),
-          peg$decode("!7X+M$.e\"\"2e3f+=%7Y+3%7)+)%4$6g$\"# %$$#  $##  $\"#  \"#  */ \"!7Q+' 4!6h!! %"),
-          peg$decode("!74+\x8F$ G!.`\"\"2`3a+<$7Y+2%74+(%4#6i#! %$##  $\"#  \"#  ,M&!.`\"\"2`3a+<$7Y+2%74+(%4#6i#! %$##  $\"#  \"#  \"+)%4\"6j\"\"! %$\"#  \"#  "),
-          peg$decode("!7Q+M$.k\"\"2k3l+=%7Y+3%7$+)%4$6m$\"# %$$#  $##  $\"#  \"#  "),
-          peg$decode(".n\"\"2n3o"),
-          peg$decode(".p\"\"2p3q*) \".r\"\"2r3s"),
-          peg$decode(".t\"\"2t3u*Y \".v\"\"2v3w*M \".x\"\"2x3y*A \".z\"\"2z3{*5 \".k\"\"2k3l*) \".|\"\"2|3}"),
-          peg$decode(".~\"\"2~3*) \".\x80\"\"2\x803\x81"),
-          peg$decode(".\x82\"\"2\x823\x83*) \".\x84\"\"2\x843\x85"),
-          peg$decode(".\x86\"\"2\x863\x87*) \".\x88\"\"2\x883\x89"),
-          peg$decode("!7<+\x85$ G!75+=$7Y+3%7<+)%4#6\x8A#\"\" %$##  $\"#  \"#  ,H&!75+=$7Y+3%7<+)%4#6\x8A#\"\" %$##  $\"#  \"#  \"+)%4\"6\x8B\"\"! %$\"#  \"#  "),
-          peg$decode("!7=+\x85$ G!76+=$7Y+3%7=+)%4#6\x8A#\"\" %$##  $\"#  \"#  ,H&!76+=$7Y+3%7=+)%4#6\x8A#\"\" %$##  $\"#  \"#  \"+)%4\"6\x8B\"\"! %$\"#  \"#  "),
-          peg$decode("!7>+\x85$ G!77+=$7Y+3%7>+)%4#6\x8A#\"\" %$##  $\"#  \"#  ,H&!77+=$7Y+3%7>+)%4#6\x8A#\"\" %$##  $\"#  \"#  \"+)%4\"6\x8B\"\"! %$\"#  \"#  "),
-          peg$decode("!7?+\x85$ G!78+=$7Y+3%7?+)%4#6\x8A#\"\" %$##  $\"#  \"#  ,H&!78+=$7Y+3%7?+)%4#6\x8A#\"\" %$##  $\"#  \"#  \"+)%4\"6\x8B\"\"! %$\"#  \"#  "),
-          peg$decode("!7@+\x85$ G!79+=$7Y+3%7@+)%4#6\x8A#\"\" %$##  $\"#  \"#  ,H&!79+=$7Y+3%7@+)%4#6\x8A#\"\" %$##  $\"#  \"#  \"+)%4\"6\x8B\"\"! %$\"#  \"#  "),
-          peg$decode("!7A+\x85$ G!7:+=$7Y+3%7A+)%4#6\x8A#\"\" %$##  $\"#  \"#  ,H&!7:+=$7Y+3%7A+)%4#6\x8A#\"\" %$##  $\"#  \"#  \"+)%4\"6\x8B\"\"! %$\"#  \"#  "),
-          peg$decode("!7B+\u0123$ G!.\x8C\"\"2\x8C3\x8D+<$7Y+2%7Q+(%4#6\x8E#! %$##  $\"#  \"#  *g \"!.Z\"\"2Z3[+V$7Y+L%7$+B%.]\"\"2]3^+2%7Y+(%4%6\x8E%!\"%$%#  $$#  $##  $\"#  \"#  ,\x97&!.\x8C\"\"2\x8C3\x8D+<$7Y+2%7Q+(%4#6\x8E#! %$##  $\"#  \"#  *g \"!.Z\"\"2Z3[+V$7Y+L%7$+B%.]\"\"2]3^+2%7Y+(%4%6\x8E%!\"%$%#  $$#  $##  $\"#  \"#  \"+)%4\"6\x8F\"\"! %$\"#  \"#  "),
-          peg$decode("!7C+\x8F$ G!.\x90\"\"2\x903\x91+<$7Y+2%7Q+(%4#6\x8E#! %$##  $\"#  \"#  ,M&!.\x90\"\"2\x903\x91+<$7Y+2%7Q+(%4#6\x8E#! %$##  $\"#  \"#  \"+)%4\"6\x92\"\"! %$\"#  \"#  "),
-          peg$decode("!7D+\u0119$ G!.\x8C\"\"2\x8C3\x8D+\x81$7Y+w%7Q+m%.N\"\"2N3O+]%7Y+S%7M*# \" \\+C%.P\"\"2P3Q+3%7Y+)%4(6\x93(\"%\"%$(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  ,\x92&!.\x8C\"\"2\x8C3\x8D+\x81$7Y+w%7Q+m%.N\"\"2N3O+]%7Y+S%7M*# \" \\+C%.P\"\"2P3Q+3%7Y+)%4(6\x93(\"%\"%$(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  \"+)%4\"6\x94\"\"! %$\"#  \"#  "),
-          peg$decode("!7E+\xCF$ G!.N\"\"2N3O+\\$7Y+R%7M*# \" \\+B%.P\"\"2P3Q+2%7Y+(%4%6\x95%!\"%$%#  $$#  $##  $\"#  \"#  ,m&!.N\"\"2N3O+\\$7Y+R%7M*# \" \\+B%.P\"\"2P3Q+2%7Y+(%4%6\x95%!\"%$%#  $$#  $##  $\"#  \"#  \"+)%4\"6\x96\"\"! %$\"#  \"#  "),
+          peg$decode("!7W*) \"7X*# \"7V+' 4!6a!! %"),
+          peg$decode("!7Q+' 4!6b!! %"),
+          peg$decode("!.c\"\"2c3d+\\$7Y+R%7/*# \" e+B%.f\"\"2f3g+2%7Y+(%4%6h%!\"%$%#  $$#  $##  $\"#  \"#  "),
+          peg$decode("!7)+\x8F$ M!.i\"\"2i3j+<$7Y+2%7)+(%4#6k#! %$##  $\"#  \"#  ,M&!.i\"\"2i3j+<$7Y+2%7)+(%4#6k#! %$##  $\"#  \"#  \"+)%4\"6l\"\"! %$\"#  \"#  "),
+          peg$decode("!.K\"\"2K3L+\\$7Y+R%71*# \" e+B%.Q\"\"2Q3R+2%7Y+(%4%6m%!\"%$%#  $$#  $##  $\"#  \"#  "),
+          peg$decode("!72+\x8F$ M!.i\"\"2i3j+<$7Y+2%72+(%4#6k#! %$##  $\"#  \"#  ,M&!.i\"\"2i3j+<$7Y+2%72+(%4#6k#! %$##  $\"#  \"#  \"+)%4\"6l\"\"! %$\"#  \"#  "),
+          peg$decode("!7X+M$.n\"\"2n3o+=%7Y+3%7)+)%4$6p$\"# %$$#  $##  $\"#  \"#  */ \"!7Q+' 4!6q!! %"),
+          peg$decode("!74+\x8F$ M!.i\"\"2i3j+<$7Y+2%74+(%4#6r#! %$##  $\"#  \"#  ,M&!.i\"\"2i3j+<$7Y+2%74+(%4#6r#! %$##  $\"#  \"#  \"+)%4\"6s\"\"! %$\"#  \"#  "),
+          peg$decode("!7Q+M$.t\"\"2t3u+=%7Y+3%7$+)%4$6v$\"# %$$#  $##  $\"#  \"#  "),
+          peg$decode(".w\"\"2w3x"),
+          peg$decode(".y\"\"2y3z*) \".{\"\"2{3|"),
+          peg$decode(".}\"\"2}3~*Y \".\"\"23\x80*M \".\x81\"\"2\x813\x82*A \".\x83\"\"2\x833\x84*5 \".t\"\"2t3u*) \".\x85\"\"2\x853\x86"),
+          peg$decode(".\x87\"\"2\x873\x88*) \".\x89\"\"2\x893\x8A"),
+          peg$decode(".\x8B\"\"2\x8B3\x8C*) \".\x8D\"\"2\x8D3\x8E"),
+          peg$decode(".\x8F\"\"2\x8F3\x90*) \".\x91\"\"2\x913\x92"),
+          peg$decode("!7<+\x85$ M!75+=$7Y+3%7<+)%4#6\x93#\"\" %$##  $\"#  \"#  ,H&!75+=$7Y+3%7<+)%4#6\x93#\"\" %$##  $\"#  \"#  \"+)%4\"6\x94\"\"! %$\"#  \"#  "),
+          peg$decode("!7=+\x85$ M!76+=$7Y+3%7=+)%4#6\x93#\"\" %$##  $\"#  \"#  ,H&!76+=$7Y+3%7=+)%4#6\x93#\"\" %$##  $\"#  \"#  \"+)%4\"6\x94\"\"! %$\"#  \"#  "),
+          peg$decode("!7>+\x85$ M!77+=$7Y+3%7>+)%4#6\x93#\"\" %$##  $\"#  \"#  ,H&!77+=$7Y+3%7>+)%4#6\x93#\"\" %$##  $\"#  \"#  \"+)%4\"6\x94\"\"! %$\"#  \"#  "),
+          peg$decode("!7?+\x85$ M!78+=$7Y+3%7?+)%4#6\x93#\"\" %$##  $\"#  \"#  ,H&!78+=$7Y+3%7?+)%4#6\x93#\"\" %$##  $\"#  \"#  \"+)%4\"6\x94\"\"! %$\"#  \"#  "),
+          peg$decode("!7@+\x85$ M!79+=$7Y+3%7@+)%4#6\x93#\"\" %$##  $\"#  \"#  ,H&!79+=$7Y+3%7@+)%4#6\x93#\"\" %$##  $\"#  \"#  \"+)%4\"6\x94\"\"! %$\"#  \"#  "),
+          peg$decode("!7A+\x85$ M!7:+=$7Y+3%7A+)%4#6\x93#\"\" %$##  $\"#  \"#  ,H&!7:+=$7Y+3%7A+)%4#6\x93#\"\" %$##  $\"#  \"#  \"+)%4\"6\x94\"\"! %$\"#  \"#  "),
+          peg$decode("!7B+\u0123$ M!.\x95\"\"2\x953\x96+<$7Y+2%7Q+(%4#6\x97#! %$##  $\"#  \"#  *g \"!.c\"\"2c3d+V$7Y+L%7$+B%.f\"\"2f3g+2%7Y+(%4%6\x97%!\"%$%#  $$#  $##  $\"#  \"#  ,\x97&!.\x95\"\"2\x953\x96+<$7Y+2%7Q+(%4#6\x97#! %$##  $\"#  \"#  *g \"!.c\"\"2c3d+V$7Y+L%7$+B%.f\"\"2f3g+2%7Y+(%4%6\x97%!\"%$%#  $$#  $##  $\"#  \"#  \"+)%4\"6\x98\"\"! %$\"#  \"#  "),
+          peg$decode("!7C+\x8F$ M!.\x99\"\"2\x993\x9A+<$7Y+2%7Q+(%4#6\x97#! %$##  $\"#  \"#  ,M&!.\x99\"\"2\x993\x9A+<$7Y+2%7Q+(%4#6\x97#! %$##  $\"#  \"#  \"+)%4\"6\x9B\"\"! %$\"#  \"#  "),
+          peg$decode("!7D+\u0119$ M!.\x95\"\"2\x953\x96+\x81$7Y+w%7Q+m%.T\"\"2T3U+]%7Y+S%7M*# \" e+C%.V\"\"2V3W+3%7Y+)%4(6\x9C(\"%\"%$(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  ,\x92&!.\x95\"\"2\x953\x96+\x81$7Y+w%7Q+m%.T\"\"2T3U+]%7Y+S%7M*# \" e+C%.V\"\"2V3W+3%7Y+)%4(6\x9C(\"%\"%$(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  \"+)%4\"6\x9D\"\"! %$\"#  \"#  "),
+          peg$decode("!7E+\xCF$ M!.T\"\"2T3U+\\$7Y+R%7M*# \" e+B%.V\"\"2V3W+2%7Y+(%4%6\x9E%!\"%$%#  $$#  $##  $\"#  \"#  ,m&!.T\"\"2T3U+\\$7Y+R%7M*# \" e+B%.V\"\"2V3W+2%7Y+(%4%6\x9E%!\"%$%#  $$#  $##  $\"#  \"#  \"+)%4\"6\x9F\"\"! %$\"#  \"#  "),
           peg$decode("7F*; \"7L*5 \"7N*/ \"7H*) \"7G*# \"7K"),
-          peg$decode("87W*; \"7X*5 \"7R*/ \"7S*) \"7T*# \"7U9*\" 3\x97"),
-          peg$decode("!7Q+' 4!6\x98!! %"),
-          peg$decode("8!.\x9A\"\"2\x9A3\x9B+\x81$7Y+w%.N\"\"2N3O+g%7Y+]%7I*# \" \\+M%.P\"\"2P3Q+=%7Y+3%7$+)%4(6\x9C(\"# %$(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  9*\" 3\x99"),
-          peg$decode("!7J+\x8F$ G!.`\"\"2`3a+<$7Y+2%7J+(%4#6\x9D#! %$##  $\"#  \"#  ,M&!.`\"\"2`3a+<$7Y+2%7J+(%4#6\x9D#! %$##  $\"#  \"#  \"+)%4\"6\x9E\"\"! %$\"#  \"#  "),
-          peg$decode("!7Q+' 4!6\x9F!! %"),
-          peg$decode("8!.N\"\"2N3O+V$7Y+L%7$+B%.P\"\"2P3Q+2%7Y+(%4%6J%!\"%$%#  $$#  $##  $\"#  \"#  9*\" 3\xA0"),
-          peg$decode("8!.Z\"\"2Z3[+\\$7Y+R%7M*# \" \\+B%.]\"\"2]3^+2%7Y+(%4%6\xA2%!\"%$%#  $$#  $##  $\"#  \"#  9*\" 3\xA1"),
-          peg$decode("!7$+\x8F$ G!.`\"\"2`3a+<$7Y+2%7$+(%4#6\xA3#! %$##  $\"#  \"#  ,M&!.`\"\"2`3a+<$7Y+2%7$+(%4#6\xA3#! %$##  $\"#  \"#  \"+)%4\"6\xA4\"\"! %$\"#  \"#  "),
-          peg$decode("8!.E\"\"2E3F+\\$7Y+R%7O*# \" \\+B%.K\"\"2K3L+2%7Y+(%4%6\xA6%!\"%$%#  $$#  $##  $\"#  \"#  9*\" 3\xA5"),
-          peg$decode("!7P+\x8F$ G!.`\"\"2`3a+<$7Y+2%7P+(%4#6\x9D#! %$##  $\"#  \"#  ,M&!.`\"\"2`3a+<$7Y+2%7P+(%4#6\x9D#! %$##  $\"#  \"#  \"+)%4\"6\x9E\"\"! %$\"#  \"#  "),
-          peg$decode("!7$+M$.e\"\"2e3f+=%7Y+3%7$+)%4$6\xA7$\"# %$$#  $##  $\"#  \"#  */ \"!7Q+' 4!6\xA8!! %"),
-          peg$decode("8!!!!87#9*$$\"\" \xAA\"#  +Q$0\xAB\"\"1!3\xAC+A% G0\xAD\"\"1!3\xAE,)&0\xAD\"\"1!3\xAE\"+#%'#%$##  $\"#  \"#  +! (%+2$7Y+(%4\"6\xAF\"!!%$\"#  \"#  9*\" 3\xA9"),
-          peg$decode("8!.=\"\"2=3>+1$7Y+'%4\"6\xB1\" %$\"#  \"#  9*\" 3\xB0"),
-          peg$decode("8!.?\"\"2?3@+1$7Y+'%4\"6\xB3\" %$\"#  \"#  9*\" 3\xB2"),
-          peg$decode("8!.A\"\"2A3B+1$7Y+'%4\"6\xB5\" %$\"#  \"#  9*\" 3\xB4"),
-          peg$decode("8!.C\"\"2C3D+1$7Y+'%4\"6\xB7\" %$\"#  \"#  9*\" 3\xB6"),
+          peg$decode("87W*; \"7X*5 \"7R*/ \"7S*) \"7T*# \"7U9*\" 3\xA0"),
+          peg$decode("!7Q+' 4!6\xA1!! %"),
+          peg$decode("8!.\xA3\"\"2\xA33\xA4+\x81$7Y+w%.T\"\"2T3U+g%7Y+]%7I*# \" e+M%.V\"\"2V3W+=%7Y+3%7$+)%4(6\xA5(\"# %$(#  $'#  $&#  $%#  $$#  $##  $\"#  \"#  9*\" 3\xA2"),
+          peg$decode("!7J+\x8F$ M!.i\"\"2i3j+<$7Y+2%7J+(%4#6\xA6#! %$##  $\"#  \"#  ,M&!.i\"\"2i3j+<$7Y+2%7J+(%4#6\xA6#! %$##  $\"#  \"#  \"+)%4\"6\xA7\"\"! %$\"#  \"#  "),
+          peg$decode("!7Q+' 4!6\xA8!! %"),
+          peg$decode("8!.T\"\"2T3U+V$7Y+L%7$+B%.V\"\"2V3W+2%7Y+(%4%6P%!\"%$%#  $$#  $##  $\"#  \"#  9*\" 3\xA9"),
+          peg$decode("8!.c\"\"2c3d+\\$7Y+R%7M*# \" e+B%.f\"\"2f3g+2%7Y+(%4%6\xAB%!\"%$%#  $$#  $##  $\"#  \"#  9*\" 3\xAA"),
+          peg$decode("!7$+\x8F$ M!.i\"\"2i3j+<$7Y+2%7$+(%4#6\xAC#! %$##  $\"#  \"#  ,M&!.i\"\"2i3j+<$7Y+2%7$+(%4#6\xAC#! %$##  $\"#  \"#  \"+)%4\"6\xAD\"\"! %$\"#  \"#  "),
+          peg$decode("8!.K\"\"2K3L+\\$7Y+R%7O*# \" e+B%.Q\"\"2Q3R+2%7Y+(%4%6\xAF%!\"%$%#  $$#  $##  $\"#  \"#  9*\" 3\xAE"),
+          peg$decode("!7P+\x8F$ M!.i\"\"2i3j+<$7Y+2%7P+(%4#6\xA6#! %$##  $\"#  \"#  ,M&!.i\"\"2i3j+<$7Y+2%7P+(%4#6\xA6#! %$##  $\"#  \"#  \"+)%4\"6\xA7\"\"! %$\"#  \"#  "),
+          peg$decode("!7$+M$.n\"\"2n3o+=%7Y+3%7$+)%4$6\xB0$\"# %$$#  $##  $\"#  \"#  */ \"!7Q+' 4!6\xB1!! %"),
+          peg$decode("8!!!!87#9*$$\"\" \xB3\"#  +Q$0\xB4\"\"1!3\xB5+A% M0\xB6\"\"1!3\xB7,)&0\xB6\"\"1!3\xB7\"+#%'#%$##  $\"#  \"#  +! (%+2$7Y+(%4\"6\xB8\"!!%$\"#  \"#  9*\" 3\xB2"),
+          peg$decode("8!.C\"\"2C3D+1$7Y+'%4\"6\xBA\" %$\"#  \"#  9*\" 3\xB9"),
+          peg$decode("8!.E\"\"2E3F+1$7Y+'%4\"6\xBC\" %$\"#  \"#  9*\" 3\xBB"),
+          peg$decode("8!.G\"\"2G3H+1$7Y+'%4\"6\xBE\" %$\"#  \"#  9*\" 3\xBD"),
+          peg$decode("8!.I\"\"2I3J+1$7Y+'%4\"6\xC0\" %$\"#  \"#  9*\" 3\xBF"),
           peg$decode("7R*/ \"7S*) \"7T*# \"7U"),
-          peg$decode("8!! G0\xB9\"\"1!3\xBA+,$,)&0\xB9\"\"1!3\xBA\"\"\"  +! (%+2$7Y+(%4\"6\xBB\"!!%$\"#  \"#  9*\" 3\xB8"),
-          peg$decode("8!.\xBD\"\"2\xBD3\xBE+f$! G0\xBF\"\"1!3\xC0,)&0\xBF\"\"1!3\xC0\"+! (%+B%.\xBD\"\"2\xBD3\xBE+2%7Y+(%4$6\xC1$!\"%$$#  $##  $\"#  \"#  9*\" 3\xBC"),
-          peg$decode(" G7Z*) \"7[*# \"7\\,/&7Z*) \"7[*# \"7\\\""),
-          peg$decode("8 G0\xC3\"\"1!3\xC4+,$,)&0\xC3\"\"1!3\xC4\"\"\"  9*\" 3\xC2"),
-          peg$decode("8 G0\xC6\"\"1!3\xC7+,$,)&0\xC6\"\"1!3\xC7\"\"\"  9*\" 3\xC5"),
-          peg$decode("8!.\xC9\"\"2\xC93\xCA+\x8F$ G!!87[9*$$\"\" \xAA\"#  +2$-\"\"1!3\xCB+#%'\"%$\"#  \"#  ,K&!!87[9*$$\"\" \xAA\"#  +2$-\"\"1!3\xCB+#%'\"%$\"#  \"#  \"+-%7[+#%'#%$##  $\"#  \"#  9*\" 3\xC8")
+          peg$decode("8!! M0\xC2\"\"1!3\xC3+,$,)&0\xC2\"\"1!3\xC3\"\"\"  +! (%+2$7Y+(%4\"6\xC4\"!!%$\"#  \"#  9*\" 3\xC1"),
+          peg$decode("8!.\xC6\"\"2\xC63\xC7+f$! M0\xC8\"\"1!3\xC9,)&0\xC8\"\"1!3\xC9\"+! (%+B%.\xC6\"\"2\xC63\xC7+2%7Y+(%4$6\xCA$!\"%$$#  $##  $\"#  \"#  9*\" 3\xC5"),
+          peg$decode(" M7Z*) \"7[*# \"7\\,/&7Z*) \"7[*# \"7\\\""),
+          peg$decode("8 M0\xCC\"\"1!3\xCD+,$,)&0\xCC\"\"1!3\xCD\"\"\"  9*\" 3\xCB"),
+          peg$decode("8 M0\xCF\"\"1!3\xD0+,$,)&0\xCF\"\"1!3\xD0\"\"\"  9*\" 3\xCE"),
+          peg$decode("8!.\xD2\"\"2\xD23\xD3+\x8F$ M!!87[9*$$\"\" \xB3\"#  +2$-\"\"1!3\xD4+#%'\"%$\"#  \"#  ,K&!!87[9*$$\"\" \xB3\"#  +2$-\"\"1!3\xD4+#%'\"%$\"#  \"#  \"+-%7[+#%'#%$##  $\"#  \"#  9*\" 3\xD1")
         ],
 
         peg$currPos          = 0,
@@ -3750,7 +3759,7 @@ module.exports = (function() {
 })();
 
 },{"../src/ast":154}],80:[function(require,module,exports){
-module.exports="// TODO: Add arity checking.\n// TODO: Add type checking.\n\nvar undefined = void 0;\nvar global = (1, eval)(\"this\");\nvar print = function(x) { return sqgl$$log(x); };\nvar not = function(x) { return !x; };\n// TODO: Polyfill.\nvar is = Object.is;\nvar isObject = function(x) {\n    return x && typeof x === \"object\";\n};\nvar $lt = function(a, b) {\n    var ta = typeof a;\n    var tb = typeof b;\n    if (ta === tb && (ta === 'string' || ta === 'number')) {\n        return a < b;\n    }\n    throw new sqgl$$Error('incorrect argument types for <')\n};\nvar $gt = function(a, b) {\n    var ta = typeof a;\n    var tb = typeof b;\n    if (ta === tb && (ta === 'string' || ta === 'number')) {\n        return a > b;\n    }\n    throw new sqgl$$Error('incorrect argument types for >')\n};\nvar $lt$eq = function(a, b) {\n    return $lt(a, b) || a === b;\n};\nvar $gt$eq = function(a, b) {\n    return $gt(a, b) || a === b;\n};\nvar $bang$eq = function(a, b) {\n    return not($eq(a, b));\n};\nvar not = function(x) {\n    return !sqgl$$assertBoolean(x);\n};\nvar $pipe$gt = function(x, f) {\n    if (typeof f !== 'function') {\n        throw new sqgl$$Error('right-side not a function in |>, ' + f);\n    }\n    return f(x);\n};\nvar $eq = function recur(a, b) {\n    if (typeof a !== typeof b) {\n        return false;\n    }\n    if (a === b) {\n        return true;\n    }\n    // Check if both values are NaN.\n    if (a !== a && b !== b) {\n        return true;\n    }\n    if (sqgl$$isObject(a) && sqgl$$isObject(b)) {\n        // TODO: Remove duplicates.\n        var ks = sqgl$$keys(a).concat(sqgl$$keys(b)).sort();\n        return ks.every(function(k) {\n            return (\n                k in a &&\n                k in b &&\n                recur(a[k], b[k])\n            );\n        });\n    }\n    return false;\n};\nvar isNan = function(x) {\n    return x !== x;\n};\nvar $plus = function(a, b) {\n    if (typeof a === 'number' && typeof b === 'number') {\n        return a + b;\n    }\n    throw new sqgl$$Error('incorrect argument types for +');\n};\nvar $plus$plus = function(a, b) {\n    var A = Array.isArray;\n    var S = function(x) { return typeof x === 'string'; };\n    var aOk = A(a) && A(b);\n    var sOk = S(a) && S(b)\n    if (aOk || sOk) {\n        return a.concat(b);\n    }\n    throw new sqgl$$Error('incorrect argument types for ++');\n};\nvar $minus = function(a, b) {\n    return a - b;\n};\nvar $star = function(a, b) {\n    return a * b;\n};\nvar $slash = function(a, b) {\n    return a / b;\n};\nvar map = function(f, xs) {\n    return xs.map(function(x) {\n        return f(x);\n    });\n};\nvar join = function(separator, items) {\n    return [].join.call(items, separator);\n};\nvar foldLeft = function(f, z, xs) {\n    xs.forEach(function(x) {\n        z = f(z, x);\n    });\n    return z;\n};\nvar fold = foldLeft;\nvar isEmpty = function(xs) {\n    return xs.length === 0;\n};\nvar head = function(xs) {\n    if (!isEmpty(xs)) {\n        return xs[0];\n    }\n    throw new sqgl$$Error('cannot get head of empty list');\n};\nvar tail = function(xs) {\n    return [].slice.call(xs, 1);\n};\nvar reduce = function(f, xs) {\n    return foldLeft(f, head(xs), tail(xs));\n};\nvar foldRight = function(f, z, xs) {\n    return foldLeft(flip(f), z, reverse(xs));\n};\nvar reverse = function(xs) {\n    return toArray(xs).reverse();\n};\nvar toArray = function(xs) {\n    return [].slice.call(xs);\n};\nvar flip = function(f) {\n    return function(x, y) {\n        return f(y, x);\n    };\n};\nvar toString = function(x) {\n    if (x) {\n        if ('toString' in x) {\n            return x.toString();\n        } else {\n            return '{WEIRD_OBJECT}';\n        }\n    } else {\n        return '' + x;\n    }\n};\nvar get = function(k, obj) {\n    if (k in obj) {\n        return obj[k];\n    }\n    throw new sqgl$$Error('key ' + k + ' not in ' + toString(obj));\n};\nvar set = function(k, v, obj) {\n    if (obj === null || typeof obj !== 'object') {\n        throw new sqgl$$Error('cannot set ' + k + ' on ' + toString(obj));\n    }\n    if (sqgl$$isFrozen(obj)) {\n        throw new sqgl$$Error('cannot set ' + k + ' on frozen object');\n    }\n    obj[k] = v;\n    return obj;\n};\nvar methodGet = function(method, obj) {\n    return obj[method].bind(obj);\n};\nvar methodCall = function(method, obj, args) {\n    return obj[method].apply(obj, args);\n};\nvar update = function(a, b) {\n    var c = Object.create(Object.getPrototypeOf(a));\n    Object.keys(a).forEach(function(k) { c[k] = a[k]; });\n    Object.keys(b).forEach(function(k) { c[k] = b[k]; });\n    return sqgl$$freeze(c);\n};\nvar $tilde = update;\nvar sqgl$$object = function(data) {\n    if (!sqgl$$isArray(data)) {\n        throw new sqgl$$Error(\n            'objects can only be constructed from an array'\n        );\n    }\n    var obj = {};\n    var i = 0;\n    var n = data.length;\n    while (i < n) {\n        if (typeof data[i][0] !== \"string\") {\n            throw new sqgl$$Error(\n                \"object keys must be strings: \" + data[i]\n            );\n        }\n        obj[data[i][0]] = data[i][1];\n        i++;\n    }\n    return sqgl$$freeze(obj);\n};\nvar sqgl$$isObject = function(x) {\n    if (arguments.length !== 1) {\n        throw new sqgl$$Error(\n            'wrong number of arguments to sqgl$$isObject'\n        );\n    }\n    return x !== null && typeof x === 'object';\n};\nvar sqgl$$assertBoolean = function(x) {\n    if (typeof x !== 'boolean') {\n        throw new sqgl$$Error('not a boolean: ' + toString(x));\n    }\n    return x;\n};\nvar sqgl$$update = update;\nvar sqgl$$isObject = isObject;\nvar sqgl$$isFrozen = Object.isFrozen;\nvar sqgl$$freeze = Object.freeze;\nvar sqgl$$create = Object.create;\nvar sqgl$$is = is;\nvar sqgl$$isArray = Array.isArray;\nvar sqgl$$keys = Object.keys;\nvar sqgl$$get = get;\nvar sqgl$$methodGet = methodGet;\nvar sqgl$$methodCall = methodCall;\nvar sqgl$$Error = Error;\nvar sqgl$$customLogger = null;\nvar sqgl$$global = global;\nvar sqgl$$log = function(x) {\n    if (sqgl$$customLogger) {\n        sqgl$$customLogger(x);\n    } else if (sqgl$$global.console && sqgl$$global.console.log) {\n        sqgl$$global.console.log(x);\n    }\n    return x;\n};\n"
+module.exports="// TODO: Add arity checking.\n// TODO: Add type checking.\n\nvar undefined = void 0;\nvar global = (1, eval)(\"this\");\nvar print = function(x) { return sqgl$$log(x); };\nvar not = function(x) { return !x; };\n// TODO: Polyfill.\nvar is = Object.is;\nvar isObject = function(x) {\n    return x && typeof x === \"object\";\n};\nvar $lt = function(a, b) {\n    var ta = typeof a;\n    var tb = typeof b;\n    if (ta === tb && (ta === 'string' || ta === 'number')) {\n        return a < b;\n    }\n    throw new sqgl$$Error('incorrect argument types for <')\n};\nvar $gt = function(a, b) {\n    var ta = typeof a;\n    var tb = typeof b;\n    if (ta === tb && (ta === 'string' || ta === 'number')) {\n        return a > b;\n    }\n    throw new sqgl$$Error('incorrect argument types for >')\n};\nvar $lt$eq = function(a, b) {\n    return $lt(a, b) || a === b;\n};\nvar $gt$eq = function(a, b) {\n    return $gt(a, b) || a === b;\n};\nvar $bang$eq = function(a, b) {\n    return not($eq(a, b));\n};\nvar not = function(x) {\n    return !sqgl$$assertBoolean(x);\n};\nvar $pipe$gt = function(x, f) {\n    if (typeof f !== 'function') {\n        throw new sqgl$$Error('right-side not a function in |>, ' + f);\n    }\n    return f(x);\n};\nvar $eq = function recur(a, b) {\n    if (typeof a !== typeof b) {\n        return false;\n    }\n    if (a === b) {\n        return true;\n    }\n    // Check if both values are NaN.\n    if (a !== a && b !== b) {\n        return true;\n    }\n    if (sqgl$$isObject(a) && sqgl$$isObject(b)) {\n        // TODO: Remove duplicates.\n        var ks = sqgl$$keys(a).concat(sqgl$$keys(b)).sort();\n        return ks.every(function(k) {\n            return (\n                k in a &&\n                k in b &&\n                recur(a[k], b[k])\n            );\n        });\n    }\n    return false;\n};\nvar isNan = function(x) {\n    return x !== x;\n};\nvar $plus = function(a, b) {\n    if (typeof a === 'number' && typeof b === 'number') {\n        return a + b;\n    }\n    throw new sqgl$$Error('incorrect argument types for +');\n};\nvar $plus$plus = function(a, b) {\n    var A = Array.isArray;\n    var S = function(x) { return typeof x === 'string'; };\n    var aOk = A(a) && A(b);\n    var sOk = S(a) && S(b)\n    if (aOk || sOk) {\n        return a.concat(b);\n    }\n    throw new sqgl$$Error('incorrect argument types for ++');\n};\nvar $minus = function(a, b) {\n    return a - b;\n};\nvar $star = function(a, b) {\n    return a * b;\n};\nvar $slash = function(a, b) {\n    return a / b;\n};\nvar map = function(f, xs) {\n    return xs.map(function(x) {\n        return f(x);\n    });\n};\nvar join = function(separator, items) {\n    return [].join.call(items, separator);\n};\nvar foldLeft = function(f, z, xs) {\n    xs.forEach(function(x) {\n        z = f(z, x);\n    });\n    return z;\n};\nvar fold = foldLeft;\nvar isEmpty = function(xs) {\n    return xs.length === 0;\n};\nvar head = function(xs) {\n    if (!isEmpty(xs)) {\n        return xs[0];\n    }\n    throw new sqgl$$Error('cannot get head of empty list');\n};\nvar tail = function(xs) {\n    return [].slice.call(xs, 1);\n};\nvar reduce = function(f, xs) {\n    return foldLeft(f, head(xs), tail(xs));\n};\nvar foldRight = function(f, z, xs) {\n    return foldLeft(flip(f), z, reverse(xs));\n};\nvar reverse = function(xs) {\n    return toArray(xs).reverse();\n};\nvar toArray = function(xs) {\n    return [].slice.call(xs);\n};\nvar flip = function(f) {\n    return function(x, y) {\n        return f(y, x);\n    };\n};\nvar toString = function(x) {\n    if (x) {\n        if ('toString' in x) {\n            return x.toString();\n        } else {\n            return '{WEIRD_OBJECT}';\n        }\n    } else {\n        return '' + x;\n    }\n};\nvar denew = function(Class) {\n    return function WrappedConstructor() {\n        var args = toArray(arguments);\n        var f = Class.bind.apply(Class, [Class].concat(args));\n        return new f;\n    };\n};\nvar get = function(k, obj) {\n    if (k in obj) {\n        return obj[k];\n    }\n    throw new sqgl$$Error('key ' + k + ' not in ' + toString(obj));\n};\nvar set = function(k, v, obj) {\n    if (obj === null || typeof obj !== 'object') {\n        throw new sqgl$$Error('cannot set ' + k + ' on ' + toString(obj));\n    }\n    if (sqgl$$isFrozen(obj)) {\n        throw new sqgl$$Error('cannot set ' + k + ' on frozen object');\n    }\n    obj[k] = v;\n    return obj;\n};\nvar methodGet = function(method, obj) {\n    return obj[method].bind(obj);\n};\nvar methodCall = function(method, obj, args) {\n    return obj[method].apply(obj, args);\n};\nvar update = function(a, b) {\n    var c = Object.create(Object.getPrototypeOf(a));\n    Object.keys(a).forEach(function(k) { c[k] = a[k]; });\n    Object.keys(b).forEach(function(k) { c[k] = b[k]; });\n    return sqgl$$freeze(c);\n};\nvar $tilde = update;\nvar sqgl$$object = function(data) {\n    if (!sqgl$$isArray(data)) {\n        throw new sqgl$$Error(\n            'objects can only be constructed from an array'\n        );\n    }\n    var obj = {};\n    var i = 0;\n    var n = data.length;\n    while (i < n) {\n        if (typeof data[i][0] !== \"string\") {\n            throw new sqgl$$Error(\n                \"object keys must be strings: \" + data[i]\n            );\n        }\n        obj[data[i][0]] = data[i][1];\n        i++;\n    }\n    return sqgl$$freeze(obj);\n};\nvar sqgl$$isObject = function(x) {\n    if (arguments.length !== 1) {\n        throw new sqgl$$Error(\n            'wrong number of arguments to sqgl$$isObject'\n        );\n    }\n    return x !== null && typeof x === 'object';\n};\nvar sqgl$$assertBoolean = function(x) {\n    if (typeof x !== 'boolean') {\n        throw new sqgl$$Error('not a boolean: ' + toString(x));\n    }\n    return x;\n};\nvar sqgl$$update = update;\nvar sqgl$$isObject = isObject;\nvar sqgl$$isFrozen = Object.isFrozen;\nvar sqgl$$freeze = Object.freeze;\nvar sqgl$$create = Object.create;\nvar sqgl$$is = is;\nvar sqgl$$isArray = Array.isArray;\nvar sqgl$$keys = Object.keys;\nvar sqgl$$get = get;\nvar sqgl$$methodGet = methodGet;\nvar sqgl$$methodCall = methodCall;\nvar sqgl$$Error = Error;\nvar sqgl$$customLogger = null;\nvar sqgl$$global = global;\nvar sqgl$$log = function(x) {\n    if (sqgl$$customLogger) {\n        sqgl$$customLogger(x);\n    } else if (sqgl$$global.console && sqgl$$global.console.log) {\n        sqgl$$global.console.log(x);\n    }\n    return x;\n};\n"
 },{}],81:[function(require,module,exports){
 (function (global){
 /*
@@ -28845,6 +28854,7 @@ var nm = require('./node-maker');
 var ast = nm({
     Module:      ["expr"],
     Script:      ["expr"],
+    Try:         ["expr"],
     GetProperty: ["obj", "prop"],
     GetMethod:   ["obj", "prop"],
     CallMethod:  ["obj", "prop", "args"],
@@ -28856,6 +28866,8 @@ var ast = nm({
     If:          ["p", "t", "f"],
     Let:         ["bindings", "expr"],
     BinOp:       ["operator", "left", "right"],
+    Error:       ["message"],
+    Throw:       ["exception"],
     Operator:    ["data"],
     List:        ["data"],
     Map:         ["data"],
@@ -28930,6 +28942,10 @@ var es = nm({
     VariableDeclarator: ['id', 'init'],
     BinaryExpression: ['operator', 'left', 'right'],
     IfStatement: ['test', 'consequent', 'alternate'],
+    TryStatement: ['block', 'handler'],
+    CatchClause: ['param', 'body'],
+    ThrowStatement: ['argument'],
+    NewExpression: ['callee', 'arguments'],
 });
 
 module.exports = es;
@@ -29375,6 +29391,10 @@ function mapLastSpecial(f, g, xs) {
     return ys.concat([y]);
 }
 
+function freeze(esNode) {
+    return es.CallExpression(es.Identifier("sqgl$$freeze"), [esNode]);
+}
+
 function jsonify(x) {
     return JSON.stringify(x);
 }
@@ -29427,6 +29447,13 @@ function globalComputedEq(name, x) {
             x
         )
     );
+}
+
+function throwHelper(esNode) {
+    var throw_ = es.ThrowStatement(esNode);
+    var body = [throw_];
+    var fn = es.FunctionExpression(null, [], es.BlockStatement(body));
+    return es.CallExpression(fn, []);
 }
 
 function cleanIdentifier(s) {
@@ -29606,6 +29633,45 @@ var handlers = {
             []
         );
     },
+    Try: function(node) {
+        var expr = transformAst(node.expr);
+        var ok = freeze(es.ArrayExpression([
+            es.Literal("ok"),
+            expr,
+        ]));
+        var fail =  freeze(es.ArrayExpression([
+            es.Literal("fail"),
+            es.Identifier("$error")
+        ]));
+        var catch_ = es.CatchClause(
+            es.Identifier("$error"),
+            es.BlockStatement([
+                es.ReturnStatement(fail)
+            ])
+        );
+        var block = es.BlockStatement([
+            es.ReturnStatement(ok)
+        ]);
+        var internalError = esprima.parse(
+            "throw new sqgl$$Error('squiggle: internal error');"
+        ).body;
+        var try_ = es.TryStatement(block, catch_);
+        var body = [try_].concat(internalError);
+        var fn = es.FunctionExpression(null, [], es.BlockStatement(body));
+        return es.CallExpression(fn, []);
+    },
+    Error: function(node) {
+        var message = transformAst(node.message);
+        var exception = es.NewExpression(
+            es.Identifier("sqgl$$Error"),
+            [message]
+        );
+        return throwHelper(exception);
+    },
+    Throw: function(node) {
+        var exception = transformAst(node.exception);
+        return throwHelper(exception);
+    },
     List: function(node) {
         var pairs = node.data.map(transformAst);
         var array = es.ArrayExpression(pairs);
@@ -29772,6 +29838,15 @@ function _walk(parents, obj, ast) {
         MatchPatternObjectPair: function(node) {
             recur(node.key);
             recur(node.value);
+        },
+        Error: function(node) {
+            recur(node.message);
+        },
+        Throw: function(node) {
+            recur(node.exception);
+        },
+        Try: function(node) {
+            recur(node.expr);
         },
         True: function(node) {},
         False: function(node) {},
