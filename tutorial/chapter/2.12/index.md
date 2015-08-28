@@ -2,6 +2,11 @@
 title: "Match-expression"
 ---
 
+Pattern matching is one of the most powerful and expressive features of
+Squiggle. If you've never used it before, think of it as the most useful way to
+extra values from arrays or objects, as well as check for equality. It might
+look a bit like a large `if`/`else` structure, but it does more.
+
 Overall structure looks like:
 
     match (V) {
@@ -10,30 +15,94 @@ Overall structure looks like:
       case P3 => X3
     }
 
-The inidividual pieces look like this:
+In this example, `V` is the value you want to match on. `P1`, `P2`, and `P3` are
+patterns. The first pattern to fully match wins, resulting in the value to the
+right of its `=>` arrow. If no patterns are matched, it throws an exception.
 
-    [p1, p2, p3]
+Here are the pattern types:
 
-Matches an array of size 3 and binds the three patterns inside.
+## Identifier bindings
 
-    {a, b, "c": p1}
+A plain identifier matches any value and binds it to the value at that position
+in the associated expression. For example, this prints "4".
 
-Matches an object with at least the properties "a", "b", and "c", applying the p1 pattern to the value at "c".
+    match (4) {
+        case x => console.log(4)
+    }
 
-    x
+You can ignore a value by using an identifier starting with an underscore, just
+like in functions:
 
-Just a plain variable name. Always passes and is bound with the value at its position in the pattern.
+    match (123) {
+        case _x => "I didn't care about the value anyway"
+    }
 
-    _x
-    _
+## Literals
 
-Technically also just a variable name pattern, but used to ignore values.
+A basic literal like a string of a number:
 
-    "hello"
-    342
-    true
-    false
-    undefined
-    null
+    console.log(match ("hey") {
+        case 56 => "This won't match!"
+        case "bye" => "I never get matched..."
+        case "hey" => "Hey buddy! This one matches"
+    })
 
-Assert the value at that position in the pattern is equal to that.
+## Arrays
+
+You can also match arrays. Arrays are assumed to be *exactly* the size
+specified, and the pattern won't match otherwise.
+
+    match ([1, 2, 3]) {
+        case [x, y, z] => x +  y + z
+    }
+
+However, if you use the slurpy array pattern, you can deal with arrays of
+*at least* the size specified, collecting the rest of the elements in another
+pattern. The following matches arrays of *at least* length 2, and prints
+`[6, 7, 8]`.
+
+    match ([4, 5, 6, 7, 8]) {
+        case [a, b, ...xs] => console.log(xs)
+    }
+
+Also note that Squiggle's `match` does not differentiate between real arrays such as `[a, b, c]` and array-like objects such as
+`{"0": a, "1": b, "2", c, "length": 3}`.
+
+## Objects
+
+Objects in JavaScript are a little more complicated than arrays, due to
+prototype chains and rarely being truly empty. Due to this, object patterns
+ignore extra properties, only caring if the ones specified exist. Properties are
+checked all the way up the prototype chain, not just own-properties.
+
+    match (global) {
+        {"Number": Number} => console.log(Number("34"))
+    }
+
+Because object patterns ignore extra properties, the following match succeeds:
+
+    match ({"a": 1}) {
+        case {} => "potato"
+    }
+
+Because arrays are also objects, the following match succeeds:
+
+    match ([4, 5, 6]) {
+        case {"length": n} => n
+    }
+
+Also, there's a shorthand for the common case of key and value names being the
+same. Normally you would write:
+
+    match (obj) {
+        case {"name": name} => name
+    }
+
+But it's possible with the shorthand notation to write:
+
+    match (obj) {
+        case {name} => name
+    }
+
+Object and array patterns can be nested within each other to match and extract
+values from deep structures.
