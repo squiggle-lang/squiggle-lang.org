@@ -10,9 +10,9 @@ look a bit like a large `if`/`else` structure, but it does more.
 Overall structure looks like:
 
     match (V) {
-      case P1 => X1
-      case P2 => X2
-      case P3 => X3
+        case P1 => X1
+        case P2 => X2
+        case P3 => X3
     }
 
 In this example, `V` is the value you want to match on. `P1`, `P2`, and `P3` are
