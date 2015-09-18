@@ -47,7 +47,7 @@ module TableOfContents
                 n_next = _chapter_plus_n(toc, i, +1)
                 old_title = page.data["title"]
                 new_title = format(
-                    "%d.%d %s - Squiggle",
+                    "%d.%d %s",
                     section,
                     subsection,
                     old_title
