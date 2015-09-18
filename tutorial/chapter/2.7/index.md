@@ -8,7 +8,8 @@ Squiggle these will throw exceptions if `property` is not an own-property of
 
     object.property
     object["property"]
-    let (name = "property") in object[name]
+    let name = "property"
+    in object[name]
 
 There will eventually be useful functions for dealing with optionally present
 values.

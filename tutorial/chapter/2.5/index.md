@@ -28,15 +28,19 @@ created. That means no `myArray.push(4)`. JavaScript arrays already have a
     [[1, 2, 3], [[1], [2], []]]
     ["hello", "world"]
 
-Objects are also wrapped in `Object.freeze`, though JavaScript does not provide
-an easy way to add key-value pairs to a copy of an object. Squiggle will
-eventually provide a convenient function for doing that. Also, Squiggle objects require quoting keys, because you can use computed values.
+Objects are wrapped in calls to `Object.freeze` so it's easy to make immutable
+data. Making new objects with updated properties is done via the `~` operator
+covered later.
+
+Object keys work like JavaScript in that they can be plain identifiers or string
+literals, but Squiggle also allows you to compute property names by wrapping
+them in parentheses.
 
     {}
-    {"a": "b"}
+    {a: "b"}
     {"hello world": "Hello, world!"}
-    {"key": 400, "x": null, "y": undefined, "o": {}}
-    {someStringVariable: someStringVariable}
+    {key: 400, x: null, y: undefined, o: {}}
+    {("a" ++ "b"): someStringVariable}
 
 Functions are wrapped in `Object.freeze` as well. Functions in JavaScript can
 normally have properties added afterwards, but freezing them disables that.

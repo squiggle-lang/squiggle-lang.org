@@ -14,20 +14,20 @@ JavaScript:
 
 Given that Squiggle automatically returns the body of a function, there has to be a way to ignore a value you don't want. The keyword `do` introduces a block that returns only the last value:
 
-    let (
-        sneakyAdd = fn(x, y) do {
+    def sneakyAdd(x, y) =
+        do
             console.log("add was called with", x, y);
             x + y;
-        }
-    ) sneakyAdd(3, 4)
+        end
+    in sneakyAdd(3, 4)
 
 The `do` -expression is flexible and can be used anywhere in Squiggle, not just
 function bodies.
 
-    do {
+    do
         console.log("Hello");
         console.log("World");
-    }
+    end
 
 Statements within a `do` expression must be ended with a semicolon. There is no
 automatic semicolon insertion, like JavaScript.
