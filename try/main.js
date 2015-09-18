@@ -30,11 +30,12 @@ var editors = {
 
 function compile(code) {
     clearConsole();
+    var ret = S.parse(code);
     var ast;
-    try {
-        ast = S.parse(code);
-    } catch (e) {
-        replacementConsole.log(e.message);
+    if (ret.status) {
+        ast = ret.value;
+    } else {
+        replacementConsole.log(JSON.stringify(ret));
         return "// error\n";
     }
     S.lint(ast).forEach(function(warning) {
@@ -100,14 +101,13 @@ function run() {
 
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
-editors.squiggle.setValue(
-"let (\n" +
-"    m = global.Math,\n" +
-"    rand = m.random,\n" +
-"    floor = m.floor,\n" +
-"    log = console::log\n" +
-") rand() * 100 |> floor |> log\n"
-)
+editors.squiggle.setValue([
+    "let m = global.Math",
+    "let rand = m.random",
+    "let floor = m.floor",
+    "let log = console::log",
+    "in log(floor(rand() * 100))"
+].join("\n") + "\n")
 
 editors.squiggle.setOption("extraKeys", {
   "Ctrl-Enter": run
