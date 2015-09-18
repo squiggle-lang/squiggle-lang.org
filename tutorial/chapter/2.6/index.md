@@ -4,23 +4,25 @@ title: "Operators"
 
 The golden rule of Squiggle, and especially of operators, is *it works like how JavaScript probably should work, in my opinion*.
 
-Here are the binary operators in order, from Squiggle:
+Here are the operators in order, from Squiggle:
 
-- `|>`
+- `not`, `-` (unary prefix)
 - `and`, `or`
-- `>=`, `<=`, `<`, `>`, `=`, `!=`
+- `>=`, `<=`, `<`, `>`, `==`, `!=`
 - `++`
 - `+`, `-`
 - `*`, `/`
 
-## Pipe operator
+## Unary prefix operators
 
-The pipe operator (`|>`) is like calling a function but backwards and without
-parentheses. Normally you would write `g(f(x))`, but with the pipe operator you
-can write `x |> f |> g`. This allows you to think left-to-right about your
-function pipelines.
+The two unary prefix operators `not` and `-` are like JavaScript `!` and `-`,
+except they assert their argument be boolean or numeric, respectively.
 
-    Math.random() * 10 |> Math.floor |> console::log
+    not true #=> false
+    not 4 #=> Error
+    -4 #=> 4
+    let x = 23 in -x #=> -23
+    -"foo" #=> Error
 
 ## Logical operators
 
@@ -33,13 +35,13 @@ not if it was 0.
 
     true and false # => false
     true or false # => true
-    true or do {
+    true or do
         console.log(
             "I would be an error, " ++
             "but I don't get evaluated!"
         )
         "potato";
-    } # => true
+    end # => true
 
 ## Comparison operators
 
@@ -48,23 +50,23 @@ an error unless both values are strings or both values are numbers. It doesn't
 make much sense to ask if an array or an object is less than something else, so
 this helps avoid subtle bugs.
 
-The operator `=` is a deep equality operator. It works like JavaScript `===` for
-the purpose of comparising strings, numbers, `true`, `false`, `undefined`,
+The operator `==` is a deep equality operator. It works like JavaScript `===`
+for the purpose of comparising strings, numbers, `true`, `false`, `undefined`,
 `null`, and functions, but differs for arrays, and objects.
 
 For arrays, it checks to see if all elements of both arrays are equal to each
-other based on the Squiggle `=` operator. It is not aware of sparse arrays.
+other based on the Squiggle `==` operator. It is not aware of sparse arrays.
 
 For objects, it checks all keys returned by `Object.keys` on both objects for
-equality using the Squiggle `=` operator.
+equality using the Squiggle `==` operator.
 
-As for `!=`, it's like `=` but returns the opposite value.
+As for `!=`, it's like `==` but returns the opposite value.
 
-    [] = [] # => true
-    [2] = [1 + 1] # => true
-    ["abc", "xyz"] = ["abc", "xy" ++ "z"] # => true
-    {"a": "b"} = {"a": "b"} # => true
-    {} = Object.create(null) # => true
+    [] == [] # => true
+    [2] == [1 + 1] # => true
+    ["abc", "xyz"] == ["abc", "xy" ++ "z"] # => true
+    {a: "b"} == {a: "b"} # => true
+    {} == Object.create(null) # => true
 
 ## Concatenation operators
 

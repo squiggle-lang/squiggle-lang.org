@@ -23,7 +23,8 @@ Two correct ways to solve this in JavaScript are as follows:
 These are both rather wordy, and in practice they're easy to forget or avoid due
 to their clunkinesss. Squiggle offers a simple operator to solve this: `::`.
 
-    let (safeLog = console::log) safeLog("ok!")
+    let log = console::log
+    in log("ok!")
 
 Currently there is no support for computed names (like `console["log"]` vs
 `console.log`) with the `::` operator, but it is likely to be added eventually.

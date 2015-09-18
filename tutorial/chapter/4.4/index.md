@@ -17,14 +17,13 @@ standard JavaScript function methods `.apply` or `.call`:
 require its use to create an instance. For that use case, Squiggle provides the
 function `denew`.
 
-    let (
-        makeDate = denew(global.Date),
-        makePromise = denew(global.Promise),
-        log = console::log,
-        d = makeDate("12/31/1999"),
-        f = fn(resolve, _reject) resolve(4),
-        p = makePromise(f)
-    ) do {
+    let makeDate = denew(global.Date)
+    let makePromise = denew(global.Promise)
+    let log = console::log
+    let d = makeDate("12/31/1999")
+    def f(resolve, _reject) = resolve(4)
+    let p = makePromise(f)
+    in do
         log(d.getFullYear());
         p.then(log);
-    }
+    end

@@ -29,17 +29,13 @@ This is equivalent to the following JavaScript:
 
 So a common pattern for creating modules is:
 
-    export let (
-        a = 1,
-        b = 2,
-        cSecret = 3,
-        dSecret = 4,
-        e = 5
-    ) {
-        "a": a,
-        "b": b,
-        "e": e
-    }
+    export
+    let a = 1
+    let b = 2
+    let cSecret = 3
+    let dSecret = 4
+    let e = 5
+    in {a, b, e}
 
 This is like the following JavaScript:
 
@@ -48,7 +44,6 @@ This is like the following JavaScript:
     var cSecret = 3;
     var dSecret = 4;
     var e = 5;
-
     module.exports = {
         a: a,
         b: b,

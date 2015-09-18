@@ -5,39 +5,21 @@ title: "Predefined functions"
 Unless otherwise stated, all predefined functions throw an error if called with
 the wrong number of parameters.
 
-## print
-
-`print(x)` is equivalent to:
-
-    do { console.log(x); x; }
-
-## not
-
-`not(true)` gives `false`.
-
-`not(false)` gives `true`.
-
-## isNan
-
-`isNan(NaN)` gives `true`.
-
-`isNan(n)` where `n` is a number other than `NaN` gives `false`.
-
 ## map
 
-`map(f, xs)` is equivalent to:
+`map(xs, f)` is equivalent to:
 
     fn(f, xs) xs.map(fn(x, _i, _a) f(x))
 
 ## join
 
-`join(separator, xs)` is equivalent to:
+`join(xs, separator)` is equivalent to:
 
     xs.join(separator)
 
 ## foldLeft
 
-`foldLeft(f, z, xs)` is equivalent to:
+`foldLeft(xs, f, z)` is equivalent to:
 
     xs.reduce(f, z)
 
@@ -47,13 +29,13 @@ the wrong number of parameters.
 
 ## reduce
 
-`reduce(f, xs)` is equivalent to:
+`reduce(xs, f)` is equivalent to:
 
     xs.reduce(f)
 
 ## foldRight
 
-`foldRight(f, z, xs)` is equivalent to:
+`foldRight(xs, f, z)` is equivalent to:
 
     reverse(xs).reduce(flip(f), z)
 
@@ -93,18 +75,12 @@ the wrong number of parameters.
 
 ## get
 
-`get(k, obj)` is equivalent to:
+`get(obj, k)` is equivalent to:
 
     obj[k]
 
 ## set
 
-`set(k, v, obj)` is equivalent to:
+`set(obj, k, v)` is equivalent to:
 
     obj[k] = v
-
-## methodGet
-
-`methodGet(name, obj)` is equivalent to:
-
-    obj[name].bind(obj)
