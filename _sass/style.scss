@@ -128,13 +128,18 @@ ul li {
 }
 
 p {
-    font-size: 18px;
     line-height: 1.7;
-    font-family: $fontParagraph;
 
     a {
         @include prettyLinks;
     }
+}
+
+ol,
+ul,
+p {
+    font-size: 1em;
+    font-family: $fontParagraph;
 }
 
 .chapter-nav {
@@ -180,6 +185,7 @@ code {
     background: #eee;
     font-family: $fontCode;
     font-weight: bold;
+    font-size: 0.9em;
 }
 
 pre code {
@@ -191,9 +197,10 @@ pre code {
     border-radius: 0;
 
     font-weight: normal;
-    font-size: 16px;
+    font-size: 1em;
     line-height: 1.2;
-    white-space: pre-wrap;
+    overflow-x: scroll;
+    // white-space: pre;
 
     background: $bg;
     color: $fg;
@@ -201,4 +208,5 @@ pre code {
     border-radius: 4px;
 }
 
+@import "narrow";
 @import "workspace";

@@ -30695,7 +30695,6 @@ var editors = {
 function compile(code) {
     clearConsole();
     var ret = S.parse(code);
-    debugger;
     var ast;
     if (ret.status) {
         ast = ret.value;
