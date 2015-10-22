@@ -16,7 +16,7 @@ The call to `log` fails because it *forgets* the function came from `console`
 Two correct ways to solve this in JavaScript are as follows:
 
     var log1 = function() {
-        return console.log.apply(this, arguments);
+        return console.log.apply(console, arguments);
     };
     var log2 = console.log.bind(console);
 
