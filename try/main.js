@@ -30,20 +30,25 @@ var editors = {
 
 function compile(code) {
     clearConsole();
-    var ret = S.parse(code);
-    var ast;
-    if (ret.status) {
-        ast = ret.value;
-    } else {
-        replacementConsole.log(JSON.stringify(ret));
+    var res = S.compile(
+        code,
+        "example.squiggle",
+        "example.js",
+        "example.js.map"
+    );
+    if (!res.parsed) {
+        console.log("Parse fail:", res);
         return "// error\n";
     }
-    S.lint(ast).forEach(function(warning) {
-        replacementConsole.log(warning);
+    res.warnings.forEach(function(warning) {
+        // TODO: Format the warning correctly
+        replacementConsole.log(
+            "line " + warning.line +
+            ", column " + warning.column +
+            ": " + warning.message
+        );
     });
-    var es = S.transformAst(ast);
-    var js = S.compile(es);
-    return js;
+    return res.code;
 }
 
 function compileAndUpdate() {
@@ -102,11 +107,9 @@ function run() {
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
 editors.squiggle.setValue([
-    "let m = global.Math",
-    "let rand = m.random",
-    "let floor = m.floor",
-    "let log = console::log",
-    "in log(floor(rand() * 100))"
+    "let x = 1",
+    "def f(x) = x + 2",
+    "in console.log(f(x))",
 ].join("\n") + "\n")
 
 editors.squiggle.setOption("extraKeys", {
