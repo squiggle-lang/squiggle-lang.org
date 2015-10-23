@@ -27593,16 +27593,14 @@ var debounce = require("lodash/function/debounce");
 var squiggleCodeOpts = {
     lineWrapping: true,
     lineNumbers: true,
-    mode: "text/plain",
-    theme: "material",
+    mode: "text/plain"
 };
 
 var javascriptCodeOpts = {
     lineWrapping: true,
     lineNumbers: true,
     readOnly: true,
-    mode: "application/javascript",
-    theme: "material",
+    mode: "application/javascript"
 };
 
 function sel(sel) {
