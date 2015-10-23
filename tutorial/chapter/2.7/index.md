@@ -3,8 +3,7 @@ title: "Property access"
 ---
 
 Property access is written just like JavaScript. The only difference is that in
-Squiggle these will throw exceptions if `property` is not an own-property of
-`object`.
+Squiggle these will throw exceptions if `object[property]` is `undefined`.
 
     object.property
     object["property"]

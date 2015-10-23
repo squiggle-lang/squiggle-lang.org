@@ -1,33 +1,62 @@
 ---
-title: "Do-expression"
+title: "Let-expression"
 ---
 
-In Squiggle, everything is an expression, but sometimes you still need to call
-functions purely for their side effects. For example, take this function in
-JavaScript:
+The most basic let-expression looks like:
 
-    function sneakyAdd(x, y) {
-        console.log("add was called with", x, y);
-        return x + y;
-    }
-    sneakyAdd(3, 4);
+    let x = 1 in x
 
-Given that Squiggle automatically returns the body of a function, there has to be a way to ignore a value you don't want. The keyword `do` introduces a block that returns only the last value:
+This is essentially equivalent to:
 
-    def sneakyAdd(x, y) =
-        do
-            console.log("add was called with", x, y);
-            x + y;
-        end
-    in sneakyAdd(3, 4)
+    (function() {
+        var x = 1;
+        return x;
+    }())
 
-The `do` -expression is flexible and can be used anywhere in Squiggle, not just
-function bodies.
+You can add many `let` bindings together like so:
 
-    do
-        console.log("Hello");
-        console.log("World");
-    end
+    let x = 1
+    let y = 2
+    let z = 3
+    in x + y + z
 
-Statements within a `do` expression must be ended with a semicolon. There is no
-automatic semicolon insertion, like JavaScript.
+This will evaluate to `6`.
+
+## Functions
+
+You can assign functions just like any other value:
+
+    let foo = fn foo(word) "foo" ++ word
+    in foo("bar") #=> "foobar"
+
+But this is tedious, so there's a shorthand:
+
+    def foo(word) = "foo" ++ word
+    in foo("bar") #=> "foobar"
+
+`def` is just sugar for making a binding to a function with the same name.
+
+## Temporal dead zone
+
+"Temporal dead zone" is a confusing phrase borrowed from ES2015 to describe an area of code where a variable cannot be used.
+
+In JavaScript, the following code prints `undefined` three times.
+
+    var x = y;
+    var y = x;
+    var z = z;
+    console.log(x, y, z);
+
+This is because of JavaScript's `var` hoisting, which makes the following code
+work more like this:
+
+    var x = undefined;
+    var y = undefined;
+    var z = undefined;
+    x = y;
+    y = x;
+    z = z;
+    console.log(x, y, z);
+
+That is nonsense. In Squiggle, `let` and `def` bindings are not hoisted, and it
+is a runtime error to attempt to use their values before initialization.
