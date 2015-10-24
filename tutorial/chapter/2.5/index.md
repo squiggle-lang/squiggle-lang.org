@@ -14,7 +14,7 @@ Additionally, `global` is a named literal that refers to the global context.
 Numbers are basically the same as JS, with two exceptions: `NaN` and `Infinity`
 are actually considered named numbers, rather than global variables. Also, you
 can include `_` in the middle of your numbers for readability, like:
-`1_000_00.999`.
+`1_000_000.999`.
 
 ## Strings
 
