@@ -207,8 +207,11 @@ body.narrow main {
 code {
     @include inlineColored;
 
-    color: #222;
-    background: #eee;
+    $fg: $red;
+    $bg: rgba($red, 0.07);
+
+    color: $fg;
+    background: $bg;
     font-family: $fontCode;
     font-weight: bold;
     font-size: 0.9em;
