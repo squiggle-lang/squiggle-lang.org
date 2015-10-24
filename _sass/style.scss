@@ -47,7 +47,7 @@ header {
     background: $bg;
 
     font-size: 1.2em;
-    padding: 5px;
+    padding: 0;
 
     .header-container {
         margin: 0 auto;
@@ -70,11 +70,15 @@ header {
 
     nav a {
         display: inline-block;
-        margin: 6px 0.2em;
+        margin: 0 0.2em;
         padding: 0.5em 2em;
         color: $fg;
         text-decoration: none;
-        border-radius: 8px;
+        border: 6px solid $bg;
+        border-radius: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.8em;
 
         transition: background 0.2s, color 0.2s;
 
