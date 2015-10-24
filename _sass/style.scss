@@ -1,14 +1,21 @@
 $bg: #fff;
 $fg: #333;
 
+$narrowWidth: 600px;
+
+$red: #c43;
+$orange: #e84;
 $green: #2a5;
+$blue: #47c;
+$darkBlue: #08a;
+
+$primary: $red;
+$link: $darkBlue;
+$focus: $green;
 
 $fontNormal: Helvetica, sans-serif;
 $fontParagraph: $fontNormal;
 $fontCode: Menlo, Consolas, monospace;
-
-$primary: #e84;
-$link: #08a;
 
 @import "mixins";
 
@@ -17,7 +24,7 @@ $link: #08a;
 }
 
 :focus {
-    outline: 6px solid rgba(#0aa, 0.8);
+    outline: 6px solid rgba($focus, 0.8);
 }
 
 html, body {
@@ -36,39 +43,37 @@ header {
     $bg: $primary;
     $fg: white;
 
-    background: $bg;
     color: $fg;
-    font-size: 3.0em;
-    padding: 0.2em;
-    font-weight: bold;
-    text-align: center;
-}
+    background: $bg;
 
-footer {
-    text-align: center;
-    margin: 1em;
-    color: #888;
-    a {
+    font-size: 1.2em;
+    padding: 5px;
+
+    .header-container {
+        margin: 0 auto;
+        display: block;
+        max-width: $narrowWidth;
+    }
+
+    .title {
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 4px 20px;
+        margin-right: 2em;
+        text-decoration: none;
         color: inherit;
     }
-}
 
-nav {
-    $bg: mix(white, $primary, 10%);
-    $fg: white;
+    nav {
+        display: inline-block;
+    }
 
-    text-align: center;
-    background: $bg;
-    padding: 0 2px;
-
-    a {
+    nav a {
         display: inline-block;
         margin: 6px 0.2em;
         padding: 0.5em 2em;
         color: $fg;
         text-decoration: none;
-        font-weight: bold;
-        font-size: 1.2em;
         border-radius: 8px;
 
         transition: background 0.2s, color 0.2s;
@@ -82,6 +87,16 @@ nav {
             background: rgba($fg, 0.20);
             color: $fg;
         }
+    }
+
+}
+
+footer {
+    text-align: center;
+    margin: 1em;
+    color: #888;
+    a {
+        color: inherit;
     }
 }
 
@@ -143,6 +158,10 @@ p {
 }
 
 .chapter-nav {
+    background: #eee;
+    color: black;
+    border-radius: 6px;
+
     &:after {
         content: ' ';
         display: block;
@@ -150,7 +169,14 @@ p {
     }
 
     a {
-        @include prettyLinks;
+        @include resetLinks;
+
+        padding: 10px 10px;
+        font-weight: bold;
+
+        &:hover {
+            text-decoration: underline;
+        }
 
         &.prev { float: left; }
         &.next { float: right; }
@@ -170,7 +196,7 @@ body.wide main {
 }
 
 body.narrow main {
-    max-width: 600px;
+    max-width: $narrowWidth;
     padding: 20px 10px;
 }
 

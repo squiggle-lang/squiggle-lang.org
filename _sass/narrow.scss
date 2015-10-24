@@ -2,10 +2,26 @@
     body {
         font-size: 14px;
     }
-    nav {
+}
+
+@media screen and (max-width: $narrowWidth) {
+    header {
         padding: 4px;
-        a {
+
+        nav,
+        nav a,
+        .title {
             display: block;
+        }
+
+        .title {
+            font-size: 1.6em;
+            margin-bottom: 0.3em;
+        }
+
+        nav a {
+            padding-left: 1em;
+            padding-right: 1em;
         }
     }
 }

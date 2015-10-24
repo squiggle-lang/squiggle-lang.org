@@ -45,3 +45,8 @@
         text-decoration: underline;
     }
 }
+
+@mixin resetLinks {
+    text-decoration: none;
+    color: inherit;
+}
