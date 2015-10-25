@@ -1,3 +1,15 @@
+@mixin diagonalStripes($color1, $color2, $size) {
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent $size,
+            $color2 $size,
+            $color2 (2 * $size)
+        ),
+        $color1;
+}
+
 @mixin inlineColored {
     padding: 2px 8px;
     border-radius: 4px;

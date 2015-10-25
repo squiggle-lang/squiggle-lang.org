@@ -3,7 +3,7 @@ $fg: #333;
 
 $narrowWidth: 600px;
 
-$red: #c43;
+$red: #c24;
 $orange: #e84;
 $green: #2a5;
 $blue: #47c;
@@ -11,7 +11,8 @@ $darkBlue: #08a;
 
 $primary: $red;
 $link: $darkBlue;
-$focus: $green;
+$code: $red;
+$focus: complement($primary);
 
 $fontNormal: Helvetica, sans-serif;
 $fontParagraph: $fontNormal;
@@ -216,8 +217,8 @@ body.narrow main {
 code {
     @include inlineColored;
 
-    $fg: $red;
-    $bg: rgba($red, 0.07);
+    $fg: $code;
+    $bg: rgba($fg, 0.04);
 
     color: $fg;
     background: $bg;
@@ -232,18 +233,15 @@ pre code {
 
     display: block;
     padding: 0.8em;
-    border-radius: 0;
+    border-radius: 4px;
 
     font-weight: normal;
     font-size: 1em;
     line-height: 1.2;
     overflow-x: scroll;
-    // white-space: pre;
 
     background: $bg;
     color: $fg;
-
-    border-radius: 4px;
 }
 
 @import "narrow";

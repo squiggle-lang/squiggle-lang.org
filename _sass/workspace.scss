@@ -1,6 +1,8 @@
 .workspace {
+    @include diagonalStripes(#eee, rgba(black, 0.02), 40px);
+
     $border: 1px solid #ccc;
-    $gap: 10px;
+    $gap: 15px;
     $radius: 2px;
 
     display: flex;
@@ -8,7 +10,6 @@
     padding-right: $gap;
     padding-bottom: $gap;
     border-bottom: $border;
-    background: #eee;
 
     .CodeMirror {
         font-family: $fontCode;
