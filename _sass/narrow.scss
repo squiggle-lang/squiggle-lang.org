@@ -7,25 +7,22 @@
 // A little bit of breathing room to account for rendering differences.
 @media screen and (max-width: ($narrowWidth + 20px)) {
     header {
-        padding: 4px;
+        .header-container {
+            text-align: center;
+        }
 
         nav,
-        nav a,
         .title {
             display: block;
         }
 
         .title {
-            font-size: 1.6em;
-            margin-bottom: 0.3em;
-            margin-right: 0;
+            margin: 0;
         }
 
-        nav a {
-            border-width: 3px;
-            border-radius: 14px;
-            padding-left: 1em;
-            padding-right: 1em;
+        nav {
+            overflow-x: auto;
+            white-space: nowrap;
         }
     }
 }

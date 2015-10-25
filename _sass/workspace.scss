@@ -17,21 +17,12 @@
         border-radius: $radius;
     }
 
-    & > section:nth-child(2) .CodeMirror {
-        // border-left: 1px solid rgba(white, 0.20);
-    }
-
     section {
         flex: 1 1 500px;
 
         margin: $gap;
         margin-bottom: 0;
         margin-right: 0;
-
-        &.code {
-            // background: #263238;
-            // border-top: 1px solid rgba(black, 0.10);
-        }
 
         .console,
         &.code {
@@ -75,14 +66,15 @@
             font-family: $fontCode;
 
             & > * {
-                border-left: 5px solid transparent;
-                box-shadow: 0 1px 0 0 #ddd;
+                // border-left: 5px solid transparent;
+                // box-shadow: 0 1px 0 0 #ddd;
+                border-bottom: 1px solid #ddd;
                 padding: 10px 15px;
             }
 
-            & > .warn  { @include borderAndTextColor(#aa2); }
-            & > .error { @include borderAndTextColor(#c00); }
-            & > .info  { @include borderAndTextColor(#88f); }
+            // & > .warn  { @include borderAndTextColor(#aa2); }
+            // & > .error { @include borderAndTextColor(#c00); }
+            // & > .info  { @include borderAndTextColor(#88f); }
         }
     }
 }
