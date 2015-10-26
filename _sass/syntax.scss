@@ -1,0 +1,33 @@
+// Mainly bluish-purple with white keywords
+
+.highlight {
+    $red: #f77;
+    $orange: #fa7;
+    $blue: #88f;
+    $green: #ae6;
+    $yellow: #fe3;
+    $white: #fff;
+    $gray: #ddf;
+    $grayer: #aaf;
+
+    // .kd = Function
+    // .k = Keyword
+    .kd, .k { color: $white; font-weight: bold; }
+
+    // .nx = Normal
+    .nx { color: $gray; }
+
+    // .p = Punctuation
+    // .o = Operator
+    .p, .o { color: $grayer; }
+
+    // .s2 = String
+    .s2 { color: $yellow; }
+
+    // .kc = Constant
+    // .mi = Number
+    .kc, .mi { color: $orange; }
+
+    // .c1 = Comment
+    .c1 { color: $green; }
+}

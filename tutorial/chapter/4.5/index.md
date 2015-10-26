@@ -8,7 +8,10 @@ magic variable is useless for Squiggle functions.
 
 Take for example this JavaScript snippet:
 
-    [10, 10, 10, 10].map(parseInt) // => [10, NaN, 2, 3]
+```javascript
+[10, 10, 10, 10].map(parseInt)
+// => [10, NaN, 2, 3]
+```
 
 This happens because `parseInt` takes an optional second parameter specifying
 the numeric base to parse using (rather than normal base-10 numbers), and `map`

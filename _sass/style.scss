@@ -228,8 +228,8 @@ code {
 }
 
 pre code {
-    $bg: #555;
-    $fg: #eee;
+    $bg: #558;
+    $fg: #ddf;
 
     display: block;
     padding: 0.8em;
@@ -246,3 +246,4 @@ pre code {
 
 @import "narrow";
 @import "workspace";
+@import "syntax";

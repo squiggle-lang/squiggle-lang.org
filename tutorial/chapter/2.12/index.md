@@ -41,11 +41,13 @@ like in functions:
 
 A basic literal like a string of a number:
 
-    console.log(match "hey"
-    case 56 => "This won't match!"
-    case "bye" => "I never get matched..."
-    case "hey" => "Hey buddy! This one matches"
-    end)
+    console.log(
+        match "hey"
+        case 56 => "This won't match!"
+        case "bye" => "I never get matched..."
+        case "hey" => "Hey buddy! This one matches"
+        end
+    )
 
 ## Arrays
 
@@ -76,7 +78,8 @@ ignore extra properties, only caring if the ones specified exist. Properties are
 checked all the way up the prototype chain, not just own-properties.
 
     match global
-    {Number: Number} => console.log(Number("34"))
+    case {Number: Number} =>
+        console.log(Number("34"))
     end
 
 Because object patterns ignore extra properties, the following match succeeds:
@@ -88,8 +91,8 @@ Because object patterns ignore extra properties, the following match succeeds:
 Because arrays are also objects, the following match succeeds:
 
     match [4, 5, 6]
-        case {length: n} => n
-    }
+    case {length: n} => n
+    end
 
 Also, there's a shorthand for the common case of key and value names being the
 same. Normally you would write:

@@ -16,6 +16,7 @@ linter will complain), and manually export globals. See example:
     # linter will complain about using an
     # undeclared binding.
     let foo = global.foo
+    let Object = global.Object
 
     def bar1() = 1
     def bar2() = 2
@@ -23,5 +24,5 @@ linter will complain), and manually export globals. See example:
 
     let api = {bar1, bar2, bar3}
 
-    in set("bar", api, global)
+    in Object.assign(global, {bar: api})
 

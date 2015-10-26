@@ -18,7 +18,7 @@ can include `_` in the middle of your numbers for readability, like:
 
 ## Strings
 
-Currently only double-quoted string literals are supported (no 'single quotes').
+Currently only `"double-quotes"` are supported, no `'single quotes'`.
 
 The supported escape characters are: `\n` `\t` `\r` `\"` `\\`. These have the
 same meaning as in JavaScript.
@@ -73,16 +73,23 @@ error. Functions use `fn` and don't use braces or `return`.
 Let's take `fn(x, y) x + y` as an example and compare that with how you'd
 express the same thing in JavaScript. It might look a lot like this function:
 
-    function(x, y) { return x + y; }
+```javascript
+function(x, y) {
+    return x + y;
+}
+```
 
 But arity checking means that it's actually more like this JavaScript function:
 
-    function(x, y) {
-        if (arguments.length !== 2) {
-            throw new Error("wrong number of arguments");
-        }
-        return x + y;
+```javascript
+function(x, y) {
+    if (arguments.length !== 2) {
+        throw new Error("wrong number of arguments");
     }
+    // Main function logic here.
+    return x + y;
+}
+```
 
 JavaScript's usual relaxed rules around argument count can lead to extremely
 subtle and hard to detect bugs. It's potentially more flexible the JavaScript

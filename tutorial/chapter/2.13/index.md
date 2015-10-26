@@ -15,7 +15,6 @@ or `["fail", error]`. You can manually inspect these values using brackets, or i
         case ["ok", obj] => obj
         case ["fail", _error] => {}
         end
-    in console.log([
-        safeParse("[]"); #=> []
-        safeParse("json error"); #=> {}
-    ])
+    let _ = console.log(safeParse("[]")) #=> []
+    let _ = console.log(safeParse("json error")) #=> {}
+    in undefined

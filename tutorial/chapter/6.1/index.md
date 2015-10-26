@@ -11,13 +11,15 @@ possible to generate them at installation time for your package.
 
 Here is an example compilation script in Bash:
 
-    #!/usr/bin/env bash
-    set -e
-    cd src
-    for f in *.squiggle; do
-        name=$(basename "$f" .squiggle)
-        squiggle "$f" -o "../out/$name.js"
-    done
+```bash
+#!/usr/bin/env bash
+set -e
+cd src
+for f in *.squiggle; do
+    name=$(basename "$f" .squiggle)
+    squiggle "$f" -o "../out/$name.js"
+done
+```
 
 Squiggle has a keyword for creating Node.js modules: `export`
 
@@ -25,7 +27,9 @@ Squiggle has a keyword for creating Node.js modules: `export`
 
 This is equivalent to the following JavaScript:
 
-    module.exports = 1;
+```javascript
+module.exports = 1;
+```
 
 So a common pattern for creating modules is:
 
@@ -39,13 +43,15 @@ So a common pattern for creating modules is:
 
 This is like the following JavaScript:
 
-    var a = 1;
-    var b = 2;
-    var cSecret = 3;
-    var dSecret = 4;
-    var e = 5;
-    module.exports = {
-        a: a,
-        b: b,
-        e: e
-    };
+```javascript
+var a = 1;
+var b = 2;
+var cSecret = 3;
+var dSecret = 4;
+var e = 5;
+module.exports = {
+    a: a,
+    b: b,
+    e: e
+};
+```
