@@ -48,7 +48,7 @@ with a live compiler that runs in your browser.
 - No type coercion in binary operators
 - ES2015-style shorthand object literals: `{foo}` means `{foo: foo}`
 - Concise function syntax: `fn(x, y) x + y`
-- Easier errors: error "oopsy" vs throw new Error("oopsy")
+- Easier errors: `error "oopsy"` vs `throw new Error("oopsy")` from JS
 - try as an expression: `match try foo(x) case ["ok", v] => ... case ["fail", e] => ... end`
 - foo.bar throws an exception unless `foo.bar !== undefined`
 - `==` provides a deep equality check
