@@ -5,13 +5,13 @@ var S = require("squiggle");
 var debounce = require("lodash/function/debounce");
 
 var squiggleCodeOpts = {
-    lineWrapping: true,
+    lineWrapping: false,
     lineNumbers: true,
     mode: "text/plain"
 };
 
 var javascriptCodeOpts = {
-    lineWrapping: true,
+    lineWrapping: false,
     lineNumbers: true,
     readOnly: true,
     mode: "application/javascript"
