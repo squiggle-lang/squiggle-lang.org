@@ -1,2 +1,4 @@
 baseurl: /squiggle
+codemirror: /squiggle/vendor/codemirror-5.6
+markdown: redcarpet
 exclude: [node_modules]

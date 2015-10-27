@@ -1,27 +1,14 @@
-// @mixin shadow3D($width, $color) {
-//     position: relative;
-//     &:after,
-//     &:before {
-//         content: '';
-//         position: absolute;
-//     }
-//     &:after {
-//         width: 100%;
-//         height: ($width * 2);
-//         left: $width;
-//         bottom: 0;
-//         background: darken($color, 12%);
-//         transform: translatey(100%) skewx(45deg);
-//     }
-//     &:before {
-//         width: ($width * 2);
-//         height: 100%;
-//         right: 0;
-//         background: darken($color, 4%);
-//         transform: translatex(100%) skewy(45deg);
-//         top: $width;
-//     }
-// }
+@mixin diagonalStripes($color1, $color2, $size) {
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent $size,
+            $color2 $size,
+            $color2 (2 * $size)
+        ),
+        $color1;
+}
 
 @mixin inlineColored {
     padding: 2px 8px;
@@ -37,11 +24,16 @@
     @include inlineColored;
 
     text-decoration: none;
-    background: rgba($link, 0.10);
+    background: rgba($link, 0.06);
     color: $link;
     font-weight: bold;
 
     &:hover {
         text-decoration: underline;
     }
+}
+
+@mixin resetLinks {
+    text-decoration: none;
+    color: inherit;
 }

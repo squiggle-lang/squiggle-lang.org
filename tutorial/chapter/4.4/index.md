@@ -14,16 +14,5 @@ standard JavaScript function methods `.apply` or `.call`:
     someFn.apply(myThisValue, [param1, param2])
 
 `new` is harder to do away with since many APIs (e.g. `Date` and `Promise`)
-require its use to create an instance. For that use case, Squiggle provides the
-function `denew`.
-
-    let makeDate = denew(global.Date)
-    let makePromise = denew(global.Promise)
-    let log = console::log
-    let d = makeDate("12/31/1999")
-    def f(resolve, _reject) = resolve(4)
-    let p = makePromise(f)
-    in do
-        log(d.getFullYear());
-        p.then(log);
-    end
+require its use to create an instance. I'm still deciding how to incorporate
+this into Squiggle.

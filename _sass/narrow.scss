@@ -1,0 +1,28 @@
+@media screen and (max-width: 450px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+// A little bit of breathing room to account for rendering differences.
+@media screen and (max-width: ($narrowWidth + 20px)) {
+    header {
+        .header-container {
+            text-align: center;
+        }
+
+        nav,
+        .title {
+            display: block;
+        }
+
+        .title {
+            margin: 0;
+        }
+
+        nav {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+}

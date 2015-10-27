@@ -6,23 +6,14 @@ The golden rule of Squiggle, and especially of operators, is *it works like how 
 
 Here are the operators in order, from Squiggle:
 
-- `not`, `-` (unary prefix)
-- `and`, `or`
+- `or`
+- `and`
+- `not`
 - `>=`, `<=`, `<`, `>`, `==`, `!=`
 - `++`
 - `+`, `-`
 - `*`, `/`
-
-## Unary prefix operators
-
-The two unary prefix operators `not` and `-` are like JavaScript `!` and `-`,
-except they assert their argument be boolean or numeric, respectively.
-
-    not true #=> false
-    not 4 #=> Error
-    -4 #=> 4
-    let x = 23 in -x #=> -23
-    -"foo" #=> Error
+- `-` (unary prefix)
 
 ## Logical operators
 
@@ -42,6 +33,14 @@ not if it was 0.
         )
         "potato";
     end # => true
+
+## Not operator
+
+`not` is like JavaScript's `!` except it throws if you give it a non-boolean
+value.
+
+    not true #=> false
+    not 4 #=> Error
 
 ## Comparison operators
 
@@ -95,3 +94,13 @@ both arguments are numbers.
 
     2 * 3 # => 6
     1 / 2 # => 0.5
+
+## Unary minus operator
+
+The unary minus operator `-` is like JavaScript's unary minus operator except it
+throws if the value is not a number.
+
+    -4 #=> 4
+    let x = 23 in -x #=> -23
+    -"foo" #=> Error
+
