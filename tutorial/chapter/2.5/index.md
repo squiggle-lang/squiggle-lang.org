@@ -18,7 +18,7 @@ can include `_` in the middle of your numbers for readability, like:
 
 ## Strings
 
-Currently only `"double-quotes"` are supported, no `'single quotes'`.
+Currently only `"double-quotes"` are supported, no `'single-quotes'`.
 
 The supported escape characters are: `\n` `\t` `\r` `\"` `\\`. These have the
 same meaning as in JavaScript.
