@@ -26,8 +26,8 @@
         margin-right: 0;
 
         .console,
-        &.code {
-            height: 300px;
+        &.code .CodeMirror {
+            height: 350px;
         }
 
         .console,
