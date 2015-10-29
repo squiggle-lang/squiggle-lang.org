@@ -41350,7 +41350,6 @@ function $$(selector) {
 }
 
 function resizeCodeAreas() {
-    console.log("resizing code area");
     $$(".CodeMirror").forEach(function(element) {
         var vh = document.documentElement.clientHeight;
         var h = Math.max(300, vh - 400);
