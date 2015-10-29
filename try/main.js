@@ -4,6 +4,26 @@ var CM = global.CodeMirror;
 var S = require("squiggle");
 var debounce = require("lodash/function/debounce");
 
+function loggerMaker(type) {
+    var old = console[type];
+    console["_" + type] = old;
+    console[type] = function() {
+        old.apply(console, arguments);
+        var str = [].map.call(arguments, String).join(" ");
+        var txtNode = document.createTextNode(str);
+        var element = document.createElement("div");
+        element.className = type;
+        element.appendChild(txtNode);
+        theConsole.appendChild(element);
+        theConsole.scrollTop = theConsole.scrollHeight;
+    };
+}
+
+loggerMaker("log");
+loggerMaker("warn");
+loggerMaker("error");
+loggerMaker("info");
+
 var squiggleCodeOpts = {
     lineWrapping: false,
     lineNumbers: true,
@@ -40,7 +60,7 @@ function compile(code) {
     }
     res.warnings.forEach(function(warning) {
         // TODO: Format the warning correctly
-        replacementConsole.log(
+        console.log(
             "line " + warning.line +
             ", column " + warning.column +
             ": " + warning.message
@@ -67,37 +87,14 @@ function clearConsole() {
     theConsole.innerHTML = "";
 }
 
-function loggerMaker(type) {
-    return function() {
-        var str = [].map.call(arguments, String).join(" ");
-        var txtNode = document.createTextNode(str);
-        var element = document.createElement("div");
-        element.className = type;
-        element.appendChild(txtNode);
-        theConsole.appendChild(element);
-        theConsole.scrollTop = theConsole.scrollHeight;
-    };
-}
-
-var replacementConsole = {
-    log: loggerMaker("log"),
-    warn: loggerMaker("warn"),
-    error: loggerMaker("error"),
-    info: loggerMaker("info"),
-}
-
-function runWithReplacedConsole(js) {
-    Function("console", js)(replacementConsole);
-}
-
 function run() {
     clearConsole();
     setTimeout(function() {
         var javascriptCode = editors.javascript.getValue();
         try {
-            runWithReplacedConsole(javascriptCode);
+            Function(javascriptCode)();
         } catch (e) {
-            replacementConsole.log(e);
+            console.log(e);
         }
     }, 100);
 }
@@ -105,9 +102,10 @@ function run() {
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
 editors.squiggle.setValue([
+    "let console = global.console",
     "let x = 1",
-    "def f(x) = x + 2",
-    "in console.log(f(x))",
+    "def inc(x) = x + 1",
+    "in console.log(inc(x))",
 ].join("\n") + "\n")
 
 editors.squiggle.setOption("extraKeys", {
