@@ -127,5 +127,6 @@ function resizeCodeAreas() {
     })
 }
 
+resizeCodeAreas();
 window.onresize = resizeCodeAreas;
 
