@@ -41320,9 +41320,10 @@ function clearConsole() {
 function run() {
     clearConsole();
     setTimeout(function() {
-        var javascriptCode = editors.javascript.getValue();
+        var code = editors.javascript.getValue();
+        var js = "return " + code;
         try {
-            Function(javascriptCode)();
+            Function(js)();
         } catch (e) {
             console.log(e);
         }
@@ -41343,6 +41344,22 @@ editors.squiggle.setOption("extraKeys", {
 });
 
 sel("#run").onclick = run;
+
+function $$(selector) {
+    return [].slice.call(document.querySelectorAll(selector));
+}
+
+function resizeCodeAreas() {
+    console.log("resizing code area");
+    $$(".CodeMirror").forEach(function(element) {
+        var vh = document.documentElement.clientHeight;
+        var h = Math.max(300, vh - 400);
+        element.style.height = h + "px";
+    })
+}
+
+window.onresize = resizeCodeAreas;
+
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"lodash/function/debounce":224,"squiggle":142}]},{},[230]);
