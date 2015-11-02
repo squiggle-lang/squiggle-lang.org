@@ -230,18 +230,25 @@ code {
 pre code {
     $bg: #558;
     $fg: #ddf;
+    $radius: 4px;
+
+    position: relative;
+
+    background: $bg;
+    color: $fg;
 
     display: block;
     padding: 0.8em;
-    border-radius: 4px;
+    border-radius: $radius;
 
     font-weight: normal;
     font-size: 1em;
     line-height: 1.2;
     overflow-x: scroll;
 
-    background: $bg;
-    color: $fg;
+
+    &.language-javascript { @include langBadge($radius, "JavaScript"); }
+    &.language-squiggle { @include langBadge($radius, "Squiggle"); }
 }
 
 @import "narrow";
