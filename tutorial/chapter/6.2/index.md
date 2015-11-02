@@ -15,12 +15,11 @@ linter will complain), and manually export globals. See example:
     # Simply using `foo` won't work because the Squiggle
     # linter will complain about using an
     # undeclared binding.
-    let foo = global.foo
-    let Object = global.Object
+    let {Object, foo} = global
 
-    def bar1() = 1
-    def bar2() = 2
-    def bar3() = 3
+    def bar1() = foo(1)
+    def bar2() = foo(2)
+    def bar3() = foo(3)
 
     let api = {bar1, bar2, bar3}
 

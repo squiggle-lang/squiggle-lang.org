@@ -103,10 +103,12 @@ function run() {
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
 editors.squiggle.setValue([
-    "let console = global.console",
-    "let x = 1",
+    "let {Date, console} = global",
+    "let x = 4",
     "def inc(x) = x + 1",
-    "in console.log(inc(x))",
+    "let _ = console.log(Date())",
+    "let _ = console.log(inc(x))",
+    "in undefined"
 ].join("\n") + "\n")
 
 editors.squiggle.setOption("extraKeys", {
