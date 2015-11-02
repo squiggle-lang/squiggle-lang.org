@@ -3,7 +3,7 @@ title: "Await-expression"
 ---
 
 With ES2015, promises are now a core language feature. If you're not familiar
-with them, check out [HTML5 Rocks](html5rocks) article about it.
+with them, check out [HTML5 Rocks][html5rocks] article about it.
 
 You can go about using promises in Squiggle much like JavaScript:
 
