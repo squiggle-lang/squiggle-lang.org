@@ -4,7 +4,7 @@ title: "Mutability problems"
 
 Sometimes you need mutable data. Fortunately, it's still possible to create it
 in Squiggle. Squiggle does not expose a syntax like `x.y = z` to assign
-properties, but it does have a `set` function.
+properties.
 
     let {Array, Object} = global
     let {assign} = Object
