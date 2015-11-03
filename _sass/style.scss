@@ -274,6 +274,8 @@ code {
     $fg: $code;
     $bg: rgba($fg, 0.04);
 
+    padding: 0 6px;
+
     color: $fg;
     background: $bg;
     font-family: $fontCode;
@@ -293,7 +295,7 @@ pre code {
     font-weight: normal;
     font-size: 1em;
     line-height: 1.2;
-    overflow-x: scroll;
+    overflow-x: auto;
 
 
     &.language-javascript { @include langBadge($radius, "JavaScript"); }
