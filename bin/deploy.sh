@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-# host=s3://dev.mockbrian.com
-host=s3://mockbrian.com
+# host=s3://dev.mockbrian.com/squiggle/
+# host=s3://mockbrian.com/squiggle/
+host=s3://squiggle-lang.org/
 
 ./bin/build-js.sh
 
@@ -13,4 +14,4 @@ s3cmd sync \
     --acl-public \
     --no-progress \
     "_site/" \
-    "$host/squiggle/"
+    "$host"
