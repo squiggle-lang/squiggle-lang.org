@@ -7,36 +7,10 @@ cssTab2: focus
 {% assign a = page.section %}
 {% assign b = page.subsection %}
 
-<div class="chapter-nav">
-    {% if page.previous %}
-    <a
-        class="prev"
-        href="{{ site.baseurl }}/tutorial/chapter/{{ page.previous }}/"
-    >&lsaquo; Previous</a>
-    {% endif %}
-    {% if page.next %}
-    <a
-        class="next"
-        href="{{ site.baseurl }}/tutorial/chapter/{{ page.next }}/"
-    >Next &rsaquo;</a>
-    {% endif %}
-</div>
+{% include chapter-nav.html %}
 
 <h1>{{ page.title }}</h1>
 
 {{ content }}
 
-<div class="chapter-nav">
-    {% if page.previous %}
-    <a
-        class="prev"
-        href="{{ site.baseurl }}/tutorial/chapter/{{ page.previous }}/"
-    >&lsaquo; Previous</a>
-    {% endif %}
-    {% if page.next %}
-    <a
-        class="next"
-        href="{{ site.baseurl }}/tutorial/chapter/{{ page.next }}/"
-    >Next &rsaquo;</a>
-    {% endif %}
-</div>
+{% include chapter-nav.html %}

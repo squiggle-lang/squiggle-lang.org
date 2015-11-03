@@ -6,7 +6,7 @@ $orange: #e84;
 $green: #2a5;
 $blue: #3f51b5;
 
-$narrowWidth: 600px;
+$narrowWidth: 700px;
 
 $primary: $red;
 $link: $blue;
@@ -47,8 +47,61 @@ header {
     background: $bg;
     font-size: 1.2em;
     padding: 0;
-    border-bottom: 1px solid rgba(black, 0.10);
-    position: relative;
+}
+
+header,
+.jumbotron {
+    border-bottom: 1px solid transparent;
+}
+
+.jumbotron {
+    $bg: lighten($primary, 3%);
+    $fg: white;
+
+    color: $fg;
+    background: $bg;
+    font-size: 1.2em;
+    padding: 0;
+    text-align: center;
+
+    h1 {
+        padding: 0;
+        margin: 10px;
+        font-size: 3em;
+    }
+
+    .jumbotron-container {
+        padding: 20px 10px;
+
+        a {
+            @include resetLinks;
+
+            padding: 2px 4px;
+            font-weight: bold;
+            border-bottom: 2px solid $fg;
+
+            &:hover {
+                background: $fg;
+                color: $bg;
+                border-radius: 1px;
+            }
+        }
+    }
+}
+
+.jumbotron-container,
+.header-container {
+    margin: 0 auto;
+    display: block;
+    max-width: $narrowWidth;
+}
+
+
+header {
+    $bg: $primary;
+    $fg: white;
+
+    text-align: center;
 
     .header-container {
         margin: 0 auto;
@@ -60,7 +113,7 @@ header {
         font-weight: bold;
         font-size: 1.2em;
         padding: 4px 20px;
-        margin-right: 2em;
+        // margin-right: 2em;
         text-decoration: none;
         color: inherit;
     }
@@ -138,13 +191,15 @@ h1, h2, h3 {
     padding-bottom: 10px;
 }
 
-h1 {
-    border-bottom: 2px solid #ccc;
-}
+main {
+    h1 {
+        border-bottom: 2px solid #ccc;
+    }
 
-h2,
-h3 {
-    border-bottom: 2px solid #eee;
+    h2,
+    h3 {
+        border-bottom: 2px solid #eee;
+    }
 }
 
 ul li {
@@ -153,10 +208,10 @@ ul li {
 
 p {
     line-height: 1.7;
+}
 
-    a {
-        @include prettyLinks;
-    }
+main p a {
+    @include prettyLinks;
 }
 
 ol,
@@ -245,6 +300,31 @@ pre code {
     &.language-squiggle { @include langBadge($radius, "Squiggle"); }
     &.language-bash { @include langBadge($radius, "Bash"); }
 }
+
+.feature-list {
+    $gap: 10px;
+
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 (-$gap);
+
+    .feature {
+        flex: 1 1 300px;
+        margin: $gap;
+
+        code {
+            // Don't line wrap mid-code in these small sections
+            display: inline-block;
+        }
+
+        h3 {
+            // border: 0;
+            margin: 0;
+            // padding-bottom: 0;
+        }
+    }
+}
+
 
 @import "narrow";
 @import "workspace";

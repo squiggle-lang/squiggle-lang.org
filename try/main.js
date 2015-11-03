@@ -103,6 +103,8 @@ function run() {
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
 editors.squiggle.setValue([
+    "# (Control-Enter) to run code",
+    "",
     "let {Date, console} = global",
     "let x = 4",
     "def inc(x) = x + 1",
