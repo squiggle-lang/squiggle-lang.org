@@ -1,5 +1,5 @@
 .workspace {
-    @include diagonalStripes(#eee, rgba(black, 0.02), 40px);
+    @include diagonalStripes(#f4f4f4, rgba(black, 0.02), 2px);
 
     $border: 1px solid #ccc;
     $gap: 15px;
@@ -39,7 +39,7 @@
             display: block;
             width: 100%;
             height: 2em;
-            font-size: 1.3em;
+            font-size: 1.4em;
             font-weight: bold;
             border-radius: $radius;
             border: 1px solid rgba(black, 0.10);
@@ -70,10 +70,6 @@
                 box-shadow: 0 1px 0 0 #ddd;
                 padding: 10px 15px;
             }
-
-            // & > .warn  { @include borderAndTextColor(#aa2); }
-            // & > .error { @include borderAndTextColor(#c00); }
-            // & > .info  { @include borderAndTextColor(#88f); }
         }
     }
 }

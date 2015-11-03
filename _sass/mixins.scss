@@ -1,17 +1,19 @@
 @mixin langBadge($radius, $name) {
     &:after {
         content: $name;
-        border-radius: 0 $radius 0 $radius;
+        border-radius: 0 0 $radius $radius;
         font-family: $fontNormal;
         font-weight: bold;
         font-size: 0.8em;
         position: absolute;
         top: 0;
-        right: 0;
+        right: 10px;
         padding: 4px 8px;
         display: block;
+        border: 1px solid rgba(white, 0.20);
+        border-top: 0;
         background: rgba(black, 0.30);
-        color: white;
+        color: rgba(white, 0.90);
     }
 }
 

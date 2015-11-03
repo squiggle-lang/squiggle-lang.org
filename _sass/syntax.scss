@@ -1,33 +1,43 @@
-// Mainly bluish-purple with white keywords
+// Using colors from the Google color guide:
+// https://www.google.com/design/spec/style/color.html#color-color-palette
 
 .highlight {
-    $red: #f77;
-    $orange: #fa7;
-    $blue: #88f;
-    $green: #ae6;
-    $yellow: #fe3;
-    $white: #fff;
-    $gray: #ddf;
-    $grayer: #aaf;
+    $bg: #424252;
+    $fg: #EEEEEE;
+    $blue: #64B5F6;
+    $lightGreen: #9CCC65;
+    $yellow: #FDD835;
+    $teal: #80CBC4;
+    $gray: #BBBBDB;
+    $green: #81C784;
+    $cyan: #4DD0E1;
+
+    pre code {
+        background: $bg;
+        color: $fg;
+    }
 
     // .kd = Function
+    .kd { color: $lightGreen; font-weight: bold; }
+
     // .k = Keyword
-    .kd, .k { color: $white; font-weight: bold; }
+    .k { color: $blue; font-weight: bold; }
 
     // .nx = Normal
-    .nx { color: $gray; }
+    .nx { color: $fg; }
 
     // .p = Punctuation
     // .o = Operator
-    .p, .o { color: $grayer; }
+    .p, .o { color: $gray; }
 
     // .s2 = String
     .s2 { color: $yellow; }
 
     // .kc = Constant
     // .mi = Number
-    .kc, .mi { color: $orange; }
+    .kc, .mi { color: $cyan; }
 
+    // .c = Comment
     // .c1 = Comment
-    .c1 { color: $green; }
+    .c, .c1 { color: $green; }
 }

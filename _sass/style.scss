@@ -1,16 +1,15 @@
 $bg: #fff;
 $fg: #333;
 
-$narrowWidth: 600px;
-
-$red: #c24;
+$red: #c2185b;
 $orange: #e84;
 $green: #2a5;
-$blue: #47c;
-$darkBlue: #08a;
+$blue: #3f51b5;
+
+$narrowWidth: 600px;
 
 $primary: $red;
-$link: $darkBlue;
+$link: $blue;
 $code: $red;
 $focus: complement($primary);
 
@@ -48,7 +47,7 @@ header {
     background: $bg;
     font-size: 1.2em;
     padding: 0;
-    box-shadow: 0 0 4px rgba(black, 0.40);
+    border-bottom: 1px solid rgba(black, 0.10);
     position: relative;
 
     .header-container {
@@ -104,7 +103,7 @@ header {
 footer {
     text-align: center;
     margin: 1em;
-    color: #888;
+    color: #777;
     a {
         color: inherit;
     }
@@ -228,14 +227,9 @@ code {
 }
 
 pre code {
-    $bg: #558;
-    $fg: #ddf;
     $radius: 4px;
 
     position: relative;
-
-    background: $bg;
-    color: $fg;
 
     display: block;
     padding: 0.8em;
@@ -249,6 +243,7 @@ pre code {
 
     &.language-javascript { @include langBadge($radius, "JavaScript"); }
     &.language-squiggle { @include langBadge($radius, "Squiggle"); }
+    &.language-bash { @include langBadge($radius, "Bash"); }
 }
 
 @import "narrow";
