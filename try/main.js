@@ -1,7 +1,7 @@
 "use strict";
 
 var CM = global.CodeMirror;
-var S = require("squiggle");
+var S = require("squiggle-lang");
 var debounce = require("lodash/function/debounce");
 
 function loggerMaker(type) {

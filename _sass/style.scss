@@ -76,14 +76,17 @@ header,
         a {
             @include resetLinks;
 
-            padding: 2px 4px;
+            padding: 8px 16px;
+            margin: 0 6px;
+            background: rgba(black, 0.10);
+            color: white;
             font-weight: bold;
-            border-bottom: 2px solid $fg;
+            border: 2px solid rgba(white, 0.6);
+            border-radius: 6px;
 
             &:hover {
                 background: $fg;
                 color: $bg;
-                border-radius: 1px;
             }
         }
     }
