@@ -1,3 +1,4 @@
 codemirror: /vendor/codemirror-5.6
 markdown: redcarpet
+highlighter: rouge
 exclude: [node_modules]

@@ -27,7 +27,7 @@ loggerMaker("info");
 var squiggleCodeOpts = {
     lineWrapping: false,
     lineNumbers: true,
-    mode: "text/plain"
+    mode: "text/x-squiggle"
 };
 
 var javascriptCodeOpts = {
@@ -51,8 +51,7 @@ function compile(code) {
     var res = S.compile(
         code,
         "example.squiggle",
-        "example.js",
-        "example.js.map"
+        {embedSourceMaps: false}
     );
     if (!res.parsed) {
         console.log("Parse fail:", res);

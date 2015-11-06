@@ -5,7 +5,8 @@
   "dependencies": {
     "browserify": "^11.0.1",
     "lodash": "^3.10.1",
-    "squiggle": "wavebeem/squiggle"
+    "squiggle": "wavebeem/squiggle",
+    "squiggle-lang": "^0.4.3"
   },
   "devDependencies": {},
   "scripts": {
