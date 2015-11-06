@@ -7,8 +7,10 @@ cssTab1: focus
 
 ## Hello, world!
 
-    let {console} = global
-    in console.log("Hello, world!")
+```squiggle
+let {console} = global
+in console.log("Hello, world!")
+```
 
 ## Features
 
@@ -103,18 +105,20 @@ cssTab1: focus
 
 ## Squiggle + Node.js HTTP Server
 
-    let http = require "http"
+```squiggle
+let http = require "http"
 
-    let port = 1337
-    let host = "127.0.0.1"
+let port = 1337
+let host = "127.0.0.1"
 
-    def handler(res, res) =
-        let headers = {"Content-Type": "text/plain"}
-        let _ = res.writeHead(200, headers)
-        let _ = res.end("Hello world\n")
-        in undefined
-
-    let server = http.createServer(handler)
-    let _ = server.listen(port, host)
-    let _ = console.log("Server running at http://" ++ host + ":" ++ port ++ "/")
+def handler(res, res) =
+    let headers = {"Content-Type": "text/plain"}
+    let _ = res.writeHead(200, headers)
+    let _ = res.end("Hello world\n")
     in undefined
+
+let server = http.createServer(handler)
+let _ = server.listen(port, host)
+let _ = console.log("Server running at http://" ++ host + ":" ++ port ++ "/")
+in undefined
+```
