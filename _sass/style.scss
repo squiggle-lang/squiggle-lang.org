@@ -83,6 +83,7 @@ header,
             font-weight: bold;
             border: 2px solid rgba(white, 0.6);
             border-radius: 6px;
+            display: inline-block;
 
             &:hover {
                 background: $fg;
@@ -114,8 +115,8 @@ header {
 
     .title {
         font-weight: bold;
-        font-size: 1.2em;
-        padding: 4px 20px;
+        // font-size: 1.2em;
+        // padding: 4px 20px;
         // margin-right: 2em;
         text-decoration: none;
         color: inherit;
@@ -123,10 +124,6 @@ header {
 
     nav {
         display: inline-block;
-    }
-
-    .title {
-        padding: 0.75em 2em;
     }
 
     nav a {
@@ -300,10 +297,9 @@ pre code {
     line-height: 1.2;
     overflow-x: auto;
 
-
-    &.language-javascript { @include langBadge($radius, "JavaScript"); }
-    &.language-squiggle { @include langBadge($radius, "Squiggle"); }
-    &.language-bash { @include langBadge($radius, "Bash"); }
+    // &.language-javascript { @include langBadge($radius, ".js"); }
+    // &.language-squiggle { @include langBadge($radius, ".sqg"); }
+    // &.language-bash { @include langBadge($radius, ".sh"); }
 }
 
 .feature-list {

@@ -25,11 +25,15 @@ same meaning as in JavaScript.
 
 Strings also support the new ES2015 syntax for specifying Unicode characters:
 
-    "\u{CODEPOINT}"
+```squiggle
+"\u{CODEPOINT}"
+```
 
 Where *CODEPOINT* is the Unicode code point of the character you want, like:
 
-    "\u{20e}" == "Ȏ"
+```squiggle
+"\u{20e}" == "Ȏ"
+```
 
 ## Arrays
 

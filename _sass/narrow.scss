@@ -11,18 +11,26 @@
             text-align: center;
         }
 
-        nav,
-        .title {
-            display: block;
-        }
-
-        .title {
-            margin: 0;
-        }
-
         nav {
+            display: block;
             overflow-x: auto;
             white-space: nowrap;
         }
+
+        .title {
+            display: none;
+        }
     }
+
+    .jumbotron .jumbotron-container {
+        .or {
+            display: none;
+        }
+
+        a {
+            display: block;
+            margin-top: 1em;
+        }
+    }
+
 }
