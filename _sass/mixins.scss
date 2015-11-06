@@ -1,21 +1,3 @@
-@mixin langBadge($radius, $name) {
-    &:after {
-        content: $name;
-        border-radius: 0 0 $radius $radius;
-        font-family: $fontNormal;
-        font-weight: bold;
-        font-size: 0.7em;
-        position: absolute;
-        top: 0;
-        right: 10px;
-        padding: 4px 8px;
-        display: block;
-        border-top: 0;
-        background: rgba(white, 0.20);
-        color: rgba(black, 0.90);
-    }
-}
-
 @mixin diagonalStripes($color1, $color2, $size) {
     background:
         repeating-linear-gradient(
