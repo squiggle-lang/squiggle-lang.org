@@ -4,7 +4,9 @@ title: "Let-expression"
 
 The most basic let-expression looks like:
 
-    let x = 1 in x
+```squiggle
+let x = 1 in x
+```
 
 This is essentially equivalent to:
 
