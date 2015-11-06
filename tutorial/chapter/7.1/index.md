@@ -73,41 +73,43 @@ console.log(evaluate(text));
 
 ## rpn.squiggle
 
-    let L = require "lodash"
-    let {Number, console} = global
+```squiggle
+let L = require "lodash"
+let {Number, console} = global
 
-    let text = "2 3 4 * 3 - +"
+let text = "2 3 4 * 3 - +"
 
-    # You have to explicitly ignore arguments
-    # with an underscore in Squiggle.
-    def tokenize(text) =
-        text.split(" ").map(fn(x, _, _) tokenValue(x))
+# You have to explicitly ignore arguments
+# with an underscore in Squiggle.
+def tokenize(text) =
+    text.split(" ").map(fn(x, _, _) tokenValue(x))
 
-    def tokenValue(token) =
-        match token
-        case "+" => fn(a, b) a + b
-        case "-" => fn(a, b) a - b
-        case "*" => fn(a, b) a * b
-        case "/" => fn(a, b) a / b
-        case num => Number(num)
+def tokenValue(token) =
+    match token
+    case "+" => fn(a, b) a + b
+    case "-" => fn(a, b) a - b
+    case "*" => fn(a, b) a * b
+    case "/" => fn(a, b) a / b
+    case num => Number(num)
 
-    def evaluateWithStack(stack, values) =
-        match values
-        case [] =>
-            stack[0]
-        case [x, ...xs] =>
-            if L.isFunction(x) then
-                let first = stack[0]
-                let second = stack[1]
-                let rest = stack.slice(2)
-                let y = x(first, second)
-                in evaluateWithStack([y] ++ rest, xs)
-            else
-                evaluateWithStack([x] ++ stack, xs)
+def evaluateWithStack(stack, values) =
+    match values
+    case [] =>
+        stack[0]
+    case [x, ...xs] =>
+        if L.isFunction(x) then
+            let first = stack[0]
+            let second = stack[1]
+            let rest = stack.slice(2)
+            let y = x(first, second)
+            in evaluateWithStack([y] ++ rest, xs)
+        else
+            evaluateWithStack([x] ++ stack, xs)
 
-    def evaluate(text) =
-        evaluateWithStack([], tokenize(text))
+def evaluate(text) =
+    evaluateWithStack([], tokenize(text))
 
-    in console.log(evaluate(text))
+in console.log(evaluate(text))
+```
 
 [rpn]: https://en.wikipedia.org/wiki/Reverse_Polish_notation

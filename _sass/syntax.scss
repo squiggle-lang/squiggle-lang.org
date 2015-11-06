@@ -1,6 +1,9 @@
 // Using colors from the Google color guide:
 // https://www.google.com/design/spec/style/color.html#color-color-palette
 
+// Handy guide for Pygments cryptic CSS classes:
+// https://gist.github.com/scotu/1272660
+
 .highlight {
     $bg: #424252;
     $fg: #EEEEEE;
@@ -30,12 +33,14 @@
     // .o = Operator
     .p, .o { color: $gray; }
 
+    // .s = String
     // .s2 = String
-    .s2 { color: $yellow; }
+    .s, .s2 { color: $yellow; }
 
+    // .no = Named constant
     // .kc = Constant
     // .mi = Number
-    .kc, .mi { color: $cyan; }
+    .no, .kc, .mi { color: $cyan; }
 
     // .c = Comment
     // .c1 = Comment

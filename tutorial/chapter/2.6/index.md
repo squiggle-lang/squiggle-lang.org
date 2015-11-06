@@ -24,23 +24,29 @@ you can't do `x || defaultValue`. But that is an error prone construct anyway:
 take for example `0 || 123`. You probably only wanted 123 if x was undefined,
 not if it was 0.
 
-    true and false # => false
-    true or false # => true
-    true or do
-        console.log(
-            "I would be an error, " ++
-            "but I don't get evaluated!"
-        )
-        "potato";
-    end # => true
+```squiggle
+true and false
+#=> false
+
+true or false
+#=> true
+
+true or console.log("not an error, never evaluated")
+#=> true
+```
 
 ## Not operator
 
 `not` is like JavaScript's `!` except it throws if you give it a non-boolean
 value.
 
-    not true #=> false
-    not 4 #=> Error
+```squiggle
+not true
+#=> false
+
+not 4
+#=> Error
+```
 
 ## Comparison operators
 
@@ -61,11 +67,22 @@ equality using the Squiggle `==` operator.
 
 As for `!=`, it's like `==` but returns the opposite value.
 
-    [] == [] # => true
-    [2] == [1 + 1] # => true
-    ["abc", "xyz"] == ["abc", "xy" ++ "z"] # => true
-    {a: "b"} == {a: "b"} # => true
-    {} == Object.create(null) # => true
+```squiggle
+[] == []
+#=> true
+
+[2] == [1 + 1]
+#=> true
+
+["abc", "xyz"] == ["abc", "xy" ++ "z"]
+#=> true
+
+{a: "b"} == {a: "b"}
+#=> true
+
+{} == Object.create(null)
+#=> true
+```
 
 ## Concatenation operators
 
@@ -74,33 +91,58 @@ method. As such, it works on arrays or strings, like `[1] ++ [2, 3]` or `"abc"
 ++ "xyz"`. It will throw an error unless the arguments are either both strings
 or both arrays.
 
-    "abc" ++ "123" # => "abc123"
-    [0, 1] ++ [2, 3] # => [0, 1, 2, 3]
-    [] ++ "" # => error
-    1 ++ [1, 2] # => error
+```squiggle
+"abc" ++ "123"
+#=> "abc123"
+
+[0, 1] ++ [2, 3]
+#=> [0, 1, 2, 3]
+
+[] ++ ""
+#=> error
+
+1 ++ [1, 2]
+#=> error
+```
 
 ## Addition and subtraction operators
 
 The operators `+` and `-` work like JavaScript except they throw an error unless
 both arguments are numbers.
 
-    1 + 2 # => 3
-    10 - 1 # => 9
+```squiggle
+1 + 2
+#=> 3
+
+10 - 1
+#=> 9
+```
 
 ## Multiplication and division operators
 
 The operators `*` and `/` work like JavaScript except they throw an error unless
 both arguments are numbers.
 
-    2 * 3 # => 6
-    1 / 2 # => 0.5
+```squiggle
+2 * 3
+#=> 6
+
+1 / 2
+#=> 0.5
+```
 
 ## Unary minus operator
 
 The unary minus operator `-` is like JavaScript's unary minus operator except it
 throws if the value is not a number.
 
-    -4 #=> 4
-    let x = 23 in -x #=> -23
-    -"foo" #=> Error
+```squiggle
+-4
+#=> -4
 
+let x = 23 in -x
+#=> -23
+
+-"foo"
+#=> Error
+```

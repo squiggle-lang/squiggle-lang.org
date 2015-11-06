@@ -9,11 +9,19 @@ It is used before an expression, like `try f()` or `try foo.bar()`. The result
 of a try expression is a length 2 array that looks like either `["ok", value]`
 or `["fail", error]`. You can manually inspect these values using brackets, or ideally use `match` to cover both cases, like this:
 
-    let parse = global.JSON.parse
-    def safeParse(text) =
-        match try parse(text)
-        case ["ok", obj] => obj
-        case ["fail", _error] => {}
-    let _ = console.log(safeParse("[]")) #=> []
-    let _ = console.log(safeParse("json error")) #=> {}
-    in undefined
+```squiggle
+let parse = global.JSON.parse
+
+def safeParse(text) =
+    match try parse(text)
+    case ["ok", obj] => obj
+    case ["fail", _error] => {}
+
+def show(text) =
+    console.log(safeParse(text))
+
+let _ = show("[]")         #=> []
+let _ = show("json error") #=> {}
+
+in undefined
+```

@@ -27,8 +27,10 @@ var log2 = console.log.bind(console);
 These are both rather wordy, and in practice they're easy to forget or avoid due
 to their clunkinesss. Squiggle offers a simple operator to solve this: `::`.
 
-    let log = console::log
-    in log("ok!")
+```squiggle
+let log = console::log
+in log("ok!")
+```
 
 Currently there is no support for computed names (like `console["log"]` vs
 `console.log`) with the `::` operator, but it is likely to be added eventually.

@@ -34,7 +34,10 @@ module TableOfContents
             # chapters array as page data.
             site
                 .pages
-                .select {|p| p.dir == "/tutorial" && p.basename == "index" }
+                .select {|p|
+                    p.dir.start_with?("/tutorial") &&
+                    p.basename == "index"
+                }
                 .each {|p| p.data["toc"] = toc }
 
             # Inject various metadata used for chapters to render correctly.

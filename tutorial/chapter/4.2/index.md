@@ -5,8 +5,10 @@ title: "Arity problems"
 Squiggle functions check their arity, but many
 JavaScript functions are built assuming variadic functions. For example:
 
-    # file increment.squiggle
-    export fn(x) x + 1
+```squiggle
+# file increment.squiggle
+export fn(x) x + 1
+```
 
 ```javascript
 // file main.js

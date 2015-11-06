@@ -23,7 +23,9 @@ done
 
 Squiggle has a keyword for creating Node.js modules: `export`
 
-    export 1
+```squiggle
+export 1
+```
 
 This is equivalent to the following JavaScript:
 
@@ -33,13 +35,15 @@ module.exports = 1;
 
 So a common pattern for creating modules is:
 
-    export
-    let a = 1
-    let b = 2
-    let cSecret = 3
-    let dSecret = 4
-    let e = 5
-    in {a, b, e}
+```squiggle
+export
+let a = 1
+let b = 2
+let cSecret = 3
+let dSecret = 4
+let e = 5
+in {a, b, e}
+```
 
 This is like the following JavaScript:
 

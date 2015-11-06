@@ -4,7 +4,9 @@ title: "Getting started"
 
 Squiggle can be installed via npm:
 
-    npm install -g squiggle-lang
+```bash
+npm install -g squiggle-lang
+```
 
 Eventually there will be a published npm package for Squiggle, but for now you
 can just install it via the GitHub shorthand. Please be aware that Squiggle

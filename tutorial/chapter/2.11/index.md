@@ -17,10 +17,12 @@ This is essentially equivalent to:
 
 You can add many `let` bindings together like so:
 
-    let x = 1
-    let y = 2
-    let z = 3
-    in x + y + z
+```squiggle
+let x = 1
+let y = 2
+let z = 3
+in x + y + z
+```
 
 This will evaluate to `6`.
 
@@ -28,13 +30,20 @@ This will evaluate to `6`.
 
 You can assign functions just like any other value:
 
-    let foo = fn foo(word) "foo" ++ word
-    in foo("bar") #=> "foobar"
+```squiggle
+let foo = fn foo(word) "foo" ++ word
+in foo("bar")
+#=> "foobar"
+```
 
 But this is tedious, so there's a shorthand:
 
-    def foo(word) = "foo" ++ word
-    in foo("bar") #=> "foobar"
+```squiggle
+def foo(word) =
+    "foo" ++ word
+in foo("bar")
+#=> "foobar"
+```
 
 `def` is just sugar for making a binding to a function with the same name.
 
