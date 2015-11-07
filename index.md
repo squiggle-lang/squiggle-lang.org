@@ -12,6 +12,8 @@ let {console} = global
 in console.log("Hello, world!")
 ```
 
+Check out [the compiler][squiggle] on GitHub.
+
 ## Features
 
 <div class="feature-list">
@@ -122,3 +124,5 @@ let _ = server.listen(port, host)
 let _ = console.log("Server running at http://" ++ host + ":" ++ port ++ "/")
 in undefined
 ```
+
+[squiggle]: https://github.com/wavebeem/squiggle
