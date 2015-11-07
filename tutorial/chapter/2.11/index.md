@@ -77,3 +77,101 @@ console.log(x, y, z);
 
 That is nonsense. In Squiggle, `let` and `def` bindings are not hoisted, and it
 is a runtime error to attempt to use their values before initialization.
+
+## Destructuring
+
+The basic form of let is `let name = value`, but the `name` part can actually be
+shaped like an array or object, in order to pluck values from the right hand
+side.
+
+### Ignore
+
+The special identifier `_` can be used to ignore values. This is useful for
+evaluating an expression for its side effects, or ignoring values in arrays or
+objects.
+
+```squiggle
+let _ = console.log("hi")
+in undefined
+```
+
+### Arrays
+
+Basically just write an array on the left, including a "..." before the last item to gobble up all remaining items. Number of items must match.
+
+```squiggle
+let [x, y] = [1, 2]
+#=> x == 1
+#=> y == 2
+```
+
+```squiggle
+let [x, y] = [1]
+#=> error, too few items to unpack
+```
+
+```squiggle
+let [x, y] = [1, 2, 3, 4]
+#=> error, too many items to unpack
+```
+
+```squiggle
+let [x, ...xs] = [1, 2, 3, 4]
+#=> x == 1
+#=> xs == [2, 3, 4]
+```
+
+```squiggle
+let [x, ...xs] = [1]
+#=> x == 1
+#=> x == []
+```
+
+```squiggle
+let [x, ...xs] = []
+#=> error, too few items to unpack
+```
+
+### Objects
+
+Just match the shape on the left hand side.
+
+```squiggle
+let {foo: foo} = {foo: 1}
+#=> foo == 1
+```
+
+Quotes still needed for complex keys.
+
+```squiggle
+let {"first name": firstName} = {"first name": "Fatima"}
+#=> firstName == "Fatima"
+```
+
+Computed values are supported within parentheses, just like object literals.
+
+```squiggle
+let {("a" ++ "b"): q} = {ab: "x"}
+#=> q == "x"
+```
+
+If the key and the variable have the same name, you only need to write it once.
+
+```squiggle
+let {name} = {name: "Ada"}
+#=> name == "Ada"
+```
+
+Extra keys are ignored in objects.
+
+```squiggle
+let {x} = {x: 10, y: 47}
+#=> x == 10
+```
+
+If a key evaluates to `undefined` in the object, an error is thrown.
+
+```squiggle
+let {x} = {y: 1}
+#=> error, x undefined in object
+```
