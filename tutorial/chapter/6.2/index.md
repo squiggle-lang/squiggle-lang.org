@@ -2,8 +2,26 @@
 title: Using in the browser
 ---
 
-The current way is to follow the Node.js steps and then use Browserify. There
-are plans to add a Browserify transform in order to simplify this process.
+The easiest way to use Squiggle code in the browser is to use the Browserify
+plugin.
+
+```bash
+npm install --save-dev browserify squiggle-browserify
+```
+
+After installation, use a script like this to build your code:
+
+
+```bash
+#!/usr/bin/env bash
+PATH="$(npm bin):$PATH"
+
+browserify \
+    -t squiggle-browserify \
+    --extension=".sqg" \
+    src/main.sqg \
+    -o out/bundle.js
+```
 
 Additionally, if you really don't want to use Browserify to bundle, you can
 avoid the need for Browserify by never using `require()` or `export` in your
