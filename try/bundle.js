@@ -16596,7 +16596,7 @@ function readFromFileMap(sm, dir) {
 
   var r = mapFileCommentRx.exec(sm);
   mapFileCommentRx.lastIndex = 0;
-  
+
   // for some odd reason //# .. captures in 1 and /* .. */ in 2
   var filename = r[1] || r[2];
   var filepath = path.join(dir, filename);
@@ -16622,7 +16622,7 @@ function Converter (sm, opts) {
 function convertFromLargeSource(content){
   var lines = content.split('\n');
   var line;
-  // find first line which contains a source map starting at end of content 
+  // find first line which contains a source map starting at end of content
   for (var i = lines.length - 1; i > 0; i--) {
     line = lines[i]
     if (~line.indexOf('sourceMappingURL=data:')) return exports.fromComment(line);
@@ -16689,7 +16689,10 @@ exports.fromMapFileComment = function (comment, dir) {
 
 // Finds last sourcemap comment in file or returns null if none was found
 exports.fromSource = function (content, largeSource) {
-  if (largeSource) return convertFromLargeSource(content);
+  if (largeSource) {
+    var res = convertFromLargeSource(content);
+    return res ? res : null;
+  }
 
   var m = content.match(commentRx);
   commentRx.lastIndex = 0;
@@ -40380,7 +40383,6 @@ function compile(code, filename, options) {
     if (arguments.length !== compile.length) {
         throw new Error("incorrect argument count to compile");
     }
-    var sourceMapFilename = filename + ".map";
     var result = parse(code);
     if (!result.status) {
         return {parsed: false, result: result};
@@ -40395,7 +40397,7 @@ function compile(code, filename, options) {
         esAst;
     var stuff = generateCodeAndSourceMap(
         optimizedAst, filename, code);
-    var js = ensureNewline(stuff.code)
+    var js = ensureNewline(stuff.code);
     var sourceMap = stuff.map.toString();
     if (options.embedSourceMaps) {
         js = addSourceMapUrl(js, sourceMap);
@@ -41901,7 +41903,16 @@ module.exports = {
     },
     has: {
         dependencies: [],
-        code: 'function $has(obj, key) { return obj[key] !== undefined; }'
+        code: [
+            'function $has(obj, key) {',
+            '    if (typeof key === "string" ||',
+            '        typeof key === "number" && key % 1 === 0) {',
+            '        return obj[key] !== undefined;',
+            '    }',
+            '    throw new Error("Key must be a string or integer" +',
+            '                    ", got " + typeof key);',
+            '}'
+        ].join("\n")
     },
     is: {
         dependencies: [],
@@ -42439,51 +42450,72 @@ function esDeclare(loc, id, expr) {
     ]);
 }
 
-function Let(transform, node) {
-    var undef = es.Identifier(null, "$undef");
-    var tmp = es.Identifier(null, "$tmp");
+function bindingToDeclAndInit(transform, b) {
+    if (b.identifier.type === "PatternSimple") {
+        return simpleBindingToDeclAndInit(transform, b);
+    }
+    return complexBindingToDeclAndInit(transform, b);
+}
+
+function simpleBindingToDeclAndInit(transform, b) {
+    var ident = transform(b.identifier.identifier);
+    var expr = transform(b.value);
+    var assignExpr = es.AssignmentExpression(null, "=", ident, expr);
+    var assignStmt = es.ExpressionStatement(null, assignExpr);
+    return {
+        identifier: ident,
+        initialization: assignStmt
+    };
+}
+
+function complexBindingToDeclAndInit(transform, b) {
     var throwUp =
         esprima.parse("throw new Error('destructuring failure');").body;
+    var value = transform(b.value);
+    var root = tmp;
+    var pattern = b.identifier;
+    var looksGood =
+        ph.satisfiesPattern(transform, root, pattern);
+    var theCheck =
+        es.IfStatement(
+            null,
+            esNot(looksGood),
+            es.BlockStatement(null, throwUp),
+            null
+        );
+    var assignTmp = es.ExpressionStatement(
+        null,
+        es.AssignmentExpression(
+            null,
+            "=",
+            tmp,
+            value
+        )
+    );
+    var matchy = [
+        assignTmp,
+        theCheck
+    ];
+    var pluck = ph.pluckPattern(transform, root, pattern);
+    var pairs = L.zip(pluck.identifiers, pluck.expressions);
+    var assignments = pairs.map(function(x) {
+        var id = x[0];
+        var expr = x[1];
+        var assign = es.AssignmentExpression(id.loc, "=", id, expr);
+        return es.ExpressionStatement(id.loc, assign);
+    });
+    return {
+        identifier: L.map(pairs, 0),
+        initialization: matchy.concat(assignments)
+    };
+}
+
+var undef = es.Identifier(null, "$undef");
+var tmp = es.Identifier(null, "$tmp");
+
+function Let(transform, node) {
     var allBindings =
-        L.map(node.bindings, function(b) {
-            var value = transform(b.value);
-            var root = tmp;
-            var pattern = b.identifier;
-            var looksGood =
-                ph.satisfiesPattern(transform, root, pattern);
-            var theCheck =
-                es.IfStatement(
-                    null,
-                    esNot(looksGood),
-                    es.BlockStatement(null, throwUp),
-                    null
-                );
-            var assignTmp = es.ExpressionStatement(
-                null,
-                es.AssignmentExpression(
-                    null,
-                    "=",
-                    tmp,
-                    value
-                )
-            );
-            var matchy = [
-                assignTmp,
-                theCheck
-            ];
-            var pluck = ph.pluckPattern(transform, root, pattern);
-            var pairs = L.zip(pluck.identifiers, pluck.expressions);
-            var assignments = pairs.map(function(x) {
-                var id = x[0];
-                var expr = x[1];
-                var assign = es.AssignmentExpression(id.loc, "=", id, expr);
-                return es.ExpressionStatement(id.loc, assign);
-            });
-            return {
-                identifier: L.map(pairs, 0),
-                initialization: matchy.concat(assignments)
-            };
-        });
+        L.map(node.bindings, bindingToDeclAndInit.bind(null, transform));
     var allIdents = L(allBindings)
         .map("identifier")
         .flatten()
