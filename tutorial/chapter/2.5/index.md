@@ -141,7 +141,7 @@ fn(@me)
         [me, them]
 ```
 
-Any variable for an `@` binding.
+Any variable can be used for an `@` binding.
 
 Functions can also optionally have names, like in JavaScript
 
