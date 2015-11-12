@@ -59,3 +59,37 @@ module.exports = {
     e: e
 };
 ```
+
+Squiggle also adds `require` as a keyword, rather than regular function, so you
+write CommonJS imports as follows:
+
+```squiggle
+let fs = require "fs"
+let L = require "lodash"
+let other = require "./foo/other"
+in ...
+```
+
+Note that the parentheses are omitted after `require` because it is a keyword.
+Parentheses cannot be omitted on normal function calls.
+
+Or you could use `export` and `require` together for a module that just collects
+other modules, like:
+
+```squiggle
+export {
+    module1: require "./module1",
+    module2: require "./module2",
+    module3: require "./module3"
+}
+```
+
+Where in JavaScript you would write:
+
+```javascript
+module.export = {
+    module1: require("./module1"),
+    module2: require("./module2"),
+    module3: require("./module3")
+};
+```
