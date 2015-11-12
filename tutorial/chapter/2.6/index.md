@@ -10,7 +10,7 @@ Here are the operators in order, from Squiggle:
 - `and`
 - `not`
 - `>=`, `<=`, `<`, `>`, `==`, `!=`
-- `++`
+- `++`, `~`
 - `+`, `-`
 - `*`, `/`
 - `-` (unary prefix)
@@ -84,7 +84,7 @@ As for `!=`, it's like `==` but returns the opposite value.
 #=> true
 ```
 
-## Concatenation operators
+## Concatenation and update operators
 
 The operator `++` is basically just syntax sugar for calling the `.concat`
 method. As such, it works on arrays or strings, like `[1] ++ [2, 3]` or `"abc"
@@ -104,6 +104,34 @@ or both arrays.
 1 ++ [1, 2]
 #=> error
 ```
+
+The operator `~` is unique to Squiggle. It is sort of like `.concat`, but for
+objects and key-value pairs.
+
+```squiggle
+{a: 1} ~ {b: 2}
+#=> {a: 1, b: 2}
+
+{a: 1, b: 2} ~ {a: 3}
+#=> {a: 3, b: 2}
+
+{a: 1} ~ {}
+#=> {a: 1}
+
+{a: 1} ~ {} ~ {a: 3}
+#=> {a: 3}
+```
+
+Here's what happens in the expression `A ~ B`:
+
+- let `C` be the result of `Object.getPrototypeOf(A)`
+- for each key `k` in `Object.keys(A)`, assign `C[k] = A[k]`
+- for each key `k` in `Object.keys(B)`, assign `C[k] = B[k]`
+- return `Object.freeze(C)`
+
+This has the effect of preserving prototype chains for simple objects (useful
+for objects with methods stored on the prototype), while returning a new object
+with the desired key-value pairs set on it.
 
 ## Addition and subtraction operators
 
