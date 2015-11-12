@@ -35,6 +35,9 @@ Where *CODEPOINT* is the Unicode code point of the character you want, like:
 "\u{20e}" == "Ȏ"
 ```
 
+The text of codepoint is case insensitive, so `"\u{20e}"` and `"\u{20E}"` are
+both legal and represent the same string, `"Ȏ"`.
+
 ## Arrays
 
 Arrays are slightly different: they are automatically wrapped in a call to
