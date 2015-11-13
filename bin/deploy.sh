@@ -30,7 +30,7 @@ s3cmd sync \
     --no-mime-magic \
     --acl-public \
     --no-progress \
-    --exclude="try/bundle.js.gz" \
+    --exclude="try/bundle.js*" \
     "_site/" \
     "$host/"
 
