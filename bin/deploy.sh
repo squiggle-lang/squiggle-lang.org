@@ -15,7 +15,7 @@ bundle exec jekyll build
 # is gzipped but before it's uploaded.
 sleep 3
 
-gzip _site/try/bundle.js
+gzip <_site/try/bundle.js >_site/try/bundle.js.gz
 ls -lh _site/try/bundle.js.gz
 
 s3cmd put \
