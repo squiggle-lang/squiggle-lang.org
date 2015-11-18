@@ -39,7 +39,7 @@ html {
     font-family: $fontNormal;
 }
 
-header {
+nav {
     $bg: $primary;
     $fg: white;
 
@@ -47,9 +47,23 @@ header {
     background: $bg;
     font-size: 1.2em;
     padding: 0;
+
+    display: block;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+
+        li {
+            display: inline-block;
+        }
+    }
 }
 
-header,
+
+nav,
 .jumbotron {
     border-bottom: 1px solid transparent;
 }
@@ -94,24 +108,19 @@ header,
 }
 
 .jumbotron-container,
-.header-container {
+.nav-container {
     margin: 0 auto;
     display: block;
     max-width: $narrowWidth;
 }
 
 
-header {
+nav {
     $bg: $primary;
     $fg: white;
 
-    text-align: center;
-
-    .header-container {
-        margin: 0 auto;
-        display: block;
-        max-width: $narrowWidth;
-    }
+    // text-align: center;
+    padding: 0 40px;
 
     .title {
         font-weight: bold;
@@ -122,27 +131,23 @@ header {
         color: inherit;
     }
 
-    nav {
-        display: inline-block;
+    ul a {
+        text-transform: uppercase;
     }
 
-    nav a {
-        padding: 1.5em 2em;
-    }
-
-    nav a {
+    a {
         @include resetLinks;
 
+        padding: 1.5em 2em;
         display: inline-block;
         margin: 0;
         font-weight: bold;
-        text-transform: uppercase;
         font-size: 0.8em;
 
         transition: background 0.2s, color 0.2s;
 
         &.focus {
-            box-shadow: inset 0 -6px 0 rgba(white, 0.70);
+            box-shadow: inset 0 -6px 0 rgba(white, 0.80);
         }
 
         &:hover {
@@ -200,26 +205,27 @@ main {
     h3 {
         border-bottom: 2px solid #eee;
     }
+
+    ul li {
+        margin: 1em 0;
+    }
+
+    p {
+        line-height: 1.7;
+
+        a {
+            @include prettyLinks;
+        }
+    }
+
+    ol,
+    ul,
+    p {
+        font-size: 1em;
+        font-family: $fontParagraph;
+    }
 }
 
-ul li {
-    margin: 1em 0;
-}
-
-p {
-    line-height: 1.7;
-}
-
-main p a {
-    @include prettyLinks;
-}
-
-ol,
-ul,
-p {
-    font-size: 1em;
-    font-family: $fontParagraph;
-}
 
 .chapter-nav {
     background: #eee;

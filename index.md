@@ -2,7 +2,6 @@
 layout: home
 title: Squiggle
 bodyClass: narrow
-cssTab1: focus
 ---
 
 ## Hello, world!

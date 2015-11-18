@@ -4,22 +4,20 @@
     }
 }
 
-// A little bit of breathing room to account for rendering differences.
 @media screen and (max-width: ($narrowWidth + 20px)) {
-    header {
-        .header-container {
-            text-align: center;
-        }
-
-        nav {
-            display: block;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
+    nav {
+        text-align: center;
 
         .title {
-            display: none;
+            display: block;
+            font-size: 1.5em;
+            padding: 10px;
+            padding-top: 10px;
         }
+    }
+
+    pre code {
+        font-size: 12px;
     }
 
     .jumbotron .jumbotron-container {
@@ -32,5 +30,4 @@
             margin-top: 1em;
         }
     }
-
 }
