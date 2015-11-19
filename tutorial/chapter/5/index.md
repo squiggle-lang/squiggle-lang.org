@@ -32,7 +32,7 @@ console.log("Hello!", "world")
 document.querySelector("body .myClass")
 ```
 
-## "Method binding"
+## Method binding
 
 In JavaScript, the implicit parameter `this` to functions is easy to mess up.
 Take for example the following code which will throw an exception in most
