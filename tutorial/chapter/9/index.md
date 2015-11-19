@@ -1,5 +1,5 @@
 ---
-title: RPN calculator
+title: Examples
 ---
 
 This example is for a [Reverse Polish Notation (RPN)][rpn] calculator. The
