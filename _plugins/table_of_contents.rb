@@ -41,7 +41,7 @@ module TableOfContents
                 n_next = _chapter_plus_n(toc, i, +1)
                 chapter = toc[i]["chapter"]
                 old_title = page.data["title"]
-                new_title = format("%d %s", chapter, old_title)
+                new_title = format("%d. %s", chapter, old_title)
                 page.data.merge!({
                     "layout" => "chapter",
                     "title" => new_title,

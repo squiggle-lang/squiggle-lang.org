@@ -144,10 +144,9 @@ nav {
         font-weight: bold;
         font-size: 0.8em;
 
-        transition: background 0.2s, color 0.2s;
-
         &.focus {
-            box-shadow: inset 0 -6px 0 rgba(white, 0.80);
+            // box-shadow: inset 0 -6px 0 rgba(white, 0.80);
+            background: rgba(black, 0.30);
         }
 
         &:hover {
