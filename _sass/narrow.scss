@@ -7,12 +7,36 @@
 @media screen and (max-width: ($narrowWidth + 20px)) {
     nav {
         text-align: center;
+        padding: 0;
 
         .title {
             display: block;
             font-size: 1.5em;
             padding: 10px;
             padding-top: 10px;
+        }
+
+        a,
+        .title {
+            padding-left: 20px;
+        }
+
+        a {
+            text-align: left;
+            border: 1px solid transparent;
+            border-left: 0;
+            border-right: 0;
+        }
+
+        a.focus {
+            box-shadow: inset 6px 0 0 white;
+            background: rgba(black, 0.05);
+        }
+
+        ul,
+        ul li,
+        ul li a {
+            display: block;
         }
     }
 
