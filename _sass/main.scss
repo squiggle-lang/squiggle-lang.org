@@ -63,11 +63,6 @@ nav {
 }
 
 
-nav,
-.jumbotron {
-    border-bottom: 1px solid transparent;
-}
-
 .jumbotron {
     $bg: lighten($primary, 3%);
     $fg: white;
