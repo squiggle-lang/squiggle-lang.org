@@ -168,6 +168,11 @@ objects and key-value pairs.
 
 {a: 1} ~ {} ~ {a: 3}
 #=> {a: 3}
+
+let proto = {a: 1, b: 2}
+let obj = Object.create(proto)
+in obj ~ {b: 4, c: 3}
+#=> {b: 4, c: 3}, with prototype set to {a: 1, b: 2}
 ```
 
 Here's what happens in the expression `A ~ B`:
