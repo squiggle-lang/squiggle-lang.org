@@ -9,7 +9,7 @@ Here are the operators in order, from Squiggle:
 - `or`
 - `and`
 - `not`
-- `>=`, `<=`, `<`, `>`, `==`, `!=`
+- `>=`, `<=`, `<`, `>`, `==`, `!=`, `is`, `hash`
 - `++`, `~`
 - `+`, `-`
 - `*`, `/`
@@ -82,6 +82,54 @@ As for `!=`, it's like `==` but returns the opposite value.
 
 {} == Object.create(null)
 #=> true
+```
+
+The operator `is` is equivalent to the ES6 function `Object.is`,
+[as documented on MDN][object_is].
+Basically it's like JavaScript's `===` operator except that
+`0 is -0` is false, and `NaN is NaN` is true.
+
+The operator `has` works like this:
+
+```squiggle
+{} has "foo"
+#=> false
+
+{a: 1} has "a"
+#=> true
+
+{} has "toString"
+#=> true, comes from prototype chain
+
+{foo: undefined} has "foo"
+#=> false, it has the key "foo" but its value is undefined
+
+{bar: null} has "bar"
+#=> true, it's ok if the value is null
+
+{"4": "four"} has 4
+#=> true, integers are converted to strings
+
+{"3.14": "pi"} has 3.14
+#=> Error, non-integer numbers are illegal as keys
+
+{"NaN": NaN} has NaN
+#=> Error, non integer numbers are illegal as keys
+
+["foo"] has 0
+#=> true, there is a value other than undefined in index 0
+
+[1, 2, undefined] has 2
+#=> false, undefined at index 2
+
+4 has "toString"
+#=> true, 4 has the method toString
+
+undefined has "toString"
+#=> Error, undefined cannot have keys
+
+null has "toString"
+#=> Error, null cannot have keys
 ```
 
 ## Concatenation and update operators
@@ -174,3 +222,5 @@ let x = 23 in -x
 -"foo"
 #=> Error
 ```
+
+[object_is]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
