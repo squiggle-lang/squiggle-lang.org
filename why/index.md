@@ -26,9 +26,11 @@ the arity of a function generally leads to misbehaving code rather than flat out
 errors where the incorrect call occurs.
 
 The JavaScript keyword `this` is really a pain. Just look at all the [Stack
-Overflow results][so_js_this]. It's such a common pain point that there's a
-pattern of [var self = this][var_self_eq_this] to work around it nesting and
-callback issues. It's also hard to tell up front of a function uses `this` at all. You could even accidentally use when copy/pasting code. Because of this, Squiggle makes JavaScript's `this` into a named parameter like any other:
+Overflow results][1]. It's such a common pain point that there's a pattern of
+[var self = this][2] to work around it nesting and callback issues. It's also
+hard to tell up front of a function uses `this` at all. You could even
+accidentally use when copy/pasting code. Because of this, Squiggle makes
+JavaScript's `this` into a named parameter like any other:
 
 ```squiggle
 let lorenzo = {
@@ -49,7 +51,10 @@ let obj = {
 }
 ```
 
-Many JavaScript functions are variadic (can accept many different numbers of arguments), but JavaScript makes it hard to write these functions, relying on the `arguments` pseudo-array. Squiggle uses the ES6 rest notation for functions like this: `def printf(format, ...args)`.
+Many JavaScript functions are variadic (can accept many different numbers of
+arguments), but JavaScript makes it hard to write these functions, relying on
+the `arguments` pseudo-array. Squiggle uses the ES6 rest notation for functions
+like this: `def printf(format, ...args)`.
 
 JavaScript is filled with hoisting. This means you can use variables before
 initialization, which leads to subtle bugs when reordering your code, or when
@@ -91,17 +96,17 @@ but it has some rough points compared to Squiggle.
 Including libraries written in JS with your ClojureScript bundle is a bit
 awkward. ClojureScript using Google Closure compiler wi.th advanced
 optimizations on, meaning you have to
-[actively fight against name mangling][name_mangle]
+[actively fight against name mangling][3]
 to use JS with your program.
 
 ClojureScript uses `nil` (their version of `null`) pervasively to represent
 values that cannot exist and other errors. The idea is that [nil
-punning][nil_punning] will let `nil` flow through the system with the
-desired behavior. Squiggle embraces [fail fast][fail_fast] design and throws as
+punning][9] will let `nil` flow through the system with the
+desired behavior. Squiggle embraces [fail fast][4] design and throws as
 many errors as possible, right at the site of the problem, for increased
 debuggability of code.
 
-The ["Quick Start" guide][quick_start] is 11 printed pages and requires
+The ["Quick Start" guide][5] is 11 printed pages and requires
 installing Java and either downloading a JAR or adding a slow Java-based build
 tool.
 
@@ -208,16 +213,15 @@ could be.
 
 <h2 id="versus-es6"><a href="#versus-es6">Versus ES6 / ES2015</a></h2>
 
-ES6 (now known as ES2015 officially) is the [latest JavaScript standard][es6]. It was
-designed to be backwards compatible, so that means it inherits all of
+ES6 (now known as ES2015 officially) is the [latest JavaScript standard][7]. It
+was designed to be backwards compatible, so that means it inherits all of
 JavaScripts bad parts, merely adding *more things* to JS to know and use, not
 reducing complexity in any way.
 
-Browser support is getting better every day, but the
-[compatibility table][compat] is filled with a lot of red still.
-Many things cannot be polyfilled 100% correctly, so there's also a risk of
-writing code that depends on polyfilled fake-ES6 but won't run in a real ES6
-engine, such as generators, symbols, weakmaps, and more.
+Browser support is getting better every day, but the [compatibility table][6] is
+filled with a lot of red still. Many things cannot be polyfilled 100% correctly,
+so there's also a risk of writing code that depends on polyfilled fake-ES6 but
+won't run in a real ES6 engine, such as generators, symbols, weakmaps, and more.
 
 <h2 id="versus-typescript"><a href="versus-typescript">Versus TypeScript</a></h2>
 
@@ -231,19 +235,19 @@ declarations as well, meaning it's more work to gain value from TS. This also
 means that using JS libraries with TypeScript nearly requires the use of
 community maintained type definition files, of varying quality.
 
-Also, per [TypeScript's design goals][ts_design_goals], it does not perform any
-runtime checks on code. This is good for performance, but it makes TypeScript
-not terribly useful for writing libraries, or for being used in a mixed JS/TS
-project, as the type system is ignored in that case.
+Also, per [TypeScript's design goals][8], it does not perform any runtime checks
+on code. This is good for performance, but it makes TypeScript not terribly
+useful for writing libraries, or for being used in a mixed JS/TS project, as the
+type system is ignored in that case.
 
 Otherwise, TypeScript essentially shares the same faults as plain JS or ES6.
 
-[so_js_this]: http://stackoverflow.com/search?q=javascript+this
-[var_self_eq_this]: http://stackoverflow.com/questions/337878/var-self-this
-[name_mangle]: http://lukevanderhart.com/2011/09/30/using-javascript-and-clojurescript.html
-[fail_fast]: https://en.wikipedia.org/wiki/Fail-fast
-[quick_start]: https://github.com/clojure/clojurescript/wiki/Quick-Start
-[compat]: http://kangax.github.io/compat-table/es6/
-[es6]: http://www.ecma-international.org/ecma-262/6.0/
-[ts_design_goals]: https://github.com/Microsoft/TypeScript/wiki/TypeScript-Design-Goals
-[nil_punning]: http://www.lispcast.com/nil-punning
+[1]: http://stackoverflow.com/search?q=javascript+this
+[2]: http://stackoverflow.com/questions/337878/var-self-this
+[3]: http://lukevanderhart.com/2011/09/30/using-javascript-and-clojurescript.html
+[4]: https://en.wikipedia.org/wiki/Fail-fast
+[5]: https://github.com/clojure/clojurescript/wiki/Quick-Start
+[6]: http://kangax.github.io/compat-table/es6/
+[7]: http://www.ecma-international.org/ecma-262/6.0/
+[8]: https://github.com/Microsoft/TypeScript/wiki/TypeScript-Design-Goals
+[9]: http://www.lispcast.com/nil-punning
