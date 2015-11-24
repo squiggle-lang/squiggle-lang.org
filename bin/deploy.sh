@@ -3,8 +3,8 @@ set -e
 
 # host=s3://dev.mockbrian.com/squiggle
 # host=s3://mockbrian.com/squiggle
-host=s3://dev.squiggle-lang.org
-# host=s3://squiggle-lang.org
+# host=s3://dev.squiggle-lang.org
+host=s3://squiggle-lang.org
 
 ./bin/build-js.sh
 
