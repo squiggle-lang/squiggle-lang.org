@@ -27,7 +27,12 @@
 
         $codeHeight: 350px;
 
-        .console,
+        &.code {
+            background: white;
+            border-radius: $radius;
+        }
+
+        &.code,
         &.code .CodeMirror {
             height: $codeHeight;
         }

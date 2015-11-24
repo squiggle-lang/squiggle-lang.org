@@ -43285,9 +43285,5 @@ editors.squiggle.setOption("extraKeys", {
 
 sel("#run").onclick = run;
 
-function $$(selector) {
-    return [].slice.call(document.querySelectorAll(selector));
-}
-
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"lodash/function/debounce":12,"squiggle-lang":150}]},{},[232]);
