@@ -25,24 +25,29 @@
         margin-bottom: 0;
         margin-right: 0;
 
+        $codeHeight: 350px;
+
         .console,
         &.code .CodeMirror {
-            height: 350px;
+            height: $codeHeight;
         }
 
         .console,
         .run {
             border-radius: $radius;
         }
+
+        $buttonHeight: 50px;
 
         .run {
             display: block;
             width: 100%;
-            height: 2em;
+            height: $buttonHeight;
             font-size: 1.4em;
             font-weight: bold;
             border-radius: $radius;
-            border: 1px solid rgba(black, 0.10);
+            box-shadow: 0 1px 2px rgba(black, 0.30);
+            border: 0;
             margin: 0;
             margin-bottom: $gap;
 
@@ -57,7 +62,7 @@
         }
 
         .console {
-            height: 150px;
+            height: ($codeHeight - $buttonHeight - $gap);
             overflow: auto;
             padding: 0;
             background: white;

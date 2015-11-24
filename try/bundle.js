@@ -43289,17 +43289,5 @@ function $$(selector) {
     return [].slice.call(document.querySelectorAll(selector));
 }
 
-function resizeCodeAreas() {
-    $$(".CodeMirror").forEach(function(element) {
-        var vh = document.documentElement.clientHeight;
-        var h = Math.max(300, vh - 400);
-        element.style.height = h + "px";
-    })
-}
-
-resizeCodeAreas();
-window.onresize = resizeCodeAreas;
-
-
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"lodash/function/debounce":12,"squiggle-lang":150}]},{},[232]);

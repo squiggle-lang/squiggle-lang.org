@@ -117,19 +117,3 @@ editors.squiggle.setOption("extraKeys", {
 });
 
 sel("#run").onclick = run;
-
-function $$(selector) {
-    return [].slice.call(document.querySelectorAll(selector));
-}
-
-function resizeCodeAreas() {
-    $$(".CodeMirror").forEach(function(element) {
-        var vh = document.documentElement.clientHeight;
-        var h = Math.max(300, vh - 400);
-        element.style.height = h + "px";
-    })
-}
-
-resizeCodeAreas();
-window.onresize = resizeCodeAreas;
-
