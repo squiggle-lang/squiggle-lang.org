@@ -9,7 +9,7 @@ Here are the operators in order, from Squiggle:
 - `or`
 - `and`
 - `not`
-- `>=`, `<=`, `<`, `>`, `==`, `!=`, `is`, `hash`
+- `>=`, `<=`, `<`, `>`, `==`, `!=`, `is`, `has`
 - `++`, `~`
 - `+`, `-`
 - `*`, `/`
