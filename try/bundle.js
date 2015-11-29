@@ -18997,9 +18997,11 @@ Object.defineProperty(exports, 'mapFileCommentRegex', {
         },
 
         ExportSpecifier: function (expr, precedence, flags) {
-            var result = [ (expr.id || expr.local).name ];
-            if (expr.name) {
-                result.push(noEmptySpace() + 'as' + noEmptySpace() + generateIdentifier(expr.name));
+            var exported = (expr.id || expr.imported).name;
+            var result = [ exported ];
+            var id = expr.name || expr.local;
+            if (id && id.name !== exported) {
+                result.push(noEmptySpace() + 'as' + noEmptySpace() + generateIdentifier(id));
             }
             return result;
         },
@@ -23523,9 +23525,9 @@ module.exports={
     "escodegen.js",
     "package.json"
   ],
-  "version": "1.7.0",
+  "version": "1.7.1",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.0"
   },
   "maintainers": [
     {
@@ -23557,11 +23559,10 @@ module.exports={
     "bower-registry-client": "^0.2.1",
     "chai": "^1.10.0",
     "commonjs-everywhere": "^0.9.7",
-    "esprima-moz": "1.0.0-dev-harmony-moz",
     "gulp": "^3.8.10",
     "gulp-eslint": "^0.2.0",
     "gulp-mocha": "^2.0.0",
-    "semver": "^4.1.0"
+    "semver": "^5.1.0"
   },
   "license": "BSD-2-Clause",
   "scripts": {
@@ -23572,25 +23573,25 @@ module.exports={
     "build-min": "cjsify -ma path: tools/entry-point.js > escodegen.browser.min.js",
     "build": "cjsify -a path: tools/entry-point.js > escodegen.browser.js"
   },
-  "gitHead": "5dabbc5441b396febd0afb9252a9afdfa7051657",
+  "gitHead": "f48fa71ce638ec32943c42c2377a08cefe9d8576",
   "bugs": {
     "url": "https://github.com/estools/escodegen/issues"
   },
-  "_id": "escodegen@1.7.0",
-  "_shasum": "4e299d8cc33087b7f29c19e2b9e84362abe35453",
+  "_id": "escodegen@1.7.1",
+  "_shasum": "30ecfcf66ca98dc67cd2fd162abeb6eafa8ce6fc",
   "_from": "escodegen@>=1.6.1 <2.0.0",
-  "_npmVersion": "2.11.3",
-  "_nodeVersion": "0.12.7",
+  "_npmVersion": "2.14.7",
+  "_nodeVersion": "4.2.2",
   "_npmUser": {
     "name": "michaelficarra",
     "email": "npm@michael.ficarra.me"
   },
   "dist": {
-    "shasum": "4e299d8cc33087b7f29c19e2b9e84362abe35453",
-    "tarball": "http://registry.npmjs.org/escodegen/-/escodegen-1.7.0.tgz"
+    "shasum": "30ecfcf66ca98dc67cd2fd162abeb6eafa8ce6fc",
+    "tarball": "http://registry.npmjs.org/escodegen/-/escodegen-1.7.1.tgz"
   },
   "directories": {},
-  "_resolved": "https://registry.npmjs.org/escodegen/-/escodegen-1.7.0.tgz",
+  "_resolved": "https://registry.npmjs.org/escodegen/-/escodegen-1.7.1.tgz",
   "readme": "ERROR: No README data found!"
 }
 
@@ -40498,12 +40499,19 @@ function fileParse(text) {
 module.exports = fileParse;
 
 },{"./parser":193}],156:[function(require,module,exports){
+var esprima = require("esprima");
+
 var es = require("./es");
 
 function fileWrapper(body) {
     var useStrict = es.ExpressionStatement(null,
         es.Literal(null, 'use strict'));
-    var newBody = [useStrict].concat(body);
+    var strictCheck = esprima.parse(
+        "if ((function() { 'use strict'; return this }())) {\n" +
+        "   throw new Error('strict mode not supported');\n" +
+        "}"
+    ).body;
+    var newBody = [useStrict].concat(strictCheck).concat(body);
     var fn = es.FunctionExpression(null,
         null, [], es.BlockStatement(null, newBody));
     var i = newBody.length - 1;
@@ -40514,7 +40522,7 @@ function fileWrapper(body) {
 
 module.exports = fileWrapper;
 
-},{"./es":153}],157:[function(require,module,exports){
+},{"./es":153,"esprima":144}],157:[function(require,module,exports){
 var estraverse = require("estraverse");
 var esprima = require("esprima");
 var L = require("lodash");
@@ -41874,17 +41882,11 @@ module.exports = {
         ].join("\n")
     },
     get: {
-        dependencies: [],
+        dependencies: ['has'],
         code: [
-            'function $get(obj, k) {',
-            '    if (obj === null || obj === undefined) {',
-            '        throw new Error("cannot get " + k + " of " + obj);',
-            '    }',
-            '    var v = obj[k];',
-            '    if (v !== undefined) {',
-            '        return v;',
-            '    }',
-            '    throw new Error("key " + k + " is undefined in " + obj);',
+            'function $get(obj, key) {',
+            '    if ($has(obj, key)) { return obj[key]; }',
+            '    throw new Error(obj + " does not have key " + key);',
             '}'
         ].join("\n")
     },
@@ -41905,6 +41907,9 @@ module.exports = {
         dependencies: [],
         code: [
             'function $has(obj, key) {',
+            '    if (obj === null || obj === undefined) {',
+            '        throw new Error(obj + " cannot have keys");',
+            '    }',
             '    if (typeof key === "string" ||',
             '        typeof key === "number" && key % 1 === 0) {',
             '        return obj[key] !== undefined;',
@@ -41929,14 +41934,6 @@ module.exports = {
     isObject: {
         dependencies: [],
         code: 'function $isObject(x) { return x && typeof x === "object"; }'
-    },
-    isObjectish: {
-        dependencies: [],
-        code: [
-            'function $isObjectish(x) {',
-            '   return x !== undefined && x !== null;',
-            '}'
-        ].join("\n")
     },
     lt: {
         // TODO: Make it work on strings too
@@ -42416,6 +42413,7 @@ function Identifier(transform, node) {
 module.exports = Identifier;
 
 },{"../es":153,"../is-js-reserved-word":158}],212:[function(require,module,exports){
+// var inspect = require("../inspect");
 var ast = require("../ast");
 var es = require("../es");
 
@@ -42423,11 +42421,27 @@ function bool(x) {
     return ast.Call(null, ast.Identifier(null, "$bool"), [x]);
 }
 
+// It would totally work to just generate code like `P ? X : Y`, but pretty
+// printers don't tend to make nested usages of such even remotely readable, so
+// we just use a function wrapper and normal if/else.
+
 function If(transform, node) {
-    var p = transform(bool(node.p));
-    var t = transform(node.t);
-    var f = transform(node.f);
-    return es.ConditionalExpression(node.loc, p, t, f);
+    var if_ = ifHelper(transform, node);
+    var block = es.BlockStatement(null, [if_]);
+    var fn = es.FunctionExpression(null, null, [], block);
+    return es.CallExpression(null, fn, []);
+}
+
+function ifHelper(transform, node) {
+    if (node.type === "If") {
+        var p = transform(bool(node.p));
+        var t = ifHelper(transform, node.t);
+        var f = ifHelper(transform, node.f);
+        return es.IfStatement(node.loc, p, t, f);
+    } else {
+        var return_ = es.ReturnStatement(node.loc, transform(node));
+        return es.BlockStatement(null, [return_]);
+    }
 }
 
 module.exports = If;
@@ -42439,10 +42453,6 @@ var L = require("lodash");
 
 var es = require("../es");
 var ph = require("./pattern-helpers");
-
-function esNot(x) {
-    return es.UnaryExpression(null, true, "!", x);
-}
 
 function esDeclare(loc, id, expr) {
     return es.VariableDeclaration(loc, "var", [
@@ -42489,13 +42499,6 @@ function complexBindingToDeclAndInit(transform, b) {
     var pattern = b.identifier;
     var looksGood =
         ph.satisfiesPattern(transform, root, pattern);
-    var theCheck =
-        es.IfStatement(
-            null,
-            esNot(looksGood),
-            es.BlockStatement(null, throwUp),
-            null
-        );
     var assignTmp = es.ExpressionStatement(
         null,
         es.AssignmentExpression(
@@ -42505,10 +42508,6 @@ function complexBindingToDeclAndInit(transform, b) {
             value
         )
     );
-    var matchy = [
-        assignTmp,
-        theCheck
-    ];
     var pluck = ph.pluckPattern(transform, root, pattern);
     var pairs = L.zip(pluck.identifiers, pluck.expressions);
     var assignments = pairs.map(function(x) {
@@ -42517,9 +42516,16 @@ function complexBindingToDeclAndInit(transform, b) {
         var assign = es.AssignmentExpression(id.loc, "=", id, expr);
         return es.ExpressionStatement(id.loc, assign);
     });
+    var theCheck =
+        es.IfStatement(
+            null,
+            looksGood,
+            es.BlockStatement(null, assignments),
+            es.BlockStatement(null, throwUp)
+        );
     return {
         identifier: L.map(pairs, 0),
-        initialization: matchy.concat(assignments)
+        initialization: [assignTmp, theCheck]
     };
 }
 
@@ -42629,8 +42635,12 @@ var es = require("../es");
 
 function Negate(transform, node) {
     var expr = transform(node.expr);
-    var negate = es.Identifier(node.loc, "$negate");
-    return es.CallExpression(null, negate, [expr]);
+    if (node.expr.type === "Number") {
+        return es.UnaryExpression(node.loc, true, "-", transform(node.expr));
+    } else {
+        var negate = es.Identifier(node.loc, "$negate");
+        return es.CallExpression(null, negate, [expr]);
+    }
 }
 
 module.exports = Negate;
@@ -42697,6 +42707,8 @@ function Parameter(transform, node) {
 module.exports = Parameter;
 
 },{}],222:[function(require,module,exports){
+var flatten = require("lodash/array/flatten");
+
 var es = require("../es");
 
 function pluckPattern(transform, root, p) {
@@ -42705,10 +42717,18 @@ function pluckPattern(transform, root, p) {
 }
 
 function satisfiesPattern(transform, root, p) {
+    var conditions = satisfiesPattern2(transform, root, p);
+    if (conditions.length === 0) {
+        return es.Literal(null, true);
+    }
+    return conditions.reduce(esAnd);
+}
+
+function satisfiesPattern2(transform, root, p) {
     if (p && p.type in _satisfiesPattern) {
         return _satisfiesPattern[p.type](transform, root, p);
     }
-    throw new Error("can't satisfiesPattern of " + j(p));
+    throw new Error("can't satisfiesPattern2 of " + j(p));
 }
 
 function esAnd(a, b) {
@@ -42717,6 +42737,10 @@ function esAnd(a, b) {
 
 function esEq(a, b) {
     return es.BinaryExpression(null, "===", a, b);
+}
+
+function notNullish(a) {
+    return es.BinaryExpression(null, "!=", a, es.Literal(null, null));
 }
 
 function esGe(a, b) {
@@ -42750,76 +42774,64 @@ function objGet2(obj, k) {
     return es.MemberExpression(null, true, obj, k);
 }
 
-// var matchTmp = es.Identifier("$_");
-
-// function assignTemp(expr) {
-//     return es.AssignmentExpression("=", matchTmp, expr);
-// }
-
 var j = JSON.stringify;
-
-function notEsTrue(x) {
-    return !isEsTrue(x);
-}
-
-function isEsTrue(x) {
-    return x.type === "Literal" && x.value === true;
-}
 
 var _satisfiesPattern = {
     PatternSimple: function(transform, root, p) {
-        return es.Literal(p.loc, true);
+        return [];
     },
     PatternLiteral: function(transform, root, p) {
         var lit = transform(p.data);
-        return es.CallExpression(
-            p.loc, es.Identifier(null, "$is"), [root, lit]);
+        var is = es.Identifier(null, "$is");
+        var call = es.CallExpression(p.loc, is, [root, lit]);
+        return [call];
     },
     PatternParenExpr: function(transform, root, p) {
         var expr = transform(p.expr);
-        return es.CallExpression(
-            null, es.Identifier(null, "$eq"), [root, expr]);
+        var eq = es.Identifier(null, "$eq");
+        var call = es.CallExpression(null, eq, [root, expr]);
+        return [call];
     },
     PatternArray: function(transform, root, p) {
         var ps = p.patterns;
         var n = ps.length;
-        var lengthEq = esEq(esProp(root, "length"), es.Literal(null, n));
-        return ps
-            .map(function(x, i) {
-                return satisfiesPattern(transform, esNth(root, i), x);
-            })
-            .filter(notEsTrue)
-            .reduce(esAnd, esAnd(root, lengthEq));
+        var checkLength = esEq(esProp(root, "length"), es.Literal(null, n));
+        var checkNormal =
+            ps.map(function(x, i) {
+                return satisfiesPattern2(transform, esNth(root, i), x);
+            });
+        return flatten([checkLength, flatten(checkNormal)]);
     },
     PatternArraySlurpy: function(transform, root, p) {
         var ps = p.patterns;
         var n = es.Literal(null, ps.length);
         var atLeastLength = esGe(esProp(root, "length"), n);
-        var a = ps
-            .map(function(x, i) {
-                return satisfiesPattern(transform, esNth(root, i), x);
-            })
-            .filter(notEsTrue)
-            .reduce(esAnd, esAnd(root, atLeastLength));
-        var b = satisfiesPattern(transform, esSlice(root, n), p.slurp);
-        return esAnd(a, b);
+        var checkLength = esAnd(notNullish(root), atLeastLength);
+        var checkNormal =
+            ps.map(function(x, i) {
+                return satisfiesPattern2(transform, esNth(root, i), x);
+            });
+        var checkSlurpy =
+            satisfiesPattern2(transform, esSlice(root, n), p.slurp);
+        return flatten([
+            checkLength,
+            flatten(checkNormal),
+            checkSlurpy
+        ]);
     },
     PatternObject: function(transform, root, p) {
-        var id = es.Identifier(null, "$isObjectish");
-        var isObjectish = es.CallExpression(null, id, [root]);
-        return p
-            .pairs
-            .map(function(x) {
-                return satisfiesPattern(transform, root, x);
-            })
-            .filter(notEsTrue)
-            .reduce(esAnd, isObjectish);
+        var checkPairs =
+            p.pairs.map(function(x) {
+                return satisfiesPattern2(transform, root, x);
+            });
+        return flatten([notNullish(root), flatten(checkPairs)]);
     },
     PatternObjectPair: function(transform, root, p) {
         var expr = transform(p.key);
         var has = esHas(root, expr);
         var rootObj = esNth2(root, expr);
-        return esAnd(has, satisfiesPattern(transform, rootObj, p.value));
+        var checkValue = satisfiesPattern2(transform, rootObj, p.value);
+        return flatten([has, checkValue]);
     },
 };
 
@@ -42879,7 +42891,7 @@ module.exports = {
     satisfiesPattern: satisfiesPattern
 };
 
-},{"../es":153}],223:[function(require,module,exports){
+},{"../es":153,"lodash/array/flatten":8}],223:[function(require,module,exports){
 var fileWrapper = require("../file-wrapper");
 
 function ReplExpression(transform, node) {
