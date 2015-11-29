@@ -167,15 +167,15 @@ closely to JS, using the same tooling, much like Squiggle.
 CoffeeScript contains **many** synonyms, making consistent code even harder to develop:
 
 ```coffeescript
-yes = on = true
-no = off = false
-not = !
-and = &&
-or = ||
-@ = this
-@foo = this.foo
-is = ===
-isnt = !==
+yes     =    on    = true
+no      =    off   = false
+not     =    !
+and     =    &&
+or      =    ||
+is      =    ===
+isnt    =    !==
+@       =    this
+@foo    =    this.foo
 ```
 
 Additionally, the flexible syntax can make programs parse in surprising ways:
