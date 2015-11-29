@@ -122,8 +122,30 @@ difficult.
 
 Elm has some great guarantees about statically enforced semver with its package
 manager, but nonetheless requires a separate package manager and build tool from
-existing JS tools. Also, it uses a Haskell-style import system which can make it
-very hard to tell which modules functions come from.
+existing JS tools.
+
+Elm uses a Haskell-style import system, which encourages polluting your local scope like:
+
+```haskell
+import Html exposing (..)
+import Style exposing (..)
+
+type alias Styles = List ( String, String )
+
+centeredLayout : Styles
+centeredLayout =
+  [ display flex'
+  , justifyContent center
+  , alignItems center
+  ]
+
+view : Html
+view =
+  div [ style centeredLayout ] [ text "Hello, world!" ]
+```
+
+So it's not clear by looking at import statements where a particular function is
+even coming from.
 
 <h2 id="versus-purescript"><a href="#versus-purescript">Versus PureScript</a></h2>
 

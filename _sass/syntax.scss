@@ -24,7 +24,8 @@
     .kd { color: $lightGreen; font-weight: bold; }
 
     // .k = Keyword
-    .k { color: $blue; font-weight: bold; }
+    // .kr = Keyword
+    .k, .kr { color: $blue; font-weight: bold; }
 
     // .nx = Normal
     .nx { color: $fg; }
@@ -39,8 +40,9 @@
 
     // .no = Named constant
     // .kc = Constant
+    // .kt = Type constant
     // .mi = Number
-    .no, .kc, .mi { color: $cyan; }
+    .no, .kc, .mi, .kt { color: $cyan; }
 
     // .c = Comment
     // .c1 = Comment
