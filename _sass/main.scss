@@ -42,12 +42,14 @@ html {
 nav {
     $bg: $primary;
     $fg: white;
+    $height: 64px;
 
     color: $fg;
     background: $bg;
     font-size: 1.2em;
     padding: 0;
     box-shadow: 0 2px 5px rgba(black, 0.26);
+    height: $height;
 
     display: block;
     padding: 0 40px;
@@ -56,6 +58,14 @@ nav {
         font-weight: bold;
         text-decoration: none;
         color: inherit;
+        padding: 0 10px;
+        margin: 0;
+        line-height: 0;
+        vertical-align: top;
+
+        img {
+            padding: 10px 0;
+        }
     }
 
     ul a {
@@ -105,6 +115,10 @@ nav {
     font-size: 1.2em;
     padding: 0;
     text-align: center;
+
+    img {
+        vertical-align: middle;
+    }
 
     h1 {
         padding: 0;
