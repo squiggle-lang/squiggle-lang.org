@@ -1,10 +1,8 @@
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 500px) {
     body {
         font-size: 14px;
     }
-}
 
-@media screen and (max-width: ($narrowWidth + 20px)) {
     nav {
         text-align: center;
         padding: 0;

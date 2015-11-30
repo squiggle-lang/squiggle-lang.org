@@ -75,7 +75,7 @@ Check out [the compiler][squiggle] on GitHub.
     <div class="feature">
         <h3>Concise function syntax</h3>
         <p>
-            Functions are simple: <code>xs.map(fn(x) x + 1)</code>.
+            Functions are simple: <code>fn(x) x + 1</code>.
         </p>
     </div>
     <div class="feature">

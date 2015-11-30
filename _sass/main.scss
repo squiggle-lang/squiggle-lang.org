@@ -167,7 +167,8 @@ footer {
 }
 
 ul.toc {
-    padding-left: 0;
+    padding: 0;
+    margin: 0;
 
     a {
         padding-left: 40px;
@@ -276,7 +277,11 @@ body.wide main {
 
 body.narrow main {
     max-width: $narrowWidth;
-    padding: 20px 10px;
+    padding: 20px;
+}
+
+main h1:first-child {
+    margin-top: 0;
 }
 
 .hidden {
@@ -289,7 +294,7 @@ code {
     $fg: $code;
     $bg: rgba($fg, 0.04);
 
-    padding: 0 6px;
+    padding: 0 3px;
 
     color: $fg;
     background: $bg;
