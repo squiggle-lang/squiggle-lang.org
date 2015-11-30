@@ -49,7 +49,6 @@ nav {
     font-size: 1.2em;
     padding: 0;
     box-shadow: 0 2px 5px rgba(black, 0.26);
-    height: $height;
 
     display: block;
     padding: 0 40px;
@@ -75,12 +74,14 @@ nav {
     a {
         @include resetLinks;
 
-        padding: 1.5em 2em;
+        padding: 0 2em;
         display: inline-block;
         margin: 0;
         font-weight: bold;
         font-size: 0.8em;
         border-top: 0;
+        height: $height;
+        line-height: $height;
 
         &.focus {
             box-shadow: inset 0 -6px 0 white;
@@ -165,6 +166,8 @@ footer {
 }
 
 ul.toc {
+    padding-left: 0;
+
     a {
         padding-left: 40px;
         background: none;
