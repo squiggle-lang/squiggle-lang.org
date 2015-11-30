@@ -17,6 +17,8 @@ value in Squiggle, and then compare Squiggle to other languages.
 
 <h2 id="whats-good"><a href="#whats-good">What's good?</a></h2>
 
+<h3 id="arity"><a href="#arity">Arity checking</a></h3>
+
 Squiggle functions have their arity (parameter count) checked. This means that
 the function `fn(x, y) x + y` will throw an error if called with any number of
 arguments besides **2**. This may not seem like a big deal if you're used to
@@ -24,6 +26,8 @@ JavaScript, but this behavior leads to errors traveling through your program to
 later points, undetected, and makes refactoring code extremely hard, as changing
 the arity of a function generally leads to misbehaving code rather than flat out
 errors where the incorrect call occurs.
+
+<h3 id="this"><a href="#this">No implicit this</a></h3>
 
 The JavaScript keyword `this` is really a pain. Just look at all the [Stack
 Overflow results][1]. It's such a common pain point that there's a pattern of
@@ -51,10 +55,14 @@ let obj = {
 }
 ```
 
+<h3 id="variadic"><a href="#variadic">Explicit variadic parameters</a></h3>
+
 Many JavaScript functions are variadic (can accept many different numbers of
 arguments), but JavaScript makes it hard to write these functions, relying on
 the `arguments` pseudo-array. Squiggle uses the ES6 rest notation for functions
 like this: `def printf(format, ...args)`.
+
+<h3 id="no-hoisting"><a href="#no-hoisting">No hoisting</a></h3>
 
 JavaScript is filled with hoisting. This means you can use variables before
 initialization, which leads to subtle bugs when reordering your code, or when
@@ -62,28 +70,41 @@ you accidentally try to use values in a circular fashion. In Squiggle it's an
 error to use a variable before initialization, and impossible to reassign a
 variable.
 
+<h3 id="frozen"><a href="#frozen">Frozen array/object literals</a></h3>
+
 ES5 introduced `Object.freeze`, a function which makes a JavaScript object
 impossible to update with new values. However, JS never got a syntax for frozen
 object literals. In Squiggle, all array and object literals are frozen by
 default, making it easy to safely pass off your data to another function,
 knowing it cannot be modified.
 
+<h3 id="easy-updates"><a href="#easy-updates">Easy update operators</a></h3>
+
 JS arrays have the awkward `.concat` method to put two arrays together, but have
 no built-in operators or methods or functions for merging objects. Squiggle adds
 `++` for array concatenation and `~` for object concatenation, allowing
 programmers to easily compose data.
 
+<h3 id="destructuring"><a href="#destructuring">Destructuring and pattern matching</a></h3>
+
 Squiggle also offers destructuring assignment and pattern matching, making it
 easy to grab nested properties from objects, import multiple values into scope,
 or dispatch behavior based on object shapes.
 
+<h3 id="no-coercion"><a href="#no-coercion">No type coercion</a></h3>
+
 Squiggle does not perform type coercion on its operators, so most of them only
-work on numbers.
+work on numbers, producing runtime errors on other values. For example `1 + "2"`
+is an error. Use `1.toString() ++ "2"`.
+
+<h3 id="safe-dot"><a href="#safe-dot">Dot operator saftey</a></h3>
 
 Squiggle throws errors on bad property access. For example, `foo.bar` will throw
 unless `foo has "bar"` is true (meaning `foo` is not undefined/null, and has a
 property "bar" with a value not equal to undefined). This makes it easier to
 avoid grabbing nonexistent values from arrays and objects.
+
+<h3 id="better-equality"><a href="#better-equality">Better equality</a></h3>
 
 Squiggle has two separate equality operators: `is` and `==`. The operator `is`
 is like the ES6 `Object.is`, and `==` is a deep equality check operator.
