@@ -108,9 +108,11 @@ Check out [the compiler][squiggle] on GitHub.
 
 ```squiggle
 let http = require "http"
+let {String} = global
 
 let port = 1337
 let host = "127.0.0.1"
+let url = "http://" ++ host + ":" ++ String(port) ++ "/"
 
 def handler(res, res) =
     let headers = {"Content-Type": "text/plain"}
@@ -120,7 +122,7 @@ def handler(res, res) =
 
 let server = http.createServer(handler)
 let _ = server.listen(port, host)
-let _ = console.log("Server running at http://" ++ host + ":" ++ port ++ "/")
+let _ = console.log("Server running at " ++ url)
 in undefined
 ```
 
