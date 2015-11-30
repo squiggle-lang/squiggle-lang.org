@@ -9,6 +9,11 @@
         text-align: center;
         padding: 0;
 
+        ul {
+            background: darken($primary, 6%);
+            font-size: 1.2em;
+        }
+
         a {
             text-align: left;
         }
@@ -16,6 +21,17 @@
         a.focus {
             box-shadow: inset 6px 0 0 white;
             background: rgba(black, 0.05);
+        }
+
+        .title {
+            line-height: 64px;
+            font-size: 1.5em;
+            display: block;
+        }
+
+        .title .extra {
+            display: inline-block;
+            vertical-align: top;
         }
 
         .title,
