@@ -17,6 +17,13 @@ Check out [the compiler][squiggle] on GitHub.
 
 <div class="feature-list">
     <div class="feature">
+        <h3>Simple syntax</h3>
+        <p>
+            Squiggle does not use semicolons, and indentation does not matter.
+            Data literals mostly match JS for ease of learning.
+        </p>
+    </div>
+    <div class="feature">
         <h3>Arity checked functions</h3>
         <p>
             Calling a function made in Squiggle with the wrong number of

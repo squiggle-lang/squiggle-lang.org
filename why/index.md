@@ -17,6 +17,11 @@ value in Squiggle, and then compare Squiggle to other languages.
 
 <h2 id="whats-good"><a href="#whats-good">What's good?</a></h2>
 
+<h3 id="syntax"><a href="#syntax">Simple syntax</a></h3>
+
+Squiggle does not use semicolons, and indentation does not matter. Arrays,
+objects, strings, and numbers are all written like JS, so it's easy to pick up.
+
 <h3 id="arity"><a href="#arity">Arity checking</a></h3>
 
 Squiggle functions have their arity (parameter count) checked. This means that
