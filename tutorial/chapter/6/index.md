@@ -45,7 +45,7 @@ let parse = global.JSON.parse
 def safeParse(text) =
     match try parse(text)
     case ["ok", obj] => obj
-    case ["fail", _error] => {}
+    case ["fail", _] => {}
 
 def show(text) =
     console.log(safeParse(text))
