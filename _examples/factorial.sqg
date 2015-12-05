@@ -1,0 +1,8 @@
+let {console} = global
+
+def factorial(n) =
+    match n
+    case 0 => 1
+    case n => n * factorial(n - 1)
+
+in console.log(factorial(4))

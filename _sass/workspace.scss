@@ -27,6 +27,10 @@
 
         $codeHeight: 350px;
 
+        &.choose-an-example {
+            flex: 1 1 100%;
+        }
+
         &.code {
             background: white;
             border-radius: $radius;

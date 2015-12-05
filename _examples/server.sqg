@@ -1,0 +1,20 @@
+### NOTE: This will not run in the browser,
+### since it requires Node.js libraries.
+
+let http = require "http"
+let {console} = global
+
+let port = 1337
+let host = "127.0.0.1"
+let url = "http://" .. host .. ":" .. port .. "/"
+
+def handler(_, res) =
+    let headers = {"Content-Type": "text/plain"}
+    let _ = res.writeHead(200, headers)
+    let _ = res.end("Hello world\n")
+    in undefined
+
+let server = http.createServer(handler)
+let _ = server.listen(port, host)
+let _ = console.log("Server running at " .. url)
+in undefined

@@ -1,0 +1,8 @@
+# (Control-Enter) to run code
+
+let {Date, console} = global
+let x = 4
+def inc(x) = x + 1
+let _ = console.log(Date())
+let _ = console.log(inc(x))
+in undefined

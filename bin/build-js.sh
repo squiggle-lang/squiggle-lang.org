@@ -2,5 +2,5 @@
 PATH="$(npm bin):$PATH"
 
 echo "Building Browserify bundle"
-browserify try/main.js -o try/bundle.js
+browserify try/main.js -t brfs -o try/bundle.js
 echo "DONE"

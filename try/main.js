@@ -2,7 +2,9 @@
 
 var CM = global.CodeMirror;
 var S = require("squiggle-lang");
+var fs = require("fs");
 var debounce = require("lodash/function/debounce");
+var assign = require("lodash/object/assign");
 
 function loggerMaker(type) {
     var old = console[type];
@@ -99,18 +101,55 @@ function run() {
     }, 100);
 }
 
+var examples = {
+    Basic: fs.readFileSync('_examples/basic.sqg', 'utf8'),
+    Factorial: fs.readFileSync('_examples/factorial.sqg', 'utf8'),
+    "Hello world": fs.readFileSync('_examples/hello.sqg', 'utf8'),
+    "HTTP server": fs.readFileSync('_examples/server.sqg', 'utf8'),
+};
+
+function E(name, attributes, children) {
+    var e = document.createElement(name);
+    assign(e, attributes);
+    children.forEach(function(kid) {
+        if (typeof kid === "string") {
+            kid = document.createTextNode(kid);
+        }
+        e.appendChild(kid);
+    });
+    return e;
+}
+
+var options =
+    Object.keys(examples).map(function(k) {
+        var v = examples[k];
+        return E("option", {value: v}, [k]);
+    });
+
+function addKids(e, kids) {
+    kids.forEach(function(kid) {
+        e.appendChild(kid);
+    });
+}
+
+addKids(sel("#examples"), options);
+
+function loadExample() {
+    var select = sel("#examples");
+    var opts = select.selectedOptions;
+    if (opts.length === 0) {
+        return;
+    }
+    var value = opts[0].value;
+    editors.squiggle.setValue(value);
+    select.selectedIndex = 0;
+}
+
+sel("#examples").onchange = loadExample;
+
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
-editors.squiggle.setValue([
-    "# (Control-Enter) to run code",
-    "",
-    "let {Date, console} = global",
-    "let x = 4",
-    "def inc(x) = x + 1",
-    "let _ = console.log(Date())",
-    "let _ = console.log(inc(x))",
-    "in undefined"
-].join("\n") + "\n")
+editors.squiggle.setValue(examples.Basic);
 
 editors.squiggle.setOption("extraKeys", {
   "Ctrl-Enter": run

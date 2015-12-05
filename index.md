@@ -111,26 +111,4 @@ Check out [the compiler][squiggle] on GitHub.
     </div>
 </div>
 
-## Squiggle + Node.js HTTP Server
-
-```squiggle
-let http = require "http"
-let {String} = global
-
-let port = 1337
-let host = "127.0.0.1"
-let url = "http://" ++ host + ":" ++ String(port) ++ "/"
-
-def handler(res, res) =
-    let headers = {"Content-Type": "text/plain"}
-    let _ = res.writeHead(200, headers)
-    let _ = res.end("Hello world\n")
-    in undefined
-
-let server = http.createServer(handler)
-let _ = server.listen(port, host)
-let _ = console.log("Server running at " ++ url)
-in undefined
-```
-
 [squiggle]: https://github.com/wavebeem/squiggle
