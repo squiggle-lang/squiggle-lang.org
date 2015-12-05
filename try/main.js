@@ -3,6 +3,7 @@
 var CM = global.CodeMirror;
 var S = require("squiggle-lang");
 var fs = require("fs");
+var uniq = require("lodash/array/uniq");
 var debounce = require("lodash/function/debounce");
 var assign = require("lodash/object/assign");
 
@@ -56,7 +57,10 @@ function compile(code) {
         {embedSourceMaps: false}
     );
     if (!res.parsed) {
-        console.log("Parse fail:", res);
+        var expectations =
+            uniq(res.result.expected.slice().sort()).join(" ");
+        console.log("Parse fail at character:", res.result.index);
+        console.log("Expected one of:\n", expectations);
         return "// error\n";
     }
     res.warnings.forEach(function(warning) {
@@ -152,9 +156,9 @@ var squiggleCode =
     localStorage.squiggleCode ||
     examples.Basic;
 
+editors.squiggle.setValue(squiggleCode);
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
-editors.squiggle.setValue(squiggleCode);
 
 editors.squiggle.setOption("extraKeys", {
   "Ctrl-Enter": run
