@@ -43518,6 +43518,7 @@ function compile(code) {
 
 function compileAndUpdate() {
     var squiggleCode = editors.squiggle.getValue();
+    localStorage.squiggleCode = squiggleCode;
     var js = compile(squiggleCode);
     setJs(js);
 }
@@ -43593,9 +43594,13 @@ function loadExample() {
 
 sel("#examples").onchange = loadExample;
 
+var squiggleCode =
+    localStorage.squiggleCode ||
+    examples.Basic;
+
 compileAndUpdate();
 editors.squiggle.on("change", debounce(compileAndUpdate, 300));
-editors.squiggle.setValue(examples.Basic);
+editors.squiggle.setValue(squiggleCode);
 
 editors.squiggle.setOption("extraKeys", {
   "Ctrl-Enter": run
