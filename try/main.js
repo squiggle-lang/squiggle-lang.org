@@ -105,7 +105,7 @@ function run() {
         try {
             Function(js)();
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }, 100);
 }
