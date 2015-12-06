@@ -4,7 +4,7 @@ title: Squiggle
 bodyClass: narrow
 ---
 
-## Hello, world!
+## Hello world
 
 ```squiggle
 let {console} = global
@@ -12,6 +12,11 @@ in console.log("Hello, world!")
 ```
 
 Check out [the compiler][squiggle] on GitHub.
+
+## Install it!
+```
+npm install -g squiggle-lang
+```
 
 ## Features
 
