@@ -10,6 +10,11 @@
         $color1;
 }
 
+@mixin logType($fg, $bg) {
+    background: mix($fg, $bg, 5%);
+    color: $fg;
+}
+
 @mixin inlineColored {
     padding: 2px 4px;
     border-radius: 4px;

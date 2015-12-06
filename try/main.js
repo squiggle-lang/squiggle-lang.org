@@ -60,23 +60,20 @@ function compile(code) {
     if (!res.parsed) {
         var expectations =
             uniq(res.result.expected.slice().sort()).join(" ");
-        var indices = [res.result.index];
-        var oopsies = OopsyData.fromIndices(code, indices);
-        oopsies.forEach(function(o) {
-            console.log(
-                "Parse error at line " + o.line + ", column " + o.column + ":"
-            );
-            console.log(o.context);
-        });
-        console.log("Expected one of:\n", expectations);
+        var o = OopsyData.fromIndices(code, [res.result.index])[0];
+        console.error(
+            "Parse error at line " + o.line + ", column " + o.column + ":\n\n" +
+            o.context + "\n\n" +
+            "Expected one of: " + expectations
+        );
         return "// error\n";
     }
     res.warnings.forEach(function(w) {
-        console.log(
+        console.warn(
             "Warning at line " + w.line + ", column " +
-            w.column + ": " + w.data
+            w.column + ": " + w.data + "\n\n" +
+            w.context
         );
-        console.log(w.context);
     });
     return res.code;
 }

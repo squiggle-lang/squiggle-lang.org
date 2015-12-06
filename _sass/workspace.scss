@@ -1,3 +1,6 @@
+$colorWarn: #860;
+$colorError: #c00;
+
 .workspace {
     @include diagonalStripes(#f4f4f4, rgba(black, 0.02), 2px);
 
@@ -71,20 +74,30 @@
         }
 
         .console {
+            $bg: white;
+
             height: ($codeHeight - $buttonHeight - $gap);
             overflow: auto;
             padding: 0;
-            background: white;
+            background: $bg;
             resize: vertical;
             border: $border;
             white-space: pre-wrap;
 
             font-family: $fontCode;
 
+            $separatorColor: darken($bg, 10%);
+
             & > * {
-                box-shadow: 0 1px 0 0 #ddd;
+                border-bottom: 1px solid $separatorColor;
                 padding: 10px 15px;
             }
+            & > :last-child {
+                border-bottom: 0;
+                box-shadow: 0 1px 0 $separatorColor;
+            }
+            & > .warn { @include logType($colorWarn, $bg); }
+            & > .error { @include logType($colorError, $bg); }
         }
     }
 }
