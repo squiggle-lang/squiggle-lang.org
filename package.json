@@ -2,14 +2,13 @@
   "name": "squiggle-gh-pages",
   "version": "0.0.0",
   "description": "",
-  "dependencies": {
+  "devDependencies": {
     "browserify": "^11.0.1",
     "lodash": "^3.10.1",
     "squiggle": "wavebeem/squiggle",
-    "squiggle-lang": "^0.4.3"
-  },
-  "devDependencies": {
-    "brfs": "^1.4.1"
+    "squiggle-lang": "^0.4.3",
+    "brfs": "^1.4.1",
+    "oopsy-data": "0.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,6 +1,7 @@
 "use strict";
 
 var CM = global.CodeMirror;
+var OopsyData = require("oopsy-data");
 var S = require("squiggle-lang");
 var fs = require("fs");
 var uniq = require("lodash/array/uniq");
@@ -59,7 +60,12 @@ function compile(code) {
     if (!res.parsed) {
         var expectations =
             uniq(res.result.expected.slice().sort()).join(" ");
-        console.log("Parse fail at character:", res.result.index);
+        var indices = [res.result.index];
+        var oopsies = OopsyData.fromIndices(code, indices);
+        oopsies.forEach(function(o) {
+            console.log("Error at line " + o.line + ", column", o.column + ":");
+            console.log(o.context);
+        });
         console.log("Expected one of:\n", expectations);
         return "// error\n";
     }
