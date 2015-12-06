@@ -63,19 +63,20 @@ function compile(code) {
         var indices = [res.result.index];
         var oopsies = OopsyData.fromIndices(code, indices);
         oopsies.forEach(function(o) {
-            console.log("Error at line " + o.line + ", column", o.column + ":");
+            console.log(
+                "Parse error at line " + o.line + ", column " + o.column + ":"
+            );
             console.log(o.context);
         });
         console.log("Expected one of:\n", expectations);
         return "// error\n";
     }
-    res.warnings.forEach(function(warning) {
-        // TODO: Format the warning correctly
+    res.warnings.forEach(function(w) {
         console.log(
-            "line " + warning.line +
-            ", column " + warning.column +
-            ": " + warning.message
+            "Warning at line " + w.line + ", column " +
+            w.column + ": " + w.data
         );
+        console.log(w.context);
     });
     return res.code;
 }
