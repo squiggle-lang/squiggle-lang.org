@@ -1,7 +1,6 @@
 "use strict";
 
 var CM = global.CodeMirror;
-var OopsyData = require("oopsy-data");
 var S = require("squiggle-lang");
 var fs = require("fs");
 var uniq = require("lodash/array/uniq");
@@ -58,13 +57,10 @@ function compile(code) {
         {embedSourceMaps: false}
     );
     if (!res.parsed) {
-        var expectations =
-            uniq(res.result.expected.slice().sort()).join(" ");
-        var o = OopsyData.fromIndices(code, [res.result.index])[0];
+        var o = res.result.oopsy;
         console.error(
-            "Parse error at line " + o.line + ", column " + o.column + ":\n\n" +
-            o.context + "\n\n" +
-            "Expected one of: " + expectations
+            "Parse error at line " + o.line + ": " + o.data + "\n\n" +
+            o.context
         );
         return "// error\n";
     }

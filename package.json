@@ -1,29 +1,24 @@
 {
-  "name": "squiggle-gh-pages",
+  "name": "squiggle-lang-com",
   "version": "0.0.0",
   "description": "",
   "devDependencies": {
+    "brfs": "^1.4.1",
     "browserify": "^11.0.1",
     "lodash": "^3.10.1",
-    "squiggle": "wavebeem/squiggle",
-    "squiggle-lang": "^0.4.3",
-    "brfs": "^1.4.1",
-    "oopsy-data": "0.0.1"
+    "squiggle-lang": "^0.7.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saikobee/squiggle.git"
+    "url": "git+https://github.com/wavebeem/squiggle.git"
   },
   "author": "Brian Mock <brian@mockbrian.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saikobee/squiggle/issues"
+    "url": "https://github.com/wavebeem/squiggle/issues"
   },
-  "homepage": "https://github.com/saikobee/squiggle#readme",
-  "dependencies": {
-    "squiggle-lang": "^0.5.0"
-  }
+  "homepage": "https://github.com/wavebeem/squiggle#readme"
 }
