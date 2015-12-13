@@ -20,10 +20,10 @@ The following directions are for OS X. The project should work in Linux and Wind
 
 ## Deployment
 
-This website lives at [mockbrian.com/squiggle][mbsq], so [@wavebeem][wave]
+This website lives at [squiggle-lang.org][sqgl], so [@wavebeem][wave]
 performs deployments using `./bin/deploy.sh`.
 
-[mbsq]: http://mockbrian.com/squiggle/
+[sqgl]: http://squiggle-lang.org/
 [site]: http://0.0.0.0:4000/squiggle/
 [wave]: https://github.com/wavebeem
 [cove]: https://github.com/wavebeem/website-squiggle/blob/master/CODE_OF_CONDUCT.md
