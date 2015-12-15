@@ -116,4 +116,4 @@ npm install -g squiggle-lang
     </div>
 </div>
 
-[squiggle]: https://github.com/wavebeem/squiggle
+[squiggle]: https://github.com/squiggle-lang/squiggle-lang
