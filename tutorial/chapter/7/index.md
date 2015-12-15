@@ -1,57 +1,22 @@
 ---
-title: "Variable bindings"
+title: "Let, Match, and Patterns"
 ---
 
-TODO: Clean this up since `let` and `match` are almost the same thing.
+## The Let-statement
 
-## The Let-expression
-
-The most basic let-expression looks like:
-
-```squiggle
-let x = 1 in x
-```
-
-This is essentially equivalent to:
-
-```javascript
-(function() {
-    var x = 1;
-    return x;
-}())
-```
-
-You can add many `let` bindings together like so:
+You've already seen the most basic form of `let`:
 
 ```squiggle
 let x = 1
-let y = 2
-let z = 3
-in x + y + z
 ```
 
-This will evaluate to `6`.
+This is essentially equivalent to the ES2015 code:
 
-## Functions
-
-You can assign functions just like any other value:
-
-```squiggle
-let foo = fn foo(word) "foo" ++ word
-in foo("bar")
-#=> "foobar"
+```javascript
+const x = 1;
 ```
 
-But this is tedious, so there's a shorthand:
-
-```squiggle
-def foo(word) =
-    "foo" ++ word
-in foo("bar")
-#=> "foobar"
-```
-
-`def` is just sugar for making a binding to a function with the same name.
+If you're unfamiliar with `const`, essentially it means that the variable `x` cannot be assigned to again, and that any code run before that statement which tries to use `x` will throw an exception.
 
 ## Temporal dead zone
 
@@ -66,8 +31,7 @@ var z = z;
 console.log(x, y, z);
 ```
 
-This is because of JavaScript's `var` hoisting, which makes the following code
-work more like this:
+This is because of JavaScript's `var` hoisting, which makes the following code work more like this:
 
 ```javascript
 var x = undefined;
@@ -79,29 +43,19 @@ z = z;
 console.log(x, y, z);
 ```
 
-That is nonsense. In Squiggle, `let` and `def` bindings are not hoisted, and it
-is a runtime error to attempt to use their values before initialization.
+That is nonsense. In Squiggle, `let` and `def` bindings are not hoisted, and it is a runtime error to attempt to use their values before initialization.
 
 ## Destructuring
 
-The basic form of let is `let name = value`, but the `name` part can actually be
-shaped like an array or object, in order to pluck values from the right hand
-side.
+The basic form of let is `let name = value`, but the `name` part can actually be shaped like an array or object, in order to pluck values from the right hand side.
 
-### Ignore
-
-The special identifier `_` can be used to ignore values. This is useful for
-evaluating an expression for its side effects, or ignoring values in arrays or
-objects.
-
-```squiggle
-let _ = console.log("hi")
-in undefined
-```
+## Patterns
 
 ### Arrays
 
 Basically just write an array on the left, including a "..." before the last item to gobble up all remaining items. Number of items must match.
+
+Two item array:
 
 ```squiggle
 let [x, y] = [1, 2]
@@ -109,15 +63,21 @@ let [x, y] = [1, 2]
 #=> y == 2
 ```
 
+Too few items:
+
 ```squiggle
 let [x, y] = [1]
 #=> error, too few items to unpack
 ```
 
+Too many items:
+
 ```squiggle
 let [x, y] = [1, 2, 3, 4]
 #=> error, too many items to unpack
 ```
+
+Rest array example 1:
 
 ```squiggle
 let [x, ...xs] = [1, 2, 3, 4]
@@ -125,11 +85,15 @@ let [x, ...xs] = [1, 2, 3, 4]
 #=> xs == [2, 3, 4]
 ```
 
+Rest array example 2:
+
 ```squiggle
 let [x, ...xs] = [1]
 #=> x == 1
 #=> x == []
 ```
+
+Too few items for rest array:
 
 ```squiggle
 let [x, ...xs] = []
@@ -180,128 +144,48 @@ let {x} = {y: 1}
 #=> error, x undefined in object
 ```
 
+### Ignore
+
+The special identifier `_` can be used to ignore values. This is useful for  ignoring values in arrays or objects.
+
+```squiggle
+let [_, y, _] = [1, 2, 3]
+#=> y == 2
+
+let [_, ...xs] = [4, 5, 6, 7]
+#=> xs == [5, 6, 7]
+
+let [x, ..._] = [3, 9]
+#=> x == 3
+```
+
 ## The Match-expression
 
-Pattern matching is one of the most powerful and expressive features of
-Squiggle. If you've never used it before, think of it as the most useful way to
-extra values from arrays or objects, as well as check for equality. It might
-look a bit like a large `if`/`else` structure, but it does more.
-
-Overall structure looks like:
+The `match` expression is like the above destructuring assignment patterns combined with `if/else`.
 
 ```squiggle
 match V
-case P1 => X1
-case P2 => X2
-case P3 => X3
+case P1 then X1
+case P2 then X2
+case P3 then X3
+end
 ```
 
-In this example, `V` is the value you want to match on. `P1`, `P2`, and `P3` are
-patterns. The first pattern to fully match wins, resulting in the value to the
-right of its `=>` arrow. If no patterns are matched, it throws an exception.
+In this example, `V` is the value you want to match on. `P1`, `P2`, and `P3` are patterns. The first pattern to fully match wins, resulting in the value to the right of its `then`. If no patterns are matched, it throws an exception.
 
-Here are the pattern types:
-
-## Identifier bindings
-
-A plain identifier matches any value and binds it to the value at that position
-in the associated expression. For example, this prints "4".
-
-```squiggle
-match 4
-case x => console.log(4)
-```
-
-You can ignore a value by using `_` as the variable name:
-
-```squiggle
-match 123
-case _ => "I didn't care about the value anyway"
-```
-
-## Literals
-
-A basic literal like a string of a number:
+All the pattern types from destructuring assignment are supported, in addition to matching value-based object literals: numbers, strings, `true`, `false`, `undefined`, `null`, `NaN`, and `Infinity`.
 
 ```squiggle
 console.log(
     match "hey"
-    case 56 => "This won't match!"
-    case "bye" => "I never get matched..."
-    case "hey" => "Hey buddy! This one matches"
+    case 56 then "This won't match!"
+    case "bye" then "I never get matched..."
+    case x then "You said " .. x
+    end
 )
 ```
 
-## Arrays
-
-You can also match arrays. Arrays are assumed to be *exactly* the size
-specified, and the pattern won't match otherwise.
-
-```squiggle
-match [1, 2, 3]
-case [x, y, z] => x + y + z
-```
-
-However, if you use the slurpy array pattern, you can deal with arrays of
-*at least* the size specified, collecting the rest of the elements in another
-pattern. The following matches arrays of *at least* length 2, and prints
-`[6, 7, 8]`.
-
-```squiggle
-match [4, 5, 6, 7, 8]
-case [a, b, ...xs] => console.log(xs)
-```
-
-Also note that Squiggle's `match` does not differentiate between real arrays such as `[a, b, c]` and array-like objects such as
-`{"0": a, "1": b, "2", c, "length": 3}`.
-
-## Objects
-
-Objects in JavaScript are a little more complicated than arrays, due to
-prototype chains and rarely being truly empty. Due to this, object patterns
-ignore extra properties, only caring if the ones specified exist. Properties are
-checked all the way up the prototype chain, not just own-properties.
-
-```squiggle
-match global
-case {Number: Number} =>
-    console.log(Number("34"))
-```
-
-Because object patterns ignore extra properties, the following match succeeds:
-
-```squiggle
-match {a: 1}
-case {} => "potato"
-```
-
-Because arrays are also objects, the following match succeeds:
-
-```squiggle
-match [4, 5, 6]
-case {length: n} => n
-```
-
-Also, there's a shorthand for the common case of key and value names being the
-same. Normally you would write:
-
-```squiggle
-match obj
-case {name: name} => name
-```
-
-But it's possible with the shorthand notation to write:
-
-```squiggle
-match obj
-case {name} => name
-```
-
-Object and array patterns can be nested within each other to match and extract
-values from deep structures.
-
-Also, you can use computed values at any point in a match expression by wrapping
-it in parentheses:
+You can also just supply an expression to `case` at the top level by wrapping it in parentheses.
 
 ```squiggle
 let K = {
@@ -310,11 +194,14 @@ let K = {
     s: "s".charCodeAt(0),
     d: "d".charCodeAt(0)
 }
+
 let dir =
     match event.which
-    case (K.w) => "up"
-    case (K.a) => "left"
-    case (K.s) => "down"
-    case (K.d) => "right"
-in console.log(dir)
+    case (K.w) then "up"
+    case (K.a) then "left"
+    case (K.s) then "down"
+    case (K.d) then "right"
+    end
+
+console.log(dir)
 ```

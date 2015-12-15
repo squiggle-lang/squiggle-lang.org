@@ -4,27 +4,35 @@ title: "Various flow control"
 
 ## If-expression
 
-Squiggle has keywords `if` and `else`, but they're actually like JavaScript's
-ternary operator (`p ? x : y`), with the exception that Squiggle throws an error
-if the value being checked is not a boolean.
+Squiggle has keywords `if` and `else`, but they're actually like JavaScript's ternary operator (`p ? x : y`), with the exception that Squiggle throws an error if the value being checked is not a boolean.
+
+Note that the `else` clause is **not** optional. It must be present in all if-expressions.
 
 ```squiggle
-console.log(if true then 3 else 4)
+console.log(
+    if true then
+        3
+    else
+        4
+    end
+)
 ```
 
-This will log 3 to the console.
+This will log `3` to the console.
 
-You can nest them just like in JavaScript:
+If you have more than two cases, you can use `elseif`:
 
 ```squiggle
-def numberToEnglish(n) =
+def numberToEnglish(n)
     if n == 1 then "one"
-    else if n == 2 then "two"
-    else if n == 3 then "three"
-    else if n == 4 then "four"
+    elseif n == 2 then "two"
+    elseif n == 3 then "three"
+    elseif n == 4 then "four"
     else "some other number"
+    end
+end
 
-in console.log(numberToEnglish(2))
+console.log(numberToEnglish(2))
 ```
 
 This would be better written with a match-expression, but more on that in a
@@ -40,20 +48,24 @@ of a try expression is a length 2 array that looks like either `["ok", value]`
 or `["fail", error]`. You can manually inspect these values using brackets, or ideally use `match` to cover both cases, like this:
 
 ```squiggle
-let parse = global.JSON.parse
+let {JSON} = global
 
-def safeParse(text) =
-    match try parse(text)
-    case ["ok", obj] => obj
-    case ["fail", _] => {}
+def safeParse(text)
+    match try JSON.parse(text)
+    case ["ok", obj] then obj
+    case ["fail", _] then {}
+    end
+end
 
-def show(text) =
+def show(text)
     console.log(safeParse(text))
+end
 
-let _ = show("[]")         #=> []
-let _ = show("json error") #=> {}
+show("[1, 2]")
+#=> [1, 2]
 
-in undefined
+show("json error")
+#=> {}
 ```
 
 ## Error- and throw- expressions
@@ -71,18 +83,20 @@ It throws an instance of JavaScript's `Error` with the message passed.
 There is also `throw` which takes an exception and throws it:
 
 ```squiggle
-throw someException
-
-throw Error("blah blah")
+match try someFunction()
+case ["ok", value] then
+    # use the value
+case ["fail", err] then
+    # do some clean up
+    throw err
+end
 ```
 
-This form is not advised, except for re-throwing exceptions caught elsewhere,
-since the form `error` is much shorter.
+This form is not advised, except for re-throwing exceptions caught elsewhere, since the form `error` is much shorter.
 
 ## Await-expression
 
-With ES2015, promises are now a core language feature. If you're not familiar
-with them, check out [HTML5 Rocks][html5rocks] article about it.
+With ES2015, promises are now a core language feature. If you're not familiar with them, check out [HTML5 Rocks][html5rocks] article about it.
 
 You can go about using promises in Squiggle much like JavaScript:
 
@@ -102,8 +116,7 @@ httpGet(someUrl).then(fn(profile)
 )
 ```
 
-In order to solve this nesting problem, Squiggle provides a syntax sugar for
-`.then`.
+In order to solve this nesting problem, Squiggle provides a syntax sugar for `.then`.
 
 ```squiggle
 await val = somePromise in val + 2

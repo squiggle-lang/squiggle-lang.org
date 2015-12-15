@@ -2,25 +2,27 @@
 title: "JavaScript interoperability"
 ---
 
-JavaScript and Squiggle are friends. Because Squiggle just compiles down to
-JavaScript files, it's trivial to call Squiggle code from JavaScript, or vice-
-versa. Squiggle uses all the same data as JavaScript, so you don't even have to
-convert anything
+JavaScript and Squiggle are friends. Because Squiggle just compiles down to JavaScript files, it's trivial to call Squiggle code from JavaScript, or vice- versa. Squiggle uses all the same data as JavaScript, so you don't even have to convert anything
 
 ## Arity problems
 
-Squiggle functions check their arity, but many
-JavaScript functions are built assuming variadic functions. For example:
+Squiggle functions check their arity, but many JavaScript functions are built assuming variadic functions. For example:
 
 ```squiggle
-# file increment.squiggle
-export fn(x) x + 1
+# File: helpers.sqg
+
+def add(x)
+    x + 1
+end
+
+export add
 ```
 
 ```javascript
-// file main.js
-var increment = require("./increment");
-var xs = [1, 2, 3].map(increment)
+// File: main.js
+
+var helpers = require("./helpers");
+var xs = [1, 2, 3].map(helpers.add)
 console.log(xs);
 ```
 
@@ -28,16 +30,14 @@ This will fail because `Array.prototype.map` actually passes *three* parameters 
 
 ```javascript
 var xs = [1, 2, 3].map(function(data) {
-    return increment(data);
+    return helpers.add(data);
 });
 console.log(xs);
 ```
 
 ## Mutability problems
 
-Sometimes you need mutable data. Fortunately, it's still possible to create it
-in Squiggle. Squiggle does not expose a syntax like `x.y = z` to assign
-properties.
+Sometimes you need mutable data. Fortunately, it's still possible to create it in Squiggle. Squiggle does not expose a syntax like `x.y = z` to assign properties.
 
 ```squiggle
 let {Array, Object} = global
@@ -51,15 +51,19 @@ let _ = console.log([a, o]);
 in undefined
 ```
 
-These are the normal `Array` and `Object` functions from JavaScript, so they
-return unfrozen values.
+These are the normal `Array` and `Object` functions from JavaScript, so they return unfrozen values. There are plans to add mutable object literals and property assignment to Squiggle eventually.
 
 ## Problems with this or new
 
-Squiggle does not feature the keywords `this` or `new` from JavaScript because
-they cause more harm than good, and are not necessary (in general). Some
-libraries require their use, however, so Squiggle has functions for dealing with
-this.
+Squiggle does not feature the keywords `this` or `new` from JavaScript because they cause more harm than good, and are not necessary (in general). Some libraries require their use, however, so Squiggle has functions for dealing with this.
+
+Remember that any Squiggle function can still use JavaScript's `this` value if it's explicitly declared as a named parameter with and `@` prefix:
+
+```squiggle
+jQuery("something").on("click", fn(@this) do
+    jQuery(this).somethingElse()
+end)
+```
 
 If you need to supply the value of `this` to a function, you can simply use the
 standard JavaScript function methods `.apply` or `.call`:
@@ -71,5 +75,4 @@ someFn.apply(myThisValue, [param1, param2])
 ```
 
 `new` is harder to do away with since many APIs (e.g. `Date` and `Promise`)
-require its use to create an instance. I'm still deciding how to incorporate
-this into Squiggle.
+require its use to create an instance. Some way to invoke `new` on a function will be provided

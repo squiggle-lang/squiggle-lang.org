@@ -74,42 +74,60 @@ console.log(evaluate(text));
 ## rpn.squiggle
 
 ```squiggle
-let L = require "lodash"
-let {Number, console} = global
+let {console} = global
 
-let text = "2 3 4 * 3 - +"
+def foldRight(xs, z, f)
+    def g(acc, x, _, _)
+        f(x, acc)
+    end
+    xs.slice().reverse().reduce(g, z)
+end
 
-# You have to explicitly ignore arguments
-# with an underscore in Squiggle.
-def tokenize(text) =
-    text.split(" ").map(fn(x, _, _) tokenValue(x))
+def Branch(data, left, right)
+    {type: "Branch", data, left, right}
+end
 
-def tokenValue(token) =
-    match token
-    case "+" => fn(a, b) a + b
-    case "-" => fn(a, b) a - b
-    case "*" => fn(a, b) a * b
-    case "/" => fn(a, b) a / b
-    case num => Number(num)
+let Tip = {type: "Tip"}
 
-def evaluateWithStack(stack, values) =
-    match values
-    case [] =>
-        stack[0]
-    case [x, ...xs] =>
-        if L.isFunction(x) then
-            let first = stack[0]
-            let second = stack[1]
-            let rest = stack.slice(2)
-            let y = x(first, second)
-            in evaluateWithStack([y] ++ rest, xs)
+def leaf(x)
+    Branch(x, Tip, Tip)
+end
+
+let x1 = "Welcome to BST-land!"
+console.log(x1)
+
+# This actually doesn't end up looking much better with pattern matching since
+# we need to make the "less-than" check on the data.
+def bstAdd(n, d)
+    if n.type == "Tip" then
+        leaf(d)
+    elseif n.type == "Branch" then
+        if d < n.data then
+            Branch(n.data, bstAdd(n.left, d), n.right)
         else
-            evaluateWithStack([x] ++ stack, xs)
+            Branch(n.data, n.left, bstAdd(n.right, d))
+        end
+    else
+        error "not a node"
+    end
+end
 
-def evaluate(text) =
-    evaluateWithStack([], tokenize(text))
+def inOrder(node)
+    match node
+    case {type: "Tip"} then
+        []
+    case {type: "Branch", left, right, data} then
+        inOrder(left) ++ [data] ++ inOrder(right)
+    end
+end
 
-in console.log(evaluate(text))
+let root = foldRight(
+    [4, 2, 1, 3, 6, 5, 7],
+    Tip,
+    fn(x, node) bstAdd(node, x)
+)
+
+console.log(inOrder(root))
 ```
 
 [rpn]: https://en.wikipedia.org/wiki/Reverse_Polish_notation
