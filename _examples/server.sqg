@@ -8,13 +8,13 @@ let port = 1337
 let host = "127.0.0.1"
 let url = "http://" .. host .. ":" .. port .. "/"
 
-def handler(_, res) =
+def handler(_, res)
     let headers = {"Content-Type": "text/plain"}
-    let _ = res.writeHead(200, headers)
-    let _ = res.end("Hello world\n")
-    in undefined
+    res.writeHead(200, headers)
+    res.end("Hello world\n")
+end
 
 let server = http.createServer(handler)
-let _ = server.listen(port, host)
-let _ = console.log("Server running at " .. url)
-in undefined
+
+server.listen(port, host)
+console.log("Server running at " .. url)

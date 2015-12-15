@@ -1,2 +1,2 @@
 let {console} = global
-in console.log("Hello, world!")
+console.log("Hello, world!")

@@ -1,8 +1,13 @@
-# (Control-Enter) to run code
+### Type (Control+Enter) to run code!
+### All code is compiled automatically.
 
 let {Date, console} = global
+
 let x = 4
-def inc(x) = x + 1
-let _ = console.log(Date())
-let _ = console.log(inc(x))
-in undefined
+
+def inc(x)
+    x + 1
+end
+
+console.log(Date())
+console.log(inc(x))
