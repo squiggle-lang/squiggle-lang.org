@@ -105,7 +105,7 @@ npm install -g squiggle-lang
         </p>
     </div>
     <div class="feature">
-        <h3>No accidenetal reference equality</h3>
+        <h3>No accidental reference equality</h3>
         <p>
             The operator <code>==</code> performs an equality check only for value types. It throws on reference types (objects/arrays).
         </p>
