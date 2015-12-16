@@ -82,7 +82,8 @@ Squiggle also adds `require` as a keyword, rather than regular function, so you 
 let fs = require "fs"
 let L = require "lodash"
 let other = require "./foo/other"
-in ...
+
+...
 ```
 
 Note that the parentheses are omitted after `require` because it is a keyword. Parentheses cannot be omitted on normal function calls.
