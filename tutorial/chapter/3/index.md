@@ -17,7 +17,7 @@ Comments start with `#` and extend to the end of the line. All text within comme
 let console = global.console
 let realCode = "potato" # comment 1
 # comment 2
-in console.log(realCode) # comment 3
+console.log(realCode) # comment 3
 # final comment
 ```
 
