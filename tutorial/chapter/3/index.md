@@ -124,24 +124,24 @@ Sometimes APIs are much easier if they can have varying parameter counts, so it 
 Functions may have multiple statements in them if you use this form with `do/end`:
 
 ```squiggle
-let add = fn(x, y) do
+let add = fn add(x, y) do
     console.log(x)
     console.log(y)
     x + y
 end
 ```
 
-If you're defining a name function though, you should use the form `def/end`:
+Notice how if you're assigning a variable to a named function you have to name it twice. This is redundant, so you should use the form `def/end` instead:
 
 ```squiggle
-def add (x, y)
+def add(x, y)
     console.log(x)
     console.log(y)
     x + y
 end
 ```
 
-Both of these forms automatically return the value of their last statement.
+Both of these forms are equivalent and automatically return the value of their last statement.
 
 ### Rest parameters
 
