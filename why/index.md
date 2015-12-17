@@ -82,7 +82,7 @@ is like the ES6 `Object.is`, and `==` is like JavaScript `===` but throws on obj
 
 ClojureScript is a very powerful and expressive language with a great community, but it has some rough points compared to Squiggle.
 
-Including libraries written in JS with your ClojureScript bundle is a bit awkward. ClojureScript using Google Closure compiler wi.th advanced optimizations on, meaning you have to [actively fight against name mangling][3]
+Including libraries written in JS with your ClojureScript bundle is a bit awkward. ClojureScript using Google Closure compiler with advanced optimizations on, meaning you have to [actively fight against name mangling][3]
 to use JS with your program.
 
 ClojureScript uses `nil` (their version of `null`) pervasively to represent values that cannot exist and other errors. The idea is that [nil punning][9] will let `nil` flow through the system with the desired behavior. Squiggle embraces [fail fast][4] design and throws as many errors as possible, right at the site of the problem, for increased debuggability of code.
