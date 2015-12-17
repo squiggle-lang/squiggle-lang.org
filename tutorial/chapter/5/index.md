@@ -20,6 +20,17 @@ object[name]
 #=> "Foo"
 ```
 
+If you want to safely access a key but fall back to some other behavior, use this snippet:
+
+```squiggle
+let user = getUser()
+let name =
+    if user has "name"
+    then user.name
+    else "(no name)"
+    end
+```
+
 ## Function and method calls
 
 Function and method calls work pretty much exactly like in JavaScript:
