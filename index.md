@@ -45,9 +45,9 @@ npm install -g squiggle-lang
         </p>
     </div>
     <div class="feature">
-        <h3>Temporal deadzone</h3>
+        <h3>No use before definition</h3>
         <p>
-            Just like ES2015, it's illegal to use a variable before it's initialized, eliminating an entire class of errors.
+            It's illegal to use a variable before it's defined, eliminating an entire class of errors.
         </p>
     </div>
     <div class="feature">

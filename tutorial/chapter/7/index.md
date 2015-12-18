@@ -18,11 +18,11 @@ const x = 1;
 
 If you're unfamiliar with `const`, essentially it means that the variable `x` cannot be assigned to again, and that any code run before that statement which tries to use `x` will throw an exception.
 
-## Temporal dead zone
+## No use before definition
 
-"Temporal dead zone" is a confusing phrase borrowed from ES2015 to describe an area of code where a variable cannot be used.
+In Squiggle, it is a runtime error to use a variable before it has been defined (this is like the ES2015 concept "temporal deadzone", which applies to `let/const` declarations in that language).
 
-In JavaScript, the following code prints `undefined` three times.
+Compare with JavaScript, which prints `undefined` three times in this example.
 
 ```javascript
 var x = y;
@@ -43,7 +43,14 @@ z = z;
 console.log(x, y, z);
 ```
 
-That is nonsense. In Squiggle, `let` and `def` bindings are not hoisted, and it is a runtime error to attempt to use their values before initialization.
+The following code in Squiggle would throw an error trying to define `x`.
+
+```squiggle
+let x = y
+let y = x
+let z = z
+console.log(x, y, z)
+```
 
 ## Destructuring
 
