@@ -15,11 +15,6 @@ If you're not familiar with RPN, here's a quick translation:
 ## rpn.js
 
 ```javascript
-// Note that the Squiggle version has much more
-// error checking embedded in its output.
-
-var L = require("lodash");
-
 var text = "2 3 4 * 3 - +";
 
 var table = {
@@ -48,7 +43,7 @@ function evaluateWithStack(stack, values) {
     var i = stack.length;
     var x = values[0];
     var v = values.slice(1);
-    if (L.isFunction(x)) {
+    if (typeof x === "function") {
         var a = stack[i - 1];
         var b = stack[i - 2];
         var y = x(a, b);
@@ -74,60 +69,42 @@ console.log(evaluate(text));
 ## rpn.squiggle
 
 ```squiggle
-let {console} = global
+let {Number, console} = global
 
-def foldRight(xs, z, f)
-    def g(acc, x, _, _)
-        f(x, acc)
-    end
-    xs.slice().reverse().reduce(g, z)
+let text = "2 3 4 * 3 - +"
+
+# You have to explicitly ignore arguments
+# with an underscore in Squiggle.
+def tokenize(text)
+    text.split(" ").map(fn(x, _, _) tokenValue(x))
 end
 
-def Branch(data, left, right)
-    {type: "Branch", data, left, right}
-end
-
-let Tip = {type: "Tip"}
-
-def leaf(x)
-    Branch(x, Tip, Tip)
-end
-
-let x1 = "Welcome to BST-land!"
-console.log(x1)
-
-# This actually doesn't end up looking much better with pattern matching since
-# we need to make the "less-than" check on the data.
-def bstAdd(n, d)
-    if n.type == "Tip" then
-        leaf(d)
-    elseif n.type == "Branch" then
-        if d < n.data then
-            Branch(n.data, bstAdd(n.left, d), n.right)
-        else
-            Branch(n.data, n.left, bstAdd(n.right, d))
-        end
-    else
-        error "not a node"
+def tokenValue(token)
+    match token
+    case "+" then ["function", fn(a, b) a + b]
+    case "-" then ["function", fn(a, b) a - b]
+    case "*" then ["function", fn(a, b) a * b]
+    case "/" then ["function", fn(a, b) a / b]
+    case num then ["number", Number(num)]
     end
 end
 
-def inOrder(node)
-    match node
-    case {type: "Tip"} then
-        []
-    case {type: "Branch", left, right, data} then
-        inOrder(left) ++ [data] ++ inOrder(right)
+def evaluateWithStack(stack, values)
+    match [stack, values]
+    case [[first, second, ...rest], [["function", f], ...xs]] then
+        evaluateWithStack([f(first, second)] ++ rest, xs)
+    case [stack, [["number", n], ...xs]] then
+        evaluateWithStack([n] ++ stack, xs)
+    case [stack, _] then
+        stack[0]
     end
 end
 
-let root = foldRight(
-    [4, 2, 1, 3, 6, 5, 7],
-    Tip,
-    fn(x, node) bstAdd(node, x)
-)
+def evaluate(text)
+    evaluateWithStack([], tokenize(text))
+end
 
-console.log(inOrder(root))
+console.log(evaluate(text))
 ```
 
 [rpn]: https://en.wikipedia.org/wiki/Reverse_Polish_notation
