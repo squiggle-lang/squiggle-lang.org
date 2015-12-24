@@ -15,7 +15,7 @@ The operators mostly work like JavaScript, but they are more restricted.
 
 ## Operators in general
 
-Few operators in JavaScript will ever throw exceptions, but Squiggle operators throws lots of them. The reasoning behind this is Squiggle avoids implicit type coercsions, such as considering the number `0` to be equivalent to `false` in a boolean context, or `""` to be equivalent to `false`. It also doesn't consider `"34"` to be equivalent to `34` in a numeric context. If you want this behavior, you can import the global functions `Number`, `String`, or `Boolean` and explicitly wrap your data in them, like `Number("34") + 3` or `Boolean(someNumber) and foo()`. This helps catch errors where you pass the wrong data type to a function, or where in your application `""` might be a perfectly valid string you want to use, not something "falsey".
+Few operators in JavaScript will ever throw exceptions, but Squiggle operators throw lots of them. The reasoning behind this is Squiggle avoids implicit type coercsions, such as considering the number `0` to be equivalent to `false` in a boolean context, or `""` to be equivalent to `false`. It also doesn't consider `"34"` to be equivalent to `34` in a numeric context. If you want this behavior, you can import the global functions `Number`, `String`, or `Boolean` and explicitly wrap your data in them, like `Number("34") + 3` or `Boolean(someNumber) and foo()`. This helps catch errors where you pass the wrong data type to a function, or where in your application `""` might be a perfectly valid string you want to use, not something "falsey".
 
 ## Logical operators
 

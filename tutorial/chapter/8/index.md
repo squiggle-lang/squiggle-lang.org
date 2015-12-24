@@ -2,7 +2,7 @@
 title: "JavaScript interoperability"
 ---
 
-JavaScript and Squiggle are friends. Because Squiggle just compiles down to JavaScript files, it's trivial to call Squiggle code from JavaScript, or vice- versa. Squiggle uses all the same data as JavaScript, so you don't even have to convert anything
+JavaScript and Squiggle are friends. Because Squiggle just compiles down to JavaScript files, it's trivial to call Squiggle code from JavaScript, or vice- versa. Squiggle uses all the same data as JavaScript, so you don't even have to convert anything.
 
 ## Arity problems
 
@@ -74,6 +74,6 @@ someFn.apply(myThisValue, [param1, param2])
 ```
 
 `new` is harder to do away with since many APIs (e.g. `Date` and `Promise`)
-require its use to create an instance. Some way to invoke `new` on a function will be provided
+require its use to create an instance. Some way to invoke `new` on a function will be provided.
 
 [1]: https://medium.com/@wavebeem/javascript-gotchas-with-this-and-new-dfb65e387ef#.a3hi57kxr

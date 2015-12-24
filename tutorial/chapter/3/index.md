@@ -23,7 +23,7 @@ console.log(realCode) # comment 3
 
 ## Named literals
 
-`true`, `false`, `null`, and `undefined` are all basically the same in Squiggle as with JavaScript.
+`true`, `false`, `null`, and `undefined` are all the same in Squiggle as they are in JavaScript.
 
 Additionally, `global` is a named literal that refers to the global context.
 
@@ -117,11 +117,24 @@ function(x, y) {
 
 JavaScript's usual relaxed rules around argument count can lead to extremely subtle and hard to detect bugs. It's potentially more flexible the JavaScript way, but much more error-prone.
 
-Sometimes APIs are much easier if they can have varying parameter counts, so it is still possible in Squiggle. Using `...` in front of your last parameter causes it so collect all of the extra parameters in an array.
+Sometimes APIs are much simpler if they can have varying parameter counts, so it is still possible to have variadic functions in Squiggle. Using `...` in front of your last parameter causes it so collect all of the extra parameters in an array.
+
+```squiggle
+def talkAbout(things)
+    others.forEach(fn(thing, _, _)
+        console.log("I like " .. thing))
+end
+
+talkAbout("cheese", "pickles", "eggs", "coffee")
+# logs "I like cheese"
+# logs "I like pickles"
+# logs "I like eggs"
+# logs "I like coffee"
+```
 
 ### Multi-statement functions
 
-Functions may have multiple statements in them if you use this form with `do/end`:
+Functions may have multiple statements in them if you use this `do/end` form with:
 
 ```squiggle
 let add = fn add(x, y) do

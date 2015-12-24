@@ -131,7 +131,7 @@ browserify \
     -o out/bundle.js
 ```
 
-Additionally, if you really don't want to use Browserify to bundle, you can avoid the need for Browserify by never using `require()` or `export` in your code. In this case, you'll need to pull in globals manually (or the Squiggle linter will complain), and manually export globals. See example:
+Additionally, if you really don't want to use Browserify to bundle, you can avoid the need for Browserify by never using `require` or `export` in your code. In this case, you'll need to pull in globals manually (or the Squiggle linter will complain), and manually export globals. See example:
 
 ```squiggle
 # file bar.js
