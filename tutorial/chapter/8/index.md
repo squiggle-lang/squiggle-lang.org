@@ -54,7 +54,7 @@ These are the normal `Array` and `Object` functions from JavaScript, so they ret
 
 ## Problems with this or new
 
-Squiggle does not feature the keywords `this` or `new` from JavaScript because they cause more harm than good, and are not necessary (in general). Some libraries require their use, however, so Squiggle has functions for dealing with this.
+Squiggle does not feature the keywords `this` or `new` from JavaScript because [they cause more harm than good][1], and are not necessary. Some libraries require their use, however, so Squiggle has functions for dealing with this.
 
 Remember that any Squiggle function can still use JavaScript's `this` value if it's explicitly declared as a named parameter with and `@` prefix:
 
@@ -75,3 +75,5 @@ someFn.apply(myThisValue, [param1, param2])
 
 `new` is harder to do away with since many APIs (e.g. `Date` and `Promise`)
 require its use to create an instance. Some way to invoke `new` on a function will be provided
+
+[1]: https://medium.com/@wavebeem/javascript-gotchas-with-this-and-new-dfb65e387ef#.a3hi57kxr
