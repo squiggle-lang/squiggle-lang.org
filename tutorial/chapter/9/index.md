@@ -15,16 +15,16 @@ If you're not familiar with RPN, here's a quick translation:
 ```javascript
 var text = "2 3 4 * 3 - +";
 
+function tokenize(text) {
+    return text.split(" ").map(tokenValue);
+}
+
 var table = {
   "+": function(a, b) { return a + b; },
   "-": function(a, b) { return a - b; },
   "*": function(a, b) { return a * b; },
   "/": function(a, b) { return a / b; }
 };
-
-function tokenize(text) {
-    return text.split(" ").map(tokenValue);
-}
 
 function tokenValue(token) {
     if (table.hasOwnProperty(token)) {
