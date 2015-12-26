@@ -154,7 +154,7 @@ def add(x, y)
 end
 ```
 
-Both of these forms are equivalent and automatically return the value of their last statement.
+Both of these forms are equivalent and automatically return the value of their last statement. The `def/end` version is just syntax sugar, but it's the preferred form due to being more concise.
 
 ### Rest parameters
 
