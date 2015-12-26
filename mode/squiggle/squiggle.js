@@ -15,7 +15,7 @@ CodeMirror.defineSimpleMode("squiggle", {
   start:[
     {regex: /"(?:[^\\]|\\.)*?"/, token: "string"},
     {regex: /(?:[0-9][0-9_]*(\.[0-9_]+)?)/, token: "number"},
-    {regex: /(?:export|try|throw|error|fn|if|then|else|match|case|let|def|in|await|require)\b/, token: "keyword"},
+    {regex: /(?:export|try|throw|error|fn|if|then|else|elseif|match|case|let|def|do|end|in|await|require)\b/, token: "keyword"},
     {regex: /\b(?:true|false|null|undefined|global)\b/, token: "builtin"},
     {regex: /#.*/, token: "comment"},
     {regex: /(?:\+\+|~|\+|-|\*|\/|=>|<=|>=|>|<|==|!=|=)/, token: "operator"},

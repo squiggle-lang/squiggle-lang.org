@@ -2,9 +2,7 @@
 title: "Operators"
 ---
 
-The golden rule of Squiggle, and especially of operators, is *it works like how JavaScript probably should work, in my opinion*.
-
-Here are the operators in order, from Squiggle:
+The operators mostly work like JavaScript, but they are more restricted.
 
 - `or`
 - `and`
@@ -15,14 +13,13 @@ Here are the operators in order, from Squiggle:
 - `*`, `/`
 - `-` (unary prefix)
 
+## Operators in general
+
+Few operators in JavaScript will ever throw exceptions, but Squiggle operators throw lots of them. The reasoning behind this is Squiggle avoids implicit type coercsions, such as considering the number `0` to be equivalent to `false` in a boolean context, or `""` to be equivalent to `false`. It also doesn't consider `"34"` to be equivalent to `34` in a numeric context. If you want this behavior, you can import the global functions `Number`, `String`, or `Boolean` and explicitly wrap your data in them, like `Number("34") + 3` or `Boolean(someNumber) and foo()`. This helps catch errors where you pass the wrong data type to a function, or where in your application `""` might be a perfectly valid string you want to use, not something "falsey".
+
 ## Logical operators
 
-The logical operators (`and` and `or`) work like their JavaScript counterparts
-(`&&` and `||`). They short-circuit just like in JavaScript, but if they
-evaluate a non-boolean value on either side, they throw an exception. That means
-you can't do `x || defaultValue`. But that is an error prone construct anyway:
-take for example `0 || 123`. You probably only wanted 123 if x was undefined,
-not if it was 0.
+The logical operators `and` and `or` operate on boolean values and return boolean values. They short circuit, meaning that `false and foo()` will not evaluate `foo()`, and `true or bar()` will not evaluate `bar()`.
 
 ```squiggle
 true and false
@@ -37,8 +34,7 @@ true or console.log("not an error, never evaluated")
 
 ## Not operator
 
-`not` is like JavaScript's `!` except it throws if you give it a non-boolean
-value.
+`not true` gives `false`, and `not false` gives `true`. Any other input throws an exception.
 
 ```squiggle
 not true
@@ -50,46 +46,27 @@ not 4
 
 ## Comparison operators
 
-The operators `<`, `<=`, `>`, and `>=` work like JavaScript, except they throw
-an error unless both values are strings or both values are numbers. It doesn't
-make much sense to ask if an array or an object is less than something else, so
-this helps avoid subtle bugs.
+The operators `<`, `<=`, `>`, and `>=` only work on numbers.
 
-The operator `==` is a deep equality operator. It works like JavaScript `===`
-for the purpose of comparising strings, numbers, `true`, `false`, `undefined`,
-`null`, and functions, but differs for arrays, and objects.
-
-For arrays, it checks to see if all elements of both arrays are equal to each
-other based on the Squiggle `==` operator. It is not aware of sparse arrays.
-
-For objects, it checks all keys returned by `Object.keys` on both objects for
-equality using the Squiggle `==` operator.
+The operator `==` is a strict equality operator. It works like JavaScript `===` for the purpose of comparing strings, numbers, `true`, `false`, `undefined`, and `null`, but it throws an exception if you try to compare objects, arrays, or functions. This is because those types do not have well-defined value comparison, so you should implement it yourself.
 
 As for `!=`, it's like `==` but returns the opposite value.
 
-```squiggle
-[] == []
-#=> true
-
-[2] == [1 + 1]
-#=> true
-
-["abc", "xyz"] == ["abc", "xy" ++ "z"]
-#=> true
-
-{a: "b"} == {a: "b"}
-#=> true
-
-{} == Object.create(null)
-#=> true
-```
-
-The operator `is` is equivalent to the ES6 function `Object.is`,
-[as documented on MDN][object_is].
-Basically it's like JavaScript's `===` operator except that
+The operator `is` is equivalent to the ES6 function `Object.is`, [as documented
+on MDN][object_is]. Basically it's like JavaScript's `===` operator except that
 `0 is -0` is false, and `NaN is NaN` is true.
 
-The operator `has` works like this:
+The operator `has` works like this is essentially like the following JavaScript function:
+
+```javascript
+function has(obj, key) {
+    if (obj === null || obj === undefined) throw new Error();
+    if (!validKey(key)) throw new Error();
+    return obj[key] !== undefined;
+}
+```
+
+Valid keys are strings and whole numbers.
 
 ```squiggle
 {} has "foo"
@@ -134,15 +111,9 @@ null has "toString"
 
 ## Concatenation and update operators
 
-The operator `++` is basically just syntax sugar for calling the `.concat`
-method. As such, it works on arrays or strings, like `[1] ++ [2, 3]` or `"abc"
-++ "xyz"`. It will throw an error unless the arguments are either both strings
-or both arrays.
+The expression `a ++ b` is basically just syntax sugar for calling the `a.concat(b)` method, except it forces that both arguments are real JavaScript arrays, not array-like objects such as `arguments` or `NodeList`s.
 
 ```squiggle
-"abc" ++ "123"
-#=> "abc123"
-
 [0, 1] ++ [2, 3]
 #=> [0, 1, 2, 3]
 
@@ -151,10 +122,12 @@ or both arrays.
 
 1 ++ [1, 2]
 #=> error
+
+[1] ++ [2] ++ [] ++ [3, 4]
+#=> [1, 2, 3, 4]
 ```
 
-The operator `~` is unique to Squiggle. It is sort of like `.concat`, but for
-objects and key-value pairs.
+The operator `~` is unique to Squiggle. It is sort of like `.concat`, but for objects and key-value pairs.
 
 ```squiggle
 {a: 1} ~ {b: 2}
@@ -171,7 +144,7 @@ objects and key-value pairs.
 
 let proto = {a: 1, b: 2}
 let obj = Object.create(proto)
-in obj ~ {b: 4, c: 3}
+obj ~ {b: 4, c: 3}
 #=> {b: 4, c: 3}, with prototype set to {a: 1, b: 2}
 ```
 
@@ -182,14 +155,11 @@ Here's what happens in the expression `A ~ B`:
 - for each key `k` in `Object.keys(B)`, assign `C[k] = B[k]`
 - return `Object.freeze(C)`
 
-This has the effect of preserving prototype chains for simple objects (useful
-for objects with methods stored on the prototype), while returning a new object
-with the desired key-value pairs set on it.
+This has the effect of preserving prototype chains for simple objects (useful for objects with methods stored on the prototype), while returning a new object with the desired key-value pairs set on it.
 
 ## Addition and subtraction operators
 
-The operators `+` and `-` work like JavaScript except they throw an error unless
-both arguments are numbers.
+The operators `+` and `-` only work on numbers.
 
 ```squiggle
 1 + 2
@@ -201,8 +171,7 @@ both arguments are numbers.
 
 ## Multiplication and division operators
 
-The operators `*` and `/` work like JavaScript except they throw an error unless
-both arguments are numbers.
+The operators `*` and `/` only work on numbers.
 
 ```squiggle
 2 * 3
@@ -214,14 +183,16 @@ both arguments are numbers.
 
 ## Unary minus operator
 
-The unary minus operator `-` is like JavaScript's unary minus operator except it
-throws if the value is not a number.
+The unary minus operator `-` only works on numbers.
+
+*Note:* Currently there is a bug where starting a statement with a `-` can cause the parser to think you're trying to do multiline subtraction, so be sure to wrap these statements in parentheses for now.
 
 ```squiggle
 -4
 #=> -4
 
-let x = 23 in -x
+let x = 23
+(-x)
 #=> -23
 
 -"foo"

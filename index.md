@@ -7,8 +7,7 @@ bodyClass: narrow
 ## Hello world
 
 ```squiggle
-let {console} = global
-in console.log("Hello, world!")
+global.console.log("Hello, world!")
 ```
 
 Check out [the compiler][squiggle] on GitHub.
@@ -24,22 +23,19 @@ npm install -g squiggle-lang
     <div class="feature">
         <h3>Simple syntax</h3>
         <p>
-            Squiggle does not use semicolons, and indentation does not matter.
-            Data literals mostly match JS for ease of learning.
+            Squiggle does not use semicolons, and indentation does not matter. Data literals mostly match JS for ease of learning.
         </p>
     </div>
     <div class="feature">
         <h3>Arity checked functions</h3>
         <p>
-            Calling a function made in Squiggle with the wrong number of
-            arguments throws an exception.
+            Calling a function made in Squiggle with the wrong number of arguments throws an exception.
         </p>
     </div>
     <div class="feature">
         <h3>Named-this</h3>
         <p>
-            JavaScript's <code>this</code> becomes a normal named parameter,
-            making it easy to nest functions and use callbacks.
+            JavaScript's <code>this</code> becomes a normal named parameter, making it easy to nest functions and use callbacks.
         </p>
     </div>
     <div class="feature">
@@ -49,9 +45,9 @@ npm install -g squiggle-lang
         </p>
     </div>
     <div class="feature">
-        <h3>Temporal deadzone</h3>
+        <h3>No use before definition</h3>
         <p>
-            Just like ES2015, it's illegal to use a variable before it's initialized, eliminating an entire class of errors.
+            It's illegal to use a variable before it's defined, eliminating an entire class of errors.
         </p>
     </div>
     <div class="feature">
@@ -109,11 +105,11 @@ npm install -g squiggle-lang
         </p>
     </div>
     <div class="feature">
-        <h3>Deep equality</h3>
+        <h3>No accidental reference equality</h3>
         <p>
-            The operator <code>==</code> performs a deep equality check.
+            The operator <code>==</code> performs an equality check only for value types. It throws on reference types (objects/arrays).
         </p>
     </div>
 </div>
 
-[squiggle]: https://github.com/wavebeem/squiggle
+[squiggle]: https://github.com/squiggle-lang/squiggle-lang

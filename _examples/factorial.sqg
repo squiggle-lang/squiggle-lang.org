@@ -1,8 +1,10 @@
 let {console} = global
 
-def factorial(n) =
+def factorial(n)
     match n
-    case 0 => 1
-    case n => n * factorial(n - 1)
+    case 0 then 1
+    case n then n * factorial(n - 1)
+    end
+end
 
-in console.log(factorial(4))
+console.log(factorial(4))

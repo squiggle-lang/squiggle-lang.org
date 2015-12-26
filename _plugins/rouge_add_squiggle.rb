@@ -23,7 +23,7 @@ module Rouge
         rule(/\bInfinity\b/, Num)
         rule(/\bNaN\b/, Num)
 
-        rule(/\b(?:export|try|throw|error|fn|if|then|else|match|case|let|def|in|await|require)\b/, Keyword)
+        rule(/\b(?:export|try|throw|error|fn|if|then|else|elseif|match|case|let|def|in|await|require|do|end)\b/, Keyword)
 
         rule(/"(?:\\\\|\\"|[^"])*"/, Str)
 
