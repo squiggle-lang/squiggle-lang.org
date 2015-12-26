@@ -17507,7 +17507,7 @@ module.exports = function (str) {
 		throw new TypeError('Expected a string');
 	}
 
-	return str.replace(matchOperatorsRe,  '\\$&');
+	return str.replace(matchOperatorsRe, '\\$&');
 };
 
 },{}],87:[function(require,module,exports){
@@ -42024,7 +42024,9 @@ function optimizeNestedIifes(node) {
         get(node, "argument.callee.body.body[0].type") === "ReturnStatement";
     if (ok) {
         // console.error("ITS HAPPENING", JSON.stringify(node, null, 2));
-        return node.argument.callee.body.body[0];
+        var kidNode = node.argument.callee.body.body[0];
+        estraverse.replace(kidNode, {enter: optimizeNestedIifes});
+        return kidNode;
     }
 }
 
@@ -43991,14 +43993,14 @@ function Module(transform, node) {
     var blockJs = transform(block);
     var predef = helpersFor(blockJs);
     var theExports = makeExportsFor(transform, node.exports);
-    // BEGIN HACK: Add the exports into the black
+    // BEGIN HACK: Add the exports into the block
     var theBody = blockJs.callee.body.body;
     theBody.pop();
     theExports.forEach(function(exp) {
         theBody.push(exp);
     });
     // END HACK
-    var body = predef.concat([blockJs]);
+    var body = predef.concat([es.ExpressionStatement(null, blockJs)]);
     return fileWrapper(body);
 }
 
