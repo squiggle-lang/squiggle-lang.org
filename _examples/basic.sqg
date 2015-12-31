@@ -5,7 +5,7 @@ let {Date, console} = global
 
 let x = 4
 
-def inc(x)
+def inc(x) do
     x + 1
 end
 

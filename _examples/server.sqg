@@ -8,7 +8,7 @@ let port = 1337
 let host = "127.0.0.1"
 let url = "http://" .. host .. ":" .. port .. "/"
 
-def handler(_, res)
+def handler(_, res) do
     let headers = {"Content-Type": "text/plain"}
     res.writeHead(200, headers)
     res.end("Hello world\n")

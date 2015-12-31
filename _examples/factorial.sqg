@@ -1,6 +1,6 @@
 let {console} = global
 
-def factorial(n)
+def factorial(n) do
     match n
     case 0 then 1
     case n then n * factorial(n - 1)
