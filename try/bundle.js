@@ -44851,10 +44851,10 @@ function run() {
 }
 
 var examples = {
-    Basic: "### Type (Control+Enter) to run code!\n### All code is compiled automatically.\n\nlet {Date, console} = global\n\nlet x = 4\n\ndef inc(x)\n    x + 1\nend\n\nconsole.log(Date())\nconsole.log(inc(x))\n",
-    Factorial: "let {console} = global\n\ndef factorial(n)\n    match n\n    case 0 then 1\n    case n then n * factorial(n - 1)\n    end\nend\n\nconsole.log(factorial(4))\n",
+    Basic: "### Type (Control+Enter) to run code!\n### All code is compiled automatically.\n\nlet {Date, console} = global\n\nlet x = 4\n\ndef inc(x) do\n    x + 1\nend\n\nconsole.log(Date())\nconsole.log(inc(x))\n",
+    Factorial: "let {console} = global\n\ndef factorial(n) do\n    match n\n    case 0 then 1\n    case n then n * factorial(n - 1)\n    end\nend\n\nconsole.log(factorial(4))\n",
     "Hello world": "let {console} = global\nconsole.log(\"Hello, world!\")\n",
-    "HTTP server": "### NOTE: This will not run in the browser,\n### since it requires Node.js libraries.\n\nlet http = require \"http\"\nlet {console} = global\n\nlet port = 1337\nlet host = \"127.0.0.1\"\nlet url = \"http://\" .. host .. \":\" .. port .. \"/\"\n\ndef handler(_, res)\n    let headers = {\"Content-Type\": \"text/plain\"}\n    res.writeHead(200, headers)\n    res.end(\"Hello world\\n\")\nend\n\nlet server = http.createServer(handler)\n\nserver.listen(port, host)\nconsole.log(\"Server running at \" .. url)\n",
+    "HTTP server": "### NOTE: This will not run in the browser,\n### since it requires Node.js libraries.\n\nlet http = require \"http\"\nlet {console} = global\n\nlet port = 1337\nlet host = \"127.0.0.1\"\nlet url = \"http://\" .. host .. \":\" .. port .. \"/\"\n\ndef handler(_, res) do\n    let headers = {\"Content-Type\": \"text/plain\"}\n    res.writeHead(200, headers)\n    res.end(\"Hello world\\n\")\nend\n\nlet server = http.createServer(handler)\n\nserver.listen(port, host)\nconsole.log(\"Server running at \" .. url)\n",
 };
 
 function E(name, attributes, children) {

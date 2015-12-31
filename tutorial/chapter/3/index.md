@@ -124,8 +124,8 @@ JavaScript's usual relaxed rules around argument count can lead to extremely sub
 Sometimes APIs are much simpler if they can have varying parameter counts, so it is still possible to have variadic functions in Squiggle. Using `...` in front of your last parameter causes it so collect all of the extra parameters in an array.
 
 ```squiggle
-def talkAbout(things)
-    others.forEach(fn(thing, ...)
+def talkAbout(...stuff)
+    stuff.forEach(fn(thing, ...)
         console.log("I like " .. thing))
 end
 
