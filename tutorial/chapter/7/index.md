@@ -162,9 +162,11 @@ let [_, y, _] = [1, 2, 3]
 let [_, ...xs] = [4, 5, 6, 7]
 #=> xs == [5, 6, 7]
 
-let [x, ..._] = [3, 9]
+let [x, ...] = [3, 9]
 #=> x == 3
 ```
+
+Note that when using a `...` pattern you can omit the identifier and it's assumed to be `_`.
 
 ## The Match-expression
 
@@ -175,10 +177,11 @@ match V
 case P1 then X1
 case P2 then X2
 case P3 then X3
+else Xn
 end
 ```
 
-In this example, `V` is the value you want to match on. `P1`, `P2`, and `P3` are patterns. The first pattern to fully match wins, resulting in the value to the right of its `then`. If no patterns are matched, it throws an exception.
+In this example, `V` is the value you want to match on. `P1`, `P2`, and `P3` are patterns. The first pattern to fully match wins, resulting in the value to the right of its `then`. If no patterns are matched, it throws an exception. The else clause is equivalent to `case _`, it will match any value.
 
 All the pattern types from destructuring assignment are supported, in addition to matching value-based object literals: numbers, strings, `true`, `false`, `undefined`, `null`, `NaN`, and `Infinity`.
 

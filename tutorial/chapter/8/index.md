@@ -11,7 +11,7 @@ Squiggle functions check their arity, but many JavaScript functions are built as
 ```squiggle
 # File: helpers.sqg
 
-def add(x)
+def add(x) do
     x + 1
 end
 
@@ -41,11 +41,10 @@ Sometimes you need mutable data. Fortunately, it's still possible to create it i
 
 ```squiggle
 let {Array, Object} = global
-let {assign} = Object
 let a = Array()
 let o = Object()
-assign(a, {0: "hi"})
-assign(o, {key: "value"})
+Object.assign(a, {0: "hi"})
+Object.assign(o, {key: "value"})
 console.log([a, o])
 #=> [["hi"], {key: "value"}]
 ```

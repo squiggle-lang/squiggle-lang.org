@@ -23,7 +23,7 @@ This will log `3` to the console.
 If you have more than two cases, you can use `elseif`:
 
 ```squiggle
-def numberToEnglish(n)
+def numberToEnglish(n) do
     if n == 1 then "one"
     elseif n == 2 then "two"
     elseif n == 3 then "three"
@@ -50,14 +50,14 @@ or `["fail", error]`. You can manually inspect these values using brackets, or i
 ```squiggle
 let {JSON} = global
 
-def safeParse(text)
+def safeParse(text) do
     match try JSON.parse(text)
     case ["ok", obj] then obj
     case ["fail", _] then {}
     end
 end
 
-def show(text)
+def show(text) do
     console.log(safeParse(text))
 end
 

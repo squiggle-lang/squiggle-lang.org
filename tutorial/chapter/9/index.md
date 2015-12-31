@@ -73,11 +73,11 @@ let text = "2 3 4 * 3 - +"
 
 # You have to explicitly ignore arguments
 # with an underscore in Squiggle.
-def tokenize(text)
-    text.split(" ").map(fn(x, _, _) tokenValue(x))
+def tokenize(text) do
+    text.split(" ").map(fn(x, ...) tokenValue(x))
 end
 
-def tokenValue(token)
+def tokenValue(token) do
     match token
     case "+" then ["function", fn(a, b) a + b]
     case "-" then ["function", fn(a, b) a - b]
@@ -87,18 +87,18 @@ def tokenValue(token)
     end
 end
 
-def evaluateWithStack(stack, values)
+def evaluateWithStack(stack, values) do
     match [stack, values]
     case [[first, second, ...rest], [["function", f], ...xs]] then
         evaluateWithStack([f(first, second)] ++ rest, xs)
     case [stack, [["number", n], ...xs]] then
         evaluateWithStack([n] ++ stack, xs)
-    case [stack, _] then
-        stack[0]
+    case [[value, ...], _] then
+        value
     end
 end
 
-def evaluate(text)
+def evaluate(text) do
     evaluateWithStack([], tokenize(text))
 end
 

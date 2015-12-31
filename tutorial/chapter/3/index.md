@@ -83,6 +83,10 @@ Object keys work like JavaScript in that they can be plain identifiers or string
 {key: 400, x: null, y: undefined, o: {}}
 
 {("a" ++ "b"): someStringVariable}
+
+let foo = "potato"
+{foo}
+# {foo: "potato"}
 ```
 
 ## Functions
@@ -121,7 +125,7 @@ Sometimes APIs are much simpler if they can have varying parameter counts, so it
 
 ```squiggle
 def talkAbout(things)
-    others.forEach(fn(thing, _, _)
+    others.forEach(fn(thing, ...)
         console.log("I like " .. thing))
 end
 
@@ -147,7 +151,7 @@ end
 Notice how if you're assigning a variable to a named function you have to name it twice. This is redundant, so you should use the form `def/end` instead:
 
 ```squiggle
-def add(x, y)
+def add(x, y) do
     console.log(x)
     console.log(y)
     x + y
@@ -159,7 +163,10 @@ Both of these forms are equivalent and automatically return the value of their l
 ### Rest parameters
 
 ```squiggle
-fn(first, second, ...rest) second
+let f = fn(first, second, ...rest) second
+
+f(1, 2, 3, 4, 5)
+# 2
 ```
 
 This function can be called like `foo(1, 2, 3, 4, 5)` and will return `2`. It would fail if called like `foo(1)` because it needs at least two parameters.
@@ -169,19 +176,28 @@ This function can be called like `foo(1, 2, 3, 4, 5)` and will return `2`. It wo
 JavaScript's `this` is a source of much confusion and pain. In order to help avoid mistakes, functions have to explicitly declare their use of JavaScript's `this`. It looks like the following:
 
 ```squiggle
-fn(@this) this.name
+let getName = fn(@this) this.name
+let obj = {name: "Violet", getName}
+obj.getName()
+# "Violet"
 ```
 
 If the first parameter starts with `@`, that variable is assigned the value of `this`. In this way, you can nest functions and always use the correct `this` value by giving it the name you want.
 
 ```squiggle
-fn(@self)
+let f = fn(@self)
     fn()
         self.x
 
-fn(@me)
+f.call({x: 4})()
+# 4
+
+let g = fn(@me)
     fn(@them)
         [me, them]
+
+g.call({a: 1}).call({b: 2})
+# [{a: 1}, {b: 2}]
 ```
 
 Any variable can be used for an `@` binding.
@@ -197,7 +213,7 @@ fn foo(x) x + 1
 This is useful for functions that need to refer to themselves, like:
 
 ```squiggle
-def forever(f)
+def forever(f) do
     if done then
         undefined
     else

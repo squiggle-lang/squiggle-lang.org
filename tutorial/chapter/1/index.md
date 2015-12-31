@@ -143,15 +143,15 @@ Additionally, if you really don't want to use Browserify to bundle, you can avoi
 
 let {Object, foo} = global
 
-def bar1()
+def bar1() do
     foo(1)
 end
 
-def bar2()
+def bar2() do
     foo(2)
 end
 
-def bar3()
+def bar3() do
     foo(3)
 end
 
