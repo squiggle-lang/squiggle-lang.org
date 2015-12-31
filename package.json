@@ -6,7 +6,7 @@
     "brfs": "^1.4.1",
     "browserify": "^11.0.1",
     "lodash": "^3.10.1",
-    "squiggle-lang": "^0.8.1"
+    "squiggle-lang": "^0.11.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

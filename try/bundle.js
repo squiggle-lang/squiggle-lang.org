@@ -17594,7 +17594,8 @@ var path = require('path');
 
 var commentRx = /^\s*\/(?:\/|\*)[@#]\s+sourceMappingURL=data:(?:application|text)\/json;(?:charset[:=]\S+;)?base64,(.*)$/mg;
 var mapFileCommentRx =
-  // //# sourceMappingURL=foo.js.map                       
+  //Example (Extra space between slashes added to solve Safari bug. Exclude space in production):
+  //     / /# sourceMappingURL=foo.js.map           
   /(?:\/\/[@#][ \t]+sourceMappingURL=([^\s'"]+?)[ \t]*$)|(?:\/\*[@#][ \t]+sourceMappingURL=([^\*]+?)[ \t]*(?:\*\/){1}[ \t]*$)/mg
 
 function decodeBase64(base64) {
@@ -41396,11 +41397,15 @@ module.exports={
 }
 
 },{}],175:[function(require,module,exports){
+"use strict";
+
 module.exports = {
     compile: require("./compile"),
 };
 
 },{"./compile":177}],176:[function(require,module,exports){
+"use strict";
+
 var mapValues = require("lodash/object/mapValues");
 
 var nm = require('./node-maker');
@@ -41463,6 +41468,8 @@ var ast = nm("ast", mapValues(almostAst, addLoc));
 module.exports = ast;
 
 },{"./node-maker":187,"lodash/object/mapValues":79}],177:[function(require,module,exports){
+"use strict";
+
 var convertSourceMap = require("convert-source-map");
 var escodegen = require("escodegen");
 var esmangle = require("esmangle");
@@ -41556,6 +41563,8 @@ function compile(code, filename, options) {
 module.exports = compile;
 
 },{"./file-index-to-position-mapper":179,"./file-parse":180,"./lint":186,"./optimize":188,"./transform-ast":229,"./traverse":264,"convert-source-map":92,"escodegen":93,"esmangle":115,"lodash/array/uniq":10,"oopsy-data":171}],178:[function(require,module,exports){
+"use strict";
+
 var mapValues = require("lodash/object/mapValues");
 
 var nm = require('./node-maker');
@@ -41632,6 +41641,8 @@ function fileIndexToPositionMapper(code, filename) {
 module.exports = fileIndexToPositionMapper;
 
 },{}],180:[function(require,module,exports){
+"use strict";
+
 var parser = require("./parser");
 
 function fileParse(text) {
@@ -41641,6 +41652,8 @@ function fileParse(text) {
 module.exports = fileParse;
 
 },{"./parser":225}],181:[function(require,module,exports){
+"use strict";
+
 var esprima = require("esprima");
 
 var es = require("./es");
@@ -41663,6 +41676,8 @@ function fileWrapper(body) {
 module.exports = fileWrapper;
 
 },{"./es":178,"esprima":168}],182:[function(require,module,exports){
+"use strict";
+
 var estraverse = require("estraverse");
 var esprima = require("esprima");
 var L = require("lodash");
@@ -41730,6 +41745,8 @@ function helpersFor(node) {
 module.exports = helpersFor;
 
 },{"./predef":227,"esprima":168,"estraverse":169,"lodash":14}],183:[function(require,module,exports){
+"use strict";
+
 var LH = require("./transform/let-helpers");
 
 function concat(a, b) {
@@ -41753,6 +41770,8 @@ function identsForBlock(transform, node) {
 module.exports = identsForBlock;
 
 },{"./transform/let-helpers":247}],184:[function(require,module,exports){
+"use strict";
+
 var words = require("./js-reserved-words");
 
 var regex = new RegExp("^(?:" + words.join("|") + ")$");
@@ -41819,6 +41838,8 @@ module.exports=[
 ]
 
 },{}],186:[function(require,module,exports){
+"use strict";
+
 var flatten = require("lodash/array/flatten");
 
 var identsForBlock = require("./idents-for-block");
@@ -41946,6 +41967,8 @@ function findUnusedOrUndeclaredBindings(ast) {
 module.exports = lint;
 
 },{"./idents-for-block":183,"./overlay-map":189,"./traverse":264,"lodash/array/flatten":8}],187:[function(require,module,exports){
+"use strict";
+
 function f(prefix, type, props) {
     return function() {
         var obj = {};
@@ -41981,6 +42004,8 @@ function nm(prefix, ast) {
 module.exports = nm;
 
 },{}],188:[function(require,module,exports){
+"use strict";
+
 var estraverse = require("estraverse");
 var matches = require("lodash/utility/matches");
 var get = require("lodash/object/get");
@@ -42039,6 +42064,8 @@ function optimize(node) {
 module.exports = optimize;
 
 },{"./es":178,"estraverse":169,"lodash/object/get":76,"lodash/utility/matches":82}],189:[function(require,module,exports){
+"use strict";
+
 // TODO: Make some of these methods pseudo-private with underscores or something
 // to keep the intended outside API clear.
 
@@ -42110,6 +42137,8 @@ function OverlayMap(parent) {
 module.exports = OverlayMap;
 
 },{}],190:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var _ = require("./parse/whitespace")(null);
@@ -42219,6 +42248,8 @@ module.exports = {
 };
 
 },{"./parse/whitespace":224,"parsimmon":173}],191:[function(require,module,exports){
+"use strict";
+
 var H = require("../parse-helpers");
 var ast = require("../ast");
 
@@ -42231,6 +42262,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190}],192:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42252,6 +42285,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],193:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 module.exports = function(ps) {
@@ -42263,6 +42298,8 @@ module.exports = function(ps) {
 };
 
 },{"parsimmon":173}],194:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var H = require("../parse-helpers");
@@ -42317,6 +42354,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],195:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42339,6 +42378,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],196:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var _ = require("./whitespace")(null);
@@ -42391,6 +42432,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],197:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var Newline = P.regex(/\n/);
@@ -42403,6 +42446,8 @@ module.exports = function(ps) {
 };
 
 },{"parsimmon":173}],198:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var _ = require("./whitespace")(null);
@@ -42415,6 +42460,8 @@ module.exports = function(ps) {
 };
 
 },{"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],199:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 module.exports = function(ps) {
@@ -42429,6 +42476,8 @@ module.exports = function(ps) {
 };
 
 },{"parsimmon":173}],200:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42450,6 +42499,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],201:[function(require,module,exports){
+"use strict";
+
 var ast = require("../ast");
 
 var ione = require("../parse-helpers").ione;
@@ -42462,6 +42513,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190}],202:[function(require,module,exports){
+"use strict";
+
 var ast = require("../ast");
 
 var ione = require("../parse-helpers").ione;
@@ -42471,6 +42524,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190}],203:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42507,6 +42562,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],204:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42533,11 +42590,15 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],205:[function(require,module,exports){
+"use strict";
+
 var patternFactory = require("./pattern-factory");
 
 module.exports = patternFactory.bind(null, "Let");
 
 },{"./pattern-factory":218}],206:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42568,7 +42629,7 @@ module.exports = function(ps) {
         iseq(makeDefBinding,
             P.seq(
                 word("def").then(ps.Identifier).skip(_),
-                wrap("(", ps.Parameters, ")").skip(_),
+                wrap("(", ps.Parameters, ")").skip(_).skip(word("do")),
                 ps.Block.skip(_).skip(P.string("end"))
             ));
 
@@ -42580,6 +42641,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],207:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 module.exports = function(ps) {
@@ -42595,11 +42658,15 @@ module.exports = function(ps) {
 };
 
 },{"parsimmon":173}],208:[function(require,module,exports){
+"use strict";
+
 var patternFactory = require("./pattern-factory");
 
 module.exports = patternFactory.bind(null, "Match");
 
 },{"./pattern-factory":218}],209:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var H = require("../parse-helpers");
@@ -42607,16 +42674,25 @@ var _ = require("./whitespace")(null);
 var ast = require("../ast");
 
 var word = H.word;
+var ione = H.ione;
 var iseq = H.iseq;
 
 module.exports = function(ps) {
+    var emptyPattern =
+        ione(ast.PatternSimple,
+            ione(ast.Identifier, P.of("_")));
+    var NormalClause =
+        P.seq(
+            word("case").then(ps.MatchPattern),
+            _.then(word("then")).then(ps.Block)
+        );
+    var ElseClause =
+        P.seq(
+            emptyPattern,
+            _.then(word("else")).then(ps.Block)
+        );
     var MatchClause =
-        iseq(ast.MatchClause,
-            P.seq(
-                word("case").then(ps.MatchPattern),
-                _.then(word("then")).then(ps.Block)
-            ));
-
+        iseq(ast.MatchClause, NormalClause.or(ElseClause));
     return iseq(ast.Match,
         P.seq(
             word("match").then(ps.BinExpr),
@@ -42627,6 +42703,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],210:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42652,6 +42730,8 @@ module.exports = function(ps) {
 
 
 },{"../ast":176,"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],211:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 module.exports = function(ps) {
@@ -42659,6 +42739,8 @@ module.exports = function(ps) {
 };
 
 },{"parsimmon":173}],212:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42675,6 +42757,8 @@ module.exports = function(ps) {
 
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],213:[function(require,module,exports){
 (function (global){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42738,6 +42822,8 @@ module.exports = function(ps) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],214:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 module.exports = function(ps) {
@@ -42752,6 +42838,8 @@ module.exports = function(ps) {
 };
 
 },{"parsimmon":173}],215:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42787,6 +42875,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],216:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42809,7 +42899,11 @@ module.exports = function(ps) {
     // The third piece (...xs) is the slurpy.
     // All pieces are optional.
 
-    var ParamSlurpy = word("...").then(Parameter);
+    var BareSlurp =
+        ione(ast.Parameter,
+            ione(ast.Identifier, P.of("_")));
+
+    var ParamSlurpy = word("...").then(Parameter.or(BareSlurp));
     var ParamContext = P.string("@").then(Parameter);
     var ParamsPositional = list0(ps.Separator, Parameter);
 
@@ -42834,6 +42928,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],217:[function(require,module,exports){
+"use strict";
+
 var H = require("../parse-helpers");
 var wrap = H.wrap;
 
@@ -42843,6 +42939,8 @@ module.exports = function(ps) {
 };
 
 },{"../parse-helpers":190}],218:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var H = require("../parse-helpers");
@@ -42926,13 +43024,17 @@ function patternFactory(type, ps) {
         ione(ast.PatternArray,
             wrap("[", list0(ps.Separator, Pattern), "]"));
 
+    var BareSlurp =
+        ione(ast.PatternSimple,
+            ione(ast.Identifier, P.of("_")));
+
     var PatternArraySlurpy =
         iseq(ast.PatternArraySlurpy,
             wrap(
                 "[",
                 P.seq(
                     Pattern.skip(ps.Separator).many(),
-                    word("...").then(Pattern)
+                    word("...").then(Pattern.or(BareSlurp))
                 ),
                 "]"
             ));
@@ -42949,6 +43051,8 @@ function patternFactory(type, ps) {
 module.exports = patternFactory;
 
 },{"../ast":176,"../parse-helpers":190,"./whitespace":224,"parsimmon":173}],219:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var H = require("../parse-helpers");
@@ -42962,6 +43066,8 @@ module.exports = function(ps) {
 };
 
 },{"../parse-helpers":190,"parsimmon":173}],220:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -42976,6 +43082,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"parsimmon":173}],221:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -43021,6 +43129,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],222:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var Comment = require("./comment")(null);
@@ -43040,6 +43150,8 @@ module.exports = function(ps) {
 };
 
 },{"../parse-helpers":190,"./comment":197,"./whitespace":224,"parsimmon":173}],223:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var ast = require("../ast");
@@ -43059,6 +43171,8 @@ module.exports = function(ps) {
 };
 
 },{"../ast":176,"../parse-helpers":190,"parsimmon":173}],224:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 var Comment = require("./comment")(null);
@@ -43069,6 +43183,8 @@ module.exports = function(ps) {
 };
 
 },{"./comment":197,"parsimmon":173}],225:[function(require,module,exports){
+"use strict";
+
 var parsimmonSalad = require("./parsimmon-salad");
 
 var ps = parsimmonSalad({
@@ -43109,6 +43225,8 @@ var ps = parsimmonSalad({
 module.exports = ps;
 
 },{"./parse/array":191,"./parse/await":192,"./parse/basic-literal":193,"./parse/bin-expr":194,"./parse/block":195,"./parse/call-or-get":196,"./parse/do-block":198,"./parse/expr":199,"./parse/function":200,"./parse/ident-expr":201,"./parse/identifier":203,"./parse/identifier-as-string":202,"./parse/if":204,"./parse/let":206,"./parse/let-pattern":205,"./parse/literal":207,"./parse/match":209,"./parse/match-pattern":208,"./parse/module":210,"./parse/name":211,"./parse/named-literal":212,"./parse/number":213,"./parse/object":215,"./parse/object-pair-key":214,"./parse/parameters":216,"./parse/paren-expr":217,"./parse/separator":219,"./parse/statement":220,"./parse/string":221,"./parse/terminator":222,"./parse/top-unary-expr":223,"./parse/whitespace":224,"./parsimmon-salad":226}],226:[function(require,module,exports){
+"use strict";
+
 var P = require("parsimmon");
 
 function parsimmonSalad(almostParsers) {
@@ -43126,6 +43244,8 @@ function parsimmonSalad(almostParsers) {
 module.exports = parsimmonSalad;
 
 },{"parsimmon":173}],227:[function(require,module,exports){
+"use strict";
+
 module.exports = {
     add: {
         dependencies: ['number'],
@@ -43384,6 +43504,8 @@ module.exports = {
 };
 
 },{}],228:[function(require,module,exports){
+"use strict";
+
 var es = require("./es");
 
 function throwHelper(node, esNode) {
@@ -43399,6 +43521,8 @@ function throwHelper(node, esNode) {
 module.exports = throwHelper;
 
 },{"./es":178}],229:[function(require,module,exports){
+"use strict";
+
 var isObject = require("lodash/lang/isObject");
 
 var jsonify = JSON.stringify;
@@ -43452,6 +43576,8 @@ function transform(node) {
 module.exports = transform;
 
 },{"./transform/array":230,"./transform/await":232,"./transform/await-expr":231,"./transform/bin-op":233,"./transform/block":234,"./transform/call":236,"./transform/call-method":235,"./transform/error":237,"./transform/expr-stmt":238,"./transform/false":239,"./transform/function":240,"./transform/get-method":241,"./transform/get-property":242,"./transform/global":243,"./transform/identifier":245,"./transform/identifier-expression":244,"./transform/if":246,"./transform/match":248,"./transform/module":249,"./transform/negate":250,"./transform/not":251,"./transform/null":252,"./transform/number":253,"./transform/object":254,"./transform/parameter":255,"./transform/repl-expression":257,"./transform/require":258,"./transform/string":259,"./transform/throw":260,"./transform/true":261,"./transform/try":262,"./transform/undefined":263,"lodash/lang/isObject":73}],230:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Array_(transform, node) {
@@ -43463,6 +43589,8 @@ function Array_(transform, node) {
 module.exports = Array_;
 
 },{"../es":178}],231:[function(require,module,exports){
+"use strict";
+
 function AwaitExpr(transform, node) {
     return transform(node.expression);
 }
@@ -43470,6 +43598,8 @@ function AwaitExpr(transform, node) {
 module.exports = AwaitExpr;
 
 },{}],232:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Await(transform, node) {
@@ -43489,6 +43619,8 @@ function Await(transform, node) {
 module.exports = Await;
 
 },{"../es":178}],233:[function(require,module,exports){
+"use strict";
+
 var ast = require("../ast");
 var es = require("../es");
 
@@ -43540,6 +43672,8 @@ function BinOp(transform, node) {
 module.exports = BinOp;
 
 },{"../ast":176,"../es":178}],234:[function(require,module,exports){
+"use strict";
+
 var flatten = require("lodash/array/flatten");
 
 var es = require("../es");
@@ -43556,10 +43690,15 @@ function Block(transform, node) {
         .map(function(identifier) {
             return LH.esDeclare(null, identifier, LH.undef);
         });
+    var needsTmpVar = false;
     var statements = node
         .statements
         .map(function(node) {
             if (node.type === "Let") {
+                // HACK: PatternSimple gets compiled to not use $tmp
+                if (node.binding.pattern.type !== "PatternSimple") {
+                    needsTmpVar = true;
+                }
                 // TODO: Don't call LH.bindingToDeclAndInit *again*
                 return LH
                     .bindingToDeclAndInit(transform, node.binding)
@@ -43571,10 +43710,7 @@ function Block(transform, node) {
         .reduce(concat, []);
     var expr = transform(node.expression.expression);
     var retStmt = es.ReturnStatement(node.expression.loc, expr);
-    var tmp =
-        decls.length === 0 ?
-            [] :
-            [tmpDecl];
+    var tmp = needsTmpVar ? [tmpDecl] : [];
     var everything = flatten([tmp, decls, statements, [retStmt]]);
     var block = es.BlockStatement(null, everything);
     var fn = es.FunctionExpression(null, null, [], block);
@@ -43584,6 +43720,8 @@ function Block(transform, node) {
 module.exports = Block;
 
 },{"../es":178,"../idents-for-block":183,"./let-helpers":247,"lodash/array/flatten":8}],235:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function CallMethod(transform, node) {
@@ -43597,6 +43735,8 @@ function CallMethod(transform, node) {
 module.exports = CallMethod;
 
 },{"../es":178}],236:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 var ast = require("../ast");
 
@@ -43620,6 +43760,8 @@ function Call(transform, node) {
 module.exports = Call;
 
 },{"../ast":176,"../es":178}],237:[function(require,module,exports){
+"use strict";
+
 var throwHelper = require("../throw-helper");
 var es = require("../es");
 
@@ -43633,6 +43775,8 @@ function Error(transform, node) {
 module.exports = Error;
 
 },{"../es":178,"../throw-helper":228}],238:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function ExprStmt(transform, node) {
@@ -43642,6 +43786,8 @@ function ExprStmt(transform, node) {
 module.exports = ExprStmt;
 
 },{"../es":178}],239:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function False(transform, node) {
@@ -43651,6 +43797,8 @@ function False(transform, node) {
 module.exports = False;
 
 },{"../es":178}],240:[function(require,module,exports){
+"use strict";
+
 var flatten = require("lodash/array/flatten");
 var esprima = require("esprima");
 
@@ -43686,7 +43834,8 @@ function Function_(transform, node) {
             es.Identifier(null, "$slice"),
             [es.Identifier(null, "arguments"), es.Literal(null, n)]
         );
-    var bindSlurpy = slurpy ?
+    var shouldBindSlurpy = slurpy && slurpy.identifier.data !== "_";
+    var bindSlurpy = shouldBindSlurpy ?
         [declareAssign(transform(slurpy), getSlurpy)] :
         [];
     var expr = transform(node.body);
@@ -43721,6 +43870,8 @@ function Function_(transform, node) {
 module.exports = Function_;
 
 },{"../ast":176,"../es":178,"esprima":168,"lodash/array/flatten":8}],241:[function(require,module,exports){
+"use strict";
+
 var ast = require("../ast");
 
 function GetMethod(transform, node) {
@@ -43734,6 +43885,8 @@ function GetMethod(transform, node) {
 module.exports = GetMethod;
 
 },{"../ast":176}],242:[function(require,module,exports){
+"use strict";
+
 var ast = require("../ast");
 
 function GetProperty(transform, node) {
@@ -43747,6 +43900,8 @@ function GetProperty(transform, node) {
 module.exports = GetProperty;
 
 },{"../ast":176}],243:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Global(transform, node) {
@@ -43756,6 +43911,8 @@ function Global(transform, node) {
 module.exports = Global;
 
 },{"../es":178}],244:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function IdentifierExpression(transform, node) {
@@ -43772,6 +43929,8 @@ function IdentifierExpression(transform, node) {
 module.exports = IdentifierExpression;
 
 },{"../es":178}],245:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 var isJsReservedWord = require("../is-js-reserved-word");
 
@@ -43789,6 +43948,8 @@ function Identifier(transform, node) {
 module.exports = Identifier;
 
 },{"../es":178,"../is-js-reserved-word":184}],246:[function(require,module,exports){
+"use strict";
+
 var ast = require("../ast");
 var es = require("../es");
 
@@ -43835,6 +43996,8 @@ function ifHelper(transform, node) {
 module.exports = If;
 
 },{"../ast":176,"../es":178}],247:[function(require,module,exports){
+"use strict";
+
 var esprima = require("esprima");
 var L = require("lodash");
 
@@ -43846,7 +44009,7 @@ function esDeclare(loc, id, expr) {
         throw new Error("invalid id");
     }
     return es.VariableDeclaration(loc, "var", [
-        es.VariableDeclarator(null, id || "POOP", expr)
+        es.VariableDeclarator(null, id, expr)
     ]);
 }
 
@@ -43928,6 +44091,8 @@ exports.undef = undef;
 exports.esDeclare = esDeclare;
 
 },{"../es":178,"./pattern-helpers":256,"esprima":168,"lodash":14}],248:[function(require,module,exports){
+"use strict";
+
 var esprima = require("esprima");
 
 var es = require("../es");
@@ -43969,6 +44134,8 @@ function wrapExpression(transform, root, p, e) {
 module.exports = Match;
 
 },{"../es":178,"./pattern-helpers":256,"esprima":168}],249:[function(require,module,exports){
+"use strict";
+
 var helpersFor = require("../helpers-for");
 var fileWrapper = require("../file-wrapper");
 var ast = require("../ast");
@@ -44007,6 +44174,8 @@ function Module(transform, node) {
 module.exports = Module;
 
 },{"../ast":176,"../es":178,"../file-wrapper":181,"../helpers-for":182}],250:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Negate(transform, node) {
@@ -44022,6 +44191,8 @@ function Negate(transform, node) {
 module.exports = Negate;
 
 },{"../es":178}],251:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Not(transform, node) {
@@ -44033,6 +44204,8 @@ function Not(transform, node) {
 module.exports = Not;
 
 },{"../es":178}],252:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Null(transform, node) {
@@ -44042,6 +44215,8 @@ function Null(transform, node) {
 module.exports = Null;
 
 },{"../es":178}],253:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Number_(transform, node) {
@@ -44058,6 +44233,8 @@ function Number_(transform, node) {
 module.exports = Number_;
 
 },{"../es":178}],254:[function(require,module,exports){
+"use strict";
+
 var flatten = require("lodash/array/flatten");
 
 var es = require("../es");
@@ -44076,6 +44253,8 @@ function Object_(transform, node) {
 module.exports = Object_;
 
 },{"../es":178,"lodash/array/flatten":8}],255:[function(require,module,exports){
+"use strict";
+
 function Parameter(transform, node) {
     return transform(node.identifier);
 }
@@ -44083,6 +44262,8 @@ function Parameter(transform, node) {
 module.exports = Parameter;
 
 },{}],256:[function(require,module,exports){
+"use strict";
+
 var flatten = require("lodash/array/flatten");
 
 var es = require("../es");
@@ -44268,6 +44449,8 @@ module.exports = {
 };
 
 },{"../es":178,"lodash/array/flatten":8}],257:[function(require,module,exports){
+"use strict";
+
 var fileWrapper = require("../file-wrapper");
 
 function ReplExpression(transform, node) {
@@ -44277,6 +44460,8 @@ function ReplExpression(transform, node) {
 module.exports = ReplExpression;
 
 },{"../file-wrapper":181}],258:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Require(transform, node) {
@@ -44288,6 +44473,8 @@ function Require(transform, node) {
 module.exports = Require;
 
 },{"../es":178}],259:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function String_(transform, node) {
@@ -44297,6 +44484,8 @@ function String_(transform, node) {
 module.exports = String_;
 
 },{"../es":178}],260:[function(require,module,exports){
+"use strict";
+
 var throwHelper = require("../throw-helper");
 
 function Throw(transform, node) {
@@ -44307,6 +44496,8 @@ function Throw(transform, node) {
 module.exports = Throw;
 
 },{"../throw-helper":228}],261:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function True(transform, node) {
@@ -44316,6 +44507,8 @@ function True(transform, node) {
 module.exports = True;
 
 },{"../es":178}],262:[function(require,module,exports){
+"use strict";
+
 var esprima = require("esprima");
 
 var es = require("../es");
@@ -44358,6 +44551,8 @@ function Try(transform, node) {
 module.exports = Try;
 
 },{"../es":178,"esprima":168}],263:[function(require,module,exports){
+"use strict";
+
 var es = require("../es");
 
 function Undefined(transform, node) {
@@ -44367,6 +44562,8 @@ function Undefined(transform, node) {
 module.exports = Undefined;
 
 },{"../es":178}],264:[function(require,module,exports){
+"use strict";
+
 var last = require('lodash/array/last');
 
 function _walk(parents, obj, ast) {
