@@ -4,7 +4,7 @@ title: "Properties and function calls"
 
 ## Property access
 
-Property access is written just like JavaScript. The difference is that Squiggle will throw an exception unless the Squiggle code `obj has key` is true.
+Property access is written just like JavaScript. The difference is that Squiggle will throw an exception unless the Squiggle code `obj has key` is `true`.
 
 ```squiggle
 let object = {property: "Foo"}
@@ -66,7 +66,7 @@ var log1 = function() {
 var log2 = console.log.bind(console);
 ```
 
-These are both rather wordy, and in practice they're easy to forget or avoid due to their clunkinesss. Squiggle offers a simple operator to solve this: `::`.
+These are both rather wordy, and in practice they're easy to forget or avoid due to their clunkiness. Squiggle offers a simple operator to solve this: `::`.
 
 ```squiggle
 let log = console::log

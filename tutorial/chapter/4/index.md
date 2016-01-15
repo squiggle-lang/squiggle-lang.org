@@ -2,7 +2,7 @@
 title: "Operators"
 ---
 
-The operators mostly work like JavaScript, but they are more restricted.
+The operators mostly work like JavaScript, but they are more restricted. Squiggle supports the following operators:
 
 - `or`
 - `and`
@@ -15,7 +15,7 @@ The operators mostly work like JavaScript, but they are more restricted.
 
 ## Operators in general
 
-Few operators in JavaScript will ever throw exceptions, but Squiggle operators throw lots of them. The reasoning behind this is Squiggle avoids implicit type coercsions, such as considering the number `0` to be equivalent to `false` in a boolean context, or `""` to be equivalent to `false`. It also doesn't consider `"34"` to be equivalent to `34` in a numeric context. If you want this behavior, you can import the global functions `Number`, `String`, or `Boolean` and explicitly wrap your data in them, like `Number("34") + 3` or `Boolean(someNumber) and foo()`. This helps catch errors where you pass the wrong data type to a function, or where in your application `""` might be a perfectly valid string you want to use, not something "falsey".
+Few operators in JavaScript will ever throw exceptions, but Squiggle operators throw lots of them. This is because Squiggle avoids implicit type coercsions, such as considering the number `0` to be equivalent to `false` in a boolean context, or `""` to be equivalent to `false`. It also doesn't consider `"34"` to be equivalent to `34` in a numeric context. If you want this behavior, you can import the global functions `Number`, `String`, or `Boolean` and explicitly wrap your data in them, like `Number("34") + 3` or `Boolean(someNumber) and foo()`. This helps catch errors where you pass the wrong data type to a function, or where in your application `""` might be a perfectly valid string you want to use, not something "falsey".
 
 ## Logical operators
 
@@ -34,7 +34,7 @@ true or console.log("not an error, never evaluated")
 
 ## Not operator
 
-`not true` gives `false`, and `not false` gives `true`. Any other input throws an exception.
+`not true` gives `false`, and `not false` gives `true`. Any non-boolean input to `not` throws an exception.
 
 ```squiggle
 not true
@@ -54,9 +54,9 @@ As for `!=`, it's like `==` but returns the opposite value.
 
 The operator `is` is equivalent to the ES6 function `Object.is`, [as documented
 on MDN][object_is]. Basically it's like JavaScript's `===` operator except that
-`0 is -0` is false, and `NaN is NaN` is true.
+`0 is -0` is false, and `NaN is NaN` is true. Unlike `==`, `is` can be used to compare objects, arrays, or functions.
 
-The operator `has` works like this is essentially like the following JavaScript function:
+The operator `has` works essentially like the following JavaScript function:
 
 ```javascript
 function has(obj, key) {
@@ -111,7 +111,7 @@ null has "toString"
 
 ## Concatenation and update operators
 
-The expression `a ++ b` is basically just syntax sugar for calling the `a.concat(b)` method, except it forces that both arguments are real JavaScript arrays, not array-like objects such as `arguments` or `NodeList`s.
+The expression `a ++ b` is basically just syntax sugar for calling the `a.concat(b)` method, except it forces that both arguments are real JavaScript arrays, not array-like objects such as `arguments` or the return value of `document.querySelectorAll`.
 
 ```squiggle
 [0, 1] ++ [2, 3]
@@ -165,8 +165,8 @@ The operators `+` and `-` only work on numbers.
 1 + 2
 #=> 3
 
-10 - 1
-#=> 9
+10 - 1.5
+#=> 8.5
 ```
 
 ## Multiplication and division operators

@@ -31,7 +31,7 @@ var z = z;
 console.log(x, y, z);
 ```
 
-This is because of JavaScript's `var` hoisting, which makes the following code work more like this:
+This is because of JavaScript's `var` hoisting, which makes the above code work more like this:
 
 ```javascript
 var x = undefined;
@@ -60,49 +60,27 @@ The basic form of let is `let name = value`, but the `name` part can actually be
 
 ### Arrays
 
-Basically just write an array on the left, including a "..." before the last item to gobble up all remaining items. Number of items must match.
-
-Two item array:
+Basically just write an array on the left, including a "..." before the last item to gobble up all remaining items. The number of items must match.
 
 ```squiggle
 let [x, y] = [1, 2]
 #=> x == 1
 #=> y == 2
-```
 
-Too few items:
-
-```squiggle
 let [x, y] = [1]
 #=> error, too few items to unpack
-```
 
-Too many items:
-
-```squiggle
 let [x, y] = [1, 2, 3, 4]
 #=> error, too many items to unpack
-```
 
-Rest array example 1:
-
-```squiggle
 let [x, ...xs] = [1, 2, 3, 4]
 #=> x == 1
 #=> xs == [2, 3, 4]
-```
 
-Rest array example 2:
-
-```squiggle
 let [x, ...xs] = [1]
 #=> x == 1
 #=> x == []
-```
 
-Too few items for rest array:
-
-```squiggle
 let [x, ...xs] = []
 #=> error, too few items to unpack
 ```
@@ -126,7 +104,7 @@ let {"first name": firstName} = {"first name": "Fatima"}
 Computed values are supported within parentheses, just like object literals.
 
 ```squiggle
-let {("a" ++ "b"): q} = {ab: "x"}
+let {("a" .. "b"): q} = {ab: "x"}
 #=> q == "x"
 ```
 
