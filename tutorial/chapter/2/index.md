@@ -28,8 +28,6 @@ You should see the program write out `Hello, world!` to the console.
 
 ## Interactive mode
 
-**Note: The REPL is currently broken**
-
 Using Squiggle to compile a JavaScript file is the primary use case, but it also features an interactive mode, also known as a REPL (historical reasons). In order to use the REPL, simply run Squiggle as follows:
 
 ```bash
