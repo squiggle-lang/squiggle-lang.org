@@ -96,9 +96,9 @@ This form is not advised, except for re-throwing exceptions caught elsewhere, si
 
 ## Await-expression
 
-With ES2015, promises are now a core language feature. If you're not familiar with them, check out [HTML5 Rocks][html5rocks] article about it.
+With ES2015, promises are now a core language feature. If you're not familiar with them, check out the [HTML5 Rocks][html5rocks] article about it.
 
-You can go about using promises in Squiggle much like JavaScript:
+You can use promises in Squiggle much like JavaScript:
 
 ```squiggle
 httpGet(someUrl).then(fn(data) data.name)

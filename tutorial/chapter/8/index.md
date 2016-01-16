@@ -22,7 +22,7 @@ export add
 // File: main.js
 
 var helpers = require("./helpers");
-var xs = [1, 2, 3].map(helpers.add)
+var xs = [1, 2, 3].map(helpers.add);
 console.log(xs);
 ```
 
@@ -55,7 +55,7 @@ These are the normal `Array` and `Object` functions from JavaScript, so they ret
 
 Squiggle does not feature the keywords `this` or `new` from JavaScript because [they cause more harm than good][1], and are not necessary. Some libraries require their use, however, so Squiggle has functions for dealing with this.
 
-Remember that any Squiggle function can still use JavaScript's `this` value if it's explicitly declared as a named parameter with and `@` prefix:
+Remember that any Squiggle function can still use JavaScript's `this` value if it's explicitly declared as a named parameter with an `@` prefix:
 
 ```squiggle
 jQuery("something").on("click", fn(@this) do

@@ -121,7 +121,7 @@ function(x, y) {
 
 JavaScript's usual relaxed rules around argument count can lead to extremely subtle and hard to detect bugs. It's potentially more flexible the JavaScript way, but much more error-prone.
 
-Sometimes APIs are much simpler if they can have varying parameter counts, so it is still possible to have variadic functions in Squiggle. Using `...` in front of your last parameter causes it so collect all of the extra parameters in an array.
+Sometimes APIs are much simpler if they can have varying parameter counts, so it is still possible to have variadic functions in Squiggle. Using `...` in front of your last parameter causes it to collect all of the extra parameters in an array.
 
 ```squiggle
 def talkAbout(...stuff)
@@ -163,9 +163,9 @@ Both of these forms are equivalent and automatically return the value of their l
 ### Rest parameters
 
 ```squiggle
-let f = fn(first, second, ...rest) second
+let foo = fn(first, second, ...rest) second
 
-f(1, 2, 3, 4, 5)
+foo(1, 2, 3, 4, 5)
 # 2
 ```
 
@@ -200,11 +200,11 @@ g.call({a: 1}).call({b: 2})
 # [{a: 1}, {b: 2}]
 ```
 
-Any variable can be used for an `@` binding.
+Any variable name can be used for an `@` binding.
 
 ### Named functions
 
-Functions can also optionally have names, like in JavaScript
+Functions can also optionally have names, like in JavaScript.
 
 ```squiggle
 fn foo(x) x + 1
@@ -214,11 +214,7 @@ This is useful for functions that need to refer to themselves, like:
 
 ```squiggle
 def forever(f) do
-    if done then
-        undefined
-    else
-        f()
-        setTimeout(forever, 300)
-    end
+    f()
+    setTimeout(forever, 300)
 end
 ```
