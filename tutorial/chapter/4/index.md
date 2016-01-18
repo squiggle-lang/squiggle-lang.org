@@ -8,7 +8,7 @@ The operators mostly work like JavaScript, but they are more restricted. Squiggl
 - `and`
 - `not`
 - `>=`, `<=`, `<`, `>`, `==`, `!=`, `is`, `has`
-- `++`, `~`
+- `++`, `~`, `..`
 - `+`, `-`
 - `*`, `/`
 - `-` (unary prefix)
@@ -110,6 +110,28 @@ null has "toString"
 ```
 
 ## Concatenation and update operators
+
+The expression `a .. b` is string concatenation. It's implemented as JS with `"" + a + b`, and it asserts `a` and `b` are not objects.
+
+```squiggle
+"foo" .. "bar"
+#=> "foobar"
+
+"x" .. 1
+#=> "x1"
+
+1 .. 2
+#=> "12"
+
+"hey" .. {uh: "oh"}
+#=> Error, cannot strcat objects
+
+"nope" .. [1, 2]
+#=> Error, cannot strcat array
+
+undefined .. null .. true .. false
+#=> "undefinednulltruefalse"
+```
 
 The expression `a ++ b` is basically just syntax sugar for calling the `a.concat(b)` method, except it forces that both arguments are real JavaScript arrays, not array-like objects such as `arguments` or the return value of `document.querySelectorAll`.
 
