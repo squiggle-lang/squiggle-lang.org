@@ -42,7 +42,8 @@
     // .kc = Constant
     // .kt = Type constant
     // .mi = Number
-    .no, .kc, .mi, .kt { color: $cyan; }
+    // .mf = Number
+    .no, .kc, .mi, .mf, .kt { color: $cyan; }
 
     // .c = Comment
     // .c1 = Comment

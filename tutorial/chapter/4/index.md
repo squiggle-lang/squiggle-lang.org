@@ -61,12 +61,12 @@ The operator `has` works essentially like the following JavaScript function:
 ```javascript
 function has(obj, key) {
     if (obj === null || obj === undefined) throw new Error();
-    if (!validKey(key)) throw new Error();
+    if (typeof key !== "string") throw new Error();
     return obj[key] !== undefined;
 }
 ```
 
-Valid keys are strings and whole numbers.
+Valid keys are strings.
 
 ```squiggle
 {} has "foo"
@@ -85,19 +85,13 @@ Valid keys are strings and whole numbers.
 #=> true, it's ok if the value is null
 
 {"4": "four"} has 4
-#=> true, integers are converted to strings
+#=> Error, integers are not converted to strings
 
-{"3.14": "pi"} has 3.14
-#=> Error, non-integer numbers are illegal as keys
+["foo"] has "0"
+#=> true, there is a value other than undefined at key "0"
 
-{"NaN": NaN} has NaN
-#=> Error, non integer numbers are illegal as keys
-
-["foo"] has 0
-#=> true, there is a value other than undefined in index 0
-
-[1, 2, undefined] has 2
-#=> false, undefined at index 2
+[1, 2, undefined] has "2"
+#=> false, undefined at key "2"
 
 4 has "toString"
 #=> true, 4 has the method toString
