@@ -8,8 +8,20 @@
         padding: 0;
 
         ul {
+            box-shadow: inset 0 0 8px 0 rgba(black, 0.03);
             background: darken($primary, 6%);
             font-size: 1.2em;
+
+            $border: 1px solid rgba(white, 0.30)
+
+            li {
+                border-top: $border;
+
+
+                &:last-child {
+                    border-bottom: $border;
+                }
+            }
         }
 
         a {
@@ -25,11 +37,16 @@
             line-height: 64px;
             font-size: 1.5em;
             display: block;
+            text-align: center;
         }
 
         .title .extra {
             display: inline-block;
             vertical-align: top;
+        }
+
+        img {
+            display: none;
         }
 
         .title,
@@ -45,13 +62,10 @@
     }
 
     .jumbotron .jumbotron-container {
+        a,
+        h1,
         .or {
             display: none;
-        }
-
-        a {
-            display: block;
-            margin-top: 1em;
         }
     }
 }
