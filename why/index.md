@@ -27,8 +27,8 @@ The JavaScript keyword `this` is really a pain. Just look at all the [Stack Over
 
 ```squiggle
 let lorenzo = {
-    name: "Lorenzo",
-    getName: fn(@this) this.name
+  name: "Lorenzo",
+  getName: fn(@this) this.name
 }
 
 lorenzo.getName()
@@ -38,10 +38,11 @@ This also means that callbacks are safer:
 
 ```squiggle
 let obj = {
-    delay: 300,
-    title: "Squiggle is Cool",
-    showLater: fn(@this)
-        setTimeout(fn() global.alert(this.title), this.delay)
+  delay: 300,
+  title: "Squiggle is Cool",
+  showLater: fn(@this) do
+    setTimeout(fn() global.alert(this.title), this.delay)
+  end
 }
 ```
 
@@ -166,7 +167,7 @@ console.log(4)
 
 # looks like:
 f = () ->
-    console.log(4)
+  console.log(4)
 
 # works like:
 f = () -> undefined
@@ -187,9 +188,9 @@ foo ->
 
 # works like:
 foo(() -> console.log("yo"), {
-    a: 1,
-    b: 2,
-    f: () -> () -> undefined
+  a: 1,
+  b: 2,
+  f: () -> () -> undefined
 })
 ```
 

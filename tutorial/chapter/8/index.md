@@ -12,7 +12,7 @@ Squiggle functions check their arity, but many JavaScript functions are built as
 # File: helpers.sqg
 
 def add(x) do
-    x + 1
+  x + 1
 end
 
 export add
@@ -30,7 +30,7 @@ This will fail because `Array.prototype.map` actually passes *three* parameters 
 
 ```javascript
 var xs = [1, 2, 3].map(function(data) {
-    return helpers.add(data);
+  return helpers.add(data);
 });
 console.log(xs);
 ```
@@ -59,7 +59,7 @@ Remember that any Squiggle function can still use JavaScript's `this` value if i
 
 ```squiggle
 jQuery("something").on("click", fn(@this) do
-    jQuery(this).somethingElse()
+  jQuery(this).somethingElse()
 end)
 ```
 

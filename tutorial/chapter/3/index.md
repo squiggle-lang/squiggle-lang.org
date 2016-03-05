@@ -103,7 +103,7 @@ Let's take `fn(x, y) x + y` as an example and compare that with how you'd expres
 
 ```javascript
 function(x, y) {
-    return x + y;
+  return x + y;
 }
 ```
 
@@ -111,11 +111,11 @@ But arity checking means that it's actually more like this JavaScript function:
 
 ```javascript
 function(x, y) {
-    if (arguments.length !== 2) {
-        throw new Error("wrong number of arguments");
-    }
-    // Main function logic here.
-    return x + y;
+  if (arguments.length !== 2) {
+    throw new Error("wrong number of arguments");
+  }
+  // Main function logic here.
+  return x + y;
 }
 ```
 
@@ -124,9 +124,10 @@ JavaScript's usual relaxed rules around argument count can lead to extremely sub
 Sometimes APIs are much simpler if they can have varying parameter counts, so it is still possible to have variadic functions in Squiggle. Using `...` in front of your last parameter causes it to collect all of the extra parameters in an array.
 
 ```squiggle
-def talkAbout(...stuff)
-    stuff.forEach(fn(thing, ...)
-        console.log("I like " .. thing))
+def talkAbout(...stuff) do
+  stuff.forEach(fn(thing, ...) do
+    console.log("I like " .. thing)
+  end)
 end
 
 talkAbout("cheese", "pickles", "eggs", "coffee")
@@ -142,9 +143,9 @@ Functions may have multiple statements in them if you use this `do/end` form wit
 
 ```squiggle
 let add = fn add(x, y) do
-    console.log(x)
-    console.log(y)
-    x + y
+  console.log(x)
+  console.log(y)
+  x + y
 end
 ```
 
@@ -152,9 +153,9 @@ Notice how if you're assigning a variable to a named function you have to name i
 
 ```squiggle
 def add(x, y) do
-    console.log(x)
-    console.log(y)
-    x + y
+  console.log(x)
+  console.log(y)
+  x + y
 end
 ```
 
@@ -186,15 +187,15 @@ If the first parameter starts with `@`, that variable is assigned the value of `
 
 ```squiggle
 let f = fn(@self)
-    fn()
-        self.x
+  fn()
+    self.x
 
 f.call({x: 4})()
 # 4
 
 let g = fn(@me)
-    fn(@them)
-        [me, them]
+  fn(@them)
+    [me, them]
 
 g.call({a: 1}).call({b: 2})
 # [{a: 1}, {b: 2}]
@@ -214,7 +215,7 @@ This is useful for functions that need to refer to themselves, like:
 
 ```squiggle
 def forever(f) do
-    f()
-    setTimeout(forever, 300)
+  f()
+  setTimeout(forever, 300)
 end
 ```

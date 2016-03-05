@@ -165,11 +165,11 @@ All the pattern types from destructuring assignment are supported, in addition t
 
 ```squiggle
 console.log(
-    match "hey"
-    case 56 then "This won't match!"
-    case "bye" then "I never get matched..."
-    case x then "You said " .. x
-    end
+  match "hey"
+  case 56 then "This won't match!"
+  case "bye" then "I never get matched..."
+  case x then "You said " .. x
+  end
 )
 ```
 
@@ -177,19 +177,19 @@ You can also just supply an expression to `case` at the top level by wrapping it
 
 ```squiggle
 let K = {
-    w: "w".charCodeAt(0),
-    a: "a".charCodeAt(0),
-    s: "s".charCodeAt(0),
-    d: "d".charCodeAt(0)
+  w: "w".charCodeAt(0),
+  a: "a".charCodeAt(0),
+  s: "s".charCodeAt(0),
+  d: "d".charCodeAt(0)
 }
 
 let dir =
-    match event.which
-    case (K.w) then "up"
-    case (K.a) then "left"
-    case (K.s) then "down"
-    case (K.d) then "right"
-    end
+  match event.which
+  case (K.w) then "up"
+  case (K.a) then "left"
+  case (K.s) then "down"
+  case (K.d) then "right"
+  end
 
 console.log(dir)
 ```

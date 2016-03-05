@@ -10,11 +10,11 @@ Note that the `else` clause is **not** optional. It must be present in all if-ex
 
 ```squiggle
 console.log(
-    if true then
-        3
-    else
-        4
-    end
+  if true then
+    3
+  else
+    4
+  end
 )
 ```
 
@@ -24,12 +24,12 @@ If you have more than two cases, you can use `elseif`:
 
 ```squiggle
 def numberToEnglish(n) do
-    if n == 1 then "one"
-    elseif n == 2 then "two"
-    elseif n == 3 then "three"
-    elseif n == 4 then "four"
-    else "some other number"
-    end
+  if n == 1 then "one"
+  elseif n == 2 then "two"
+  elseif n == 3 then "three"
+  elseif n == 4 then "four"
+  else "some other number"
+  end
 end
 
 console.log(numberToEnglish(2))
@@ -51,14 +51,14 @@ or `["fail", error]`. You can manually inspect these values using brackets, or i
 let {JSON} = global
 
 def safeParse(text) do
-    match try JSON.parse(text)
-    case ["ok", obj] then obj
-    case ["fail", _] then {}
-    end
+  match try JSON.parse(text)
+  case ["ok", obj] then obj
+  case ["fail", _] then {}
+  end
 end
 
 def show(text) do
-    console.log(safeParse(text))
+  console.log(safeParse(text))
 end
 
 show("[1, 2]")
@@ -85,10 +85,10 @@ There is also `throw` which takes an exception and throws it:
 ```squiggle
 match try someFunction()
 case ["ok", value] then
-    # use the value
+  # use the value
 case ["fail", err] then
-    # do some clean up
-    throw err
+  # do some clean up
+  throw err
 end
 ```
 
@@ -107,13 +107,13 @@ httpGet(someUrl).then(fn(data) data.name)
 But this pattern can get quite unyieldy when nested:
 
 ```squiggle
-httpGet(someUrl).then(fn(profile)
-    httpGet(profile.imageUrl).then(fn(image)
-        writeFile(filename, image).then(fn(_)
-            console.log("Image downloaded and saved!")
-        )
-    )
-)
+httpGet(someUrl).then(fn(profile) do
+  httpGet(profile.imageUrl).then(fn(image) do
+    writeFile(filename, image).then(fn(...) do
+        console.log("Image downloaded and saved!")
+    end)
+  end)
+end)
 ```
 
 In order to solve this nesting problem, Squiggle provides a syntax sugar for `.then`.

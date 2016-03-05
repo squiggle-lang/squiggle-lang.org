@@ -60,9 +60,9 @@ The operator `has` works essentially like the following JavaScript function:
 
 ```javascript
 function has(obj, key) {
-    if (obj === null || obj === undefined) throw new Error();
-    if (typeof key !== "string") throw new Error();
-    return obj[key] !== undefined;
+  if (obj === null || obj === undefined) throw new Error();
+  if (typeof key !== "string") throw new Error();
+  return obj[key] !== undefined;
 }
 ```
 

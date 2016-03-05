@@ -16,7 +16,7 @@ If you're not familiar with RPN, here's a quick translation:
 var text = "2 3 4 * 3 - +";
 
 function tokenize(text) {
-    return text.split(" ").map(tokenValue);
+  return text.split(" ").map(tokenValue);
 }
 
 var table = {
@@ -27,38 +27,33 @@ var table = {
 };
 
 function tokenValue(token) {
-    if (table.hasOwnProperty(token)) {
-        return table[token];
-    } else {
-        return Number(token);
-    }
+  if (table.hasOwnProperty(token)) {
+    return table[token];
+  } else {
+    return Number(token);
+  }
 }
 
-function evaluateWithStack(stack, values) {
-    if (values.length === 0) {
-        return stack[0];
-    }
-    var i = stack.length;
-    var x = values[0];
-    var v = values.slice(1);
-    if (typeof x === "function") {
-        var a = stack[i - 1];
-        var b = stack[i - 2];
-        var y = x(a, b);
-        return evaluateWithStack(
-            stack.slice(0, i - 2).concat([y]),
-            v
-        );
-    } else {
-        return evaluateWithStack(
-            stack.concat([x]),
-            v
-        );
-    }
+function evaluate_(stack, values) {
+  if (values.length === 0) {
+    return stack[0];
+  }
+  var i = stack.length;
+  var x = values[0];
+  var v = values.slice(1);
+  if (typeof x === "function") {
+    var a = stack[i - 1];
+    var b = stack[i - 2];
+    var y = x(a, b);
+    var newStack = stack.slice(0, i - 2).concat([y]);
+  } else {
+    var newStack = stack.concat([x]);
+  }
+  return evaluate_(newStack, v);
 }
 
 function evaluate(text) {
-    return evaluateWithStack([], tokenize(text));
+  return evaluate_([], tokenize(text));
 }
 
 console.log(evaluate(text));
@@ -71,35 +66,33 @@ let {Number, console} = global
 
 let text = "2 3 4 * 3 - +"
 
-# You have to explicitly ignore arguments
-# with an underscore in Squiggle.
 def tokenize(text) do
-    text.split(" ").map(fn(x, ...) tokenValue(x))
+  text.split(" ").map(fn(x, ...) tokenValue(x))
 end
 
 def tokenValue(token) do
-    match token
-    case "+" then ["function", fn(a, b) a + b]
-    case "-" then ["function", fn(a, b) a - b]
-    case "*" then ["function", fn(a, b) a * b]
-    case "/" then ["function", fn(a, b) a / b]
-    case num then ["number", Number(num)]
-    end
+  match token
+  case "+" then ["Func", fn(a, b) a + b]
+  case "-" then ["Func", fn(a, b) a - b]
+  case "*" then ["Func", fn(a, b) a * b]
+  case "/" then ["Func", fn(a, b) a / b]
+  case num then ["Num", Number(num)]
+  end
 end
 
-def evaluateWithStack(stack, values) do
-    match [stack, values]
-    case [[first, second, ...rest], [["function", f], ...xs]] then
-        evaluateWithStack([f(first, second)] ++ rest, xs)
-    case [stack, [["number", n], ...xs]] then
-        evaluateWithStack([n] ++ stack, xs)
-    case [[value, ...], _] then
-        value
-    end
+def evaluate_(stack, values) do
+  match [stack, values]
+  case [[first, second, ...rest], [["Func", f], ...xs]] then
+    evaluate_([f(first, second)] ++ rest, xs)
+  case [stack, [["Num", n], ...xs]] then
+    evaluate_([n] ++ stack, xs)
+  case [[value, ...], _] then
+    value
+  end
 end
 
 def evaluate(text) do
-    evaluateWithStack([], tokenize(text))
+  evaluate_([], tokenize(text))
 end
 
 console.log(evaluate(text))
