@@ -6,7 +6,7 @@ let {Date, console} = global
 let x = 4
 
 def inc(x) do
-    x + 1
+  x + 1
 end
 
 console.log(Date())

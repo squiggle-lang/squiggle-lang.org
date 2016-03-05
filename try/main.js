@@ -30,12 +30,14 @@ loggerMaker("info");
 var squiggleCodeOpts = {
   lineWrapping: false,
   lineNumbers: true,
+  tabSize: 2,
   mode: "text/x-squiggle"
 };
 
 var javascriptCodeOpts = {
   lineWrapping: false,
   lineNumbers: true,
+  tabSize: 2,
   readOnly: true,
   mode: "application/javascript"
 };
