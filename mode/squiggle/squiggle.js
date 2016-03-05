@@ -18,7 +18,7 @@ CodeMirror.defineSimpleMode("squiggle", {
     {regex: /(?:export|try|throw|error|fn|if|then|else|elseif|match|case|let|def|do|end|in|await|require)\b/, token: "keyword"},
     {regex: /\b(?:true|false|null|undefined|global)\b/, token: "builtin"},
     {regex: /#.*/, token: "comment"},
-    {regex: /(?:\+\+|~|\+|-|\*|\/|=>|<=|>=|>|<|==|!=|=)/, token: "operator"},
+    {regex: /(?:\+\+|~|\+|-|\*|\/|=>|<=|>=|>|<|==|!=|=|&)/, token: "operator"},
     {regex: /\b(?:has|is|not|and|or)\b/, token: "operator"},
     {regex: /[a-zA-Z_][a-zA-Z0-9]*/, token: "variable"},
     {regex: /[\{\[\(]/, indent: true},

@@ -29,7 +29,7 @@ module Rouge
 
         rule(/\b(?:true|false|undefined|null|global)\b/, Name::Constant)
 
-        rule(/(?:\+\+|~|\+|-|\*|\/|=>|<=|>=|>|<|==|!=|=)/, Operator)
+        rule(/(?:\+\+|~|\+|-|\*|\/|=>|<=|>=|>|<|==|!=|=|&)/, Operator)
         rule(/\b(?:and|or|is|not|has)\b/, Operator)
 
         rule(/[,\.:{}\[\]()@]+/, Punctuation)

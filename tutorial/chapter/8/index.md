@@ -41,10 +41,13 @@ Sometimes you need mutable data. Fortunately, it's still possible to create it i
 
 ```squiggle
 let {Object, console} = global
+
 let a = &["sup", "cool"]
 let o = &{key: "nothing", key2: "interesting"}
+
 Object.assign(a, {"0": "hi"})
 Object.assign(o, {key: "value"})
+
 console.log([a, o])
 #=> [["hi", "cool"], {key: "value", key2: "interesting"}]
 ```
