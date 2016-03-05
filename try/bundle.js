@@ -42533,8 +42533,8 @@ var almostAst = {
     Error:       ["message"],
     Throw:       ["exception"],
     Operator:    ["data"],
-    Array:       ["data"],
-    Object:      ["data"],
+    Array:       ["isFrozen", "data"],
+    Object:      ["isFrozen", "data"],
     Number:      ["data"],
     String:      ["data"],
     True:        [],
@@ -43321,6 +43321,8 @@ module.exports = {
 },{"./parse/whitespace":222,"parsimmon":158}],189:[function(require,module,exports){
 "use strict";
 
+var P = require("parsimmon");
+
 var H = require("../parse-helpers");
 var ast = require("../ast");
 
@@ -43328,11 +43330,22 @@ var ione = H.ione;
 var wrap = H.wrap;
 var list0 = H.list0;
 
+function FrozenArray(index, items) {
+    return ast.Array(index, true, items);
+}
+
+function UnfrozenArray(index, items) {
+    return ast.Array(index, false, items);
+}
+
 module.exports = function(ps) {
-    return ione(ast.Array, wrap("[", list0(ps.Separator, ps.Expr), "]"));
+    return P.alt(
+      ione(FrozenArray, wrap("[", list0(ps.Separator, ps.Expr), "]")),
+      ione(UnfrozenArray, wrap("&[", list0(ps.Separator, ps.Expr), "]"))
+    );
 };
 
-},{"../ast":174,"../parse-helpers":188}],190:[function(require,module,exports){
+},{"../ast":174,"../parse-helpers":188,"parsimmon":158}],190:[function(require,module,exports){
 "use strict";
 
 var P = require("parsimmon");
@@ -43986,6 +43999,14 @@ var iseq = H.iseq;
 var list0 = H.list0;
 var spaced = H.spaced;
 
+function FrozenObj(index, pairs) {
+    return ast.Object(index, true, pairs);
+}
+
+function UnfrozenObj(index, pairs) {
+    return ast.Object(index, false, pairs);
+}
+
 module.exports = function(ps) {
     var Normal =
         iseq(ast.Pair,
@@ -44006,7 +44027,10 @@ module.exports = function(ps) {
     var Pair = P.alt(Normal, Shorthand);
     var Pairs = list0(ps.Separator, Pair);
 
-    return ione(ast.Object, wrap("{", Pairs, "}"));
+    return P.alt(
+        ione(UnfrozenObj, wrap("&{", Pairs, "}")),
+        ione(FrozenObj, wrap("{", Pairs, "}"))
+    );
 };
 
 },{"../ast":174,"../parse-helpers":188,"parsimmon":158}],214:[function(require,module,exports){
@@ -44391,7 +44415,11 @@ module.exports = {
         dependencies: ['slice'],
         code: [
             'function $array() { ',
-            '   return Object.freeze($slice(arguments, 0));',
+            '    var a = Array.prototype.slice.call(arguments, 1);',
+            '    if (arguments[0]) {',
+            '        Object.freeze(a);',
+            '    }',
+            '   return a;',
             '}'
         ].join("\n")
     },
@@ -44421,7 +44449,7 @@ module.exports = {
         dependencies: ['isObject'],
         code: [
             'function $strcat(a, b) {' +
-            '    if ($isObject(a) || $isObject(b)) {' +
+            '    if ($isValueType(a) || $isValueType(b)) {' +
             '        throw new Error("incorrect argument types for ..");' +
             '    }' +
             '    return "" + a + b;' +
@@ -44587,11 +44615,11 @@ module.exports = {
         dependencies: [],
         code: [
 'function $object() {',
-'    if (arguments.length % 2 !== 0) {',
+'    if (arguments.length % 2 !== 1) {',
 '        throw new Error("objects must have an even number of items");',
 '    }',
 '    var obj = {};',
-'    var i = 0;',
+'    var i = 1;',
 '    var n = arguments.length - 1;',
 '    while (i < n) {',
 '        if (typeof arguments[i] !== "string") {',
@@ -44600,7 +44628,10 @@ module.exports = {
 '        obj[arguments[i]] = arguments[i + 1];',
 '        i += 2;',
 '    }',
-'    return Object.freeze(obj);',
+'    if (arguments[0]) {',
+'        Object.freeze(obj);',
+'    }',
+'    return obj;',
 '}'
 ].join("\n")
     },
@@ -44849,8 +44880,10 @@ var es = require("../es");
 
 function Array_(transform, node) {
     var pairs = node.data.map(transform);
+    var isFrozen = es.Literal(null, node.isFrozen);
     var callee = es.Identifier(null, '$array');
-    return es.CallExpression(node.loc, callee, pairs);
+    var args = [isFrozen].concat(pairs);
+    return es.CallExpression(node.loc, callee, args);
 }
 
 module.exports = Array_;
@@ -45538,7 +45571,8 @@ function pairToArray(pair) {
 
 function Object_(transform, node) {
     var pairs = node.data.map(pairToArray);
-    var args = flatten(pairs).map(transform);
+    var isFrozen = es.Literal(null, node.isFrozen);
+    var args = [isFrozen].concat(flatten(pairs).map(transform));
     var id = es.Identifier(null, '$object');
     return es.CallExpression(node.loc, id, args);
 }
@@ -45558,6 +45592,7 @@ module.exports = Parameter;
 "use strict";
 
 var flatten = require("lodash/array/flatten");
+var esprima = require("esprima");
 
 var es = require("../es");
 
@@ -45579,6 +45614,11 @@ function satisfiesPattern2(transform, root, p) {
         return _satisfiesPattern[p.type](transform, root, p);
     }
     throw new Error("can't satisfiesPattern2 of " + j(p));
+}
+
+function esIsArray(x) {
+    var isArray = esprima.parse('Array.isArray').body[0].expression;
+    return es.CallExpression(null, isArray, [x]);
 }
 
 function esAnd(a, b) {
@@ -45650,7 +45690,11 @@ var _satisfiesPattern = {
             ps.map(function(x, i) {
                 return satisfiesPattern2(transform, esNth(root, i), x);
             });
-        return flatten([checkLength, flatten(checkNormal)]);
+        return flatten([
+            esIsArray(root),
+            checkLength,
+            flatten(checkNormal)
+        ]);
     },
     PatternArraySlurpy: function(transform, root, p) {
         var ps = p.patterns;
@@ -45664,6 +45708,7 @@ var _satisfiesPattern = {
         var checkSlurpy =
             satisfiesPattern2(transform, esSlice(root, n), p.slurp);
         return flatten([
+            esIsArray(root),
             checkLength,
             flatten(checkNormal),
             checkSlurpy
@@ -45741,7 +45786,7 @@ module.exports = {
     satisfiesPattern: satisfiesPattern
 };
 
-},{"../es":176,"lodash/array/flatten":78}],257:[function(require,module,exports){
+},{"../es":176,"esprima":66,"lodash/array/flatten":78}],257:[function(require,module,exports){
 "use strict";
 
 var fileWrapper = require("../file-wrapper");
@@ -45808,7 +45853,8 @@ var es = require("../es");
 
 function frozenArray(xs) {
     var fn = es.Identifier(null, "$array");
-    return es.CallExpression(null, fn, xs);
+    var args = [es.Literal(null, true)].concat(xs);
+    return es.CallExpression(null, fn, args);
 }
 
 function Try(transform, node) {

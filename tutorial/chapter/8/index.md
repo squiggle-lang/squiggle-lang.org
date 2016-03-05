@@ -37,19 +37,17 @@ console.log(xs);
 
 ## Mutability problems
 
-Sometimes you need mutable data. Fortunately, it's still possible to create it in Squiggle. Squiggle does not expose a syntax like `x.y = z` to assign properties.
+Sometimes you need mutable data. Fortunately, it's still possible to create it in Squiggle. Simply put a `&` before your array or object literals.
 
 ```squiggle
-let {Array, Object} = global
-let a = Array()
-let o = Object()
-Object.assign(a, {0: "hi"})
+let {Object, console} = global
+let a = &["sup", "cool"]
+let o = &{key: "nothing", key2: "interesting"}
+Object.assign(a, {"0": "hi"})
 Object.assign(o, {key: "value"})
 console.log([a, o])
-#=> [["hi"], {key: "value"}]
+#=> [["hi", "cool"], {key: "value", key2: "interesting"}]
 ```
-
-These are the normal `Array` and `Object` functions from JavaScript, so they return unfrozen values. There are plans to add mutable object literals and property assignment to Squiggle eventually.
 
 ## Problems with this or new
 

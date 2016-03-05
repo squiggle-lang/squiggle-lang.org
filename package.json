@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/squiggle-lang/squiggle-lang/issues"
   },
-  "homepage": "https://github.com/squiggle-lang/squiggle-lang#readme"
+  "homepage": "https://github.com/squiggle-lang/squiggle-lang#readme",
+  "dependencies": {
+    "squiggle-lang": "^0.13.1"
+  }
 }
