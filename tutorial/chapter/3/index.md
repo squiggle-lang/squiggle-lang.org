@@ -164,7 +164,9 @@ Both of these forms are equivalent and automatically return the value of their l
 ### Rest parameters
 
 ```squiggle
-let foo = fn(first, second, ...rest) second
+def foo(first, second, ...rest) do
+  second
+end
 
 foo(1, 2, 3, 4, 5)
 # 2
@@ -177,8 +179,12 @@ This function can be called like `foo(1, 2, 3, 4, 5)` and will return `2`. It wo
 JavaScript's `this` is a source of much confusion and pain. In order to help avoid mistakes, functions have to explicitly declare their use of JavaScript's `this`. It looks like the following:
 
 ```squiggle
-let getName = fn(@this) this.name
+def getName(@this) do
+  this.name
+end
+
 let obj = {name: "Violet", getName}
+
 obj.getName()
 # "Violet"
 ```
@@ -186,36 +192,19 @@ obj.getName()
 If the first parameter starts with `@`, that variable is assigned the value of `this`. In this way, you can nest functions and always use the correct `this` value by giving it the name you want.
 
 ```squiggle
-let f = fn(@self)
-  fn()
-    self.x
+def f(@self) do
+  fn() self.x
+end
 
 f.call({x: 4})()
 # 4
 
-let g = fn(@me)
-  fn(@them)
-    [me, them]
+def g(@me) do
+  fn(@them) [me, them]
+end
 
 g.call({a: 1}).call({b: 2})
 # [{a: 1}, {b: 2}]
 ```
 
 Any variable name can be used for an `@` binding.
-
-### Named functions
-
-Functions can also optionally have names, like in JavaScript.
-
-```squiggle
-fn foo(x) x + 1
-```
-
-This is useful for functions that need to refer to themselves, like:
-
-```squiggle
-def forever(f) do
-  f()
-  setTimeout(forever, 300)
-end
-```

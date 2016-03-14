@@ -18,11 +18,11 @@ const x = 1;
 
 If you're unfamiliar with `const`, essentially it means that the variable `x` cannot be assigned to again, and that any code run before that statement which tries to use `x` will throw an exception.
 
-## No use before definition
+## No use before initialization
 
-In Squiggle, it is a runtime error to use a variable before it has been defined (this is like the ES2015 concept "temporal deadzone", which applies to `let/const` declarations in that language).
+Squiggle warns you if you try to use a variable before it has been initialized.
 
-Compare with JavaScript, which prints `undefined` three times in this example.
+In JavaScript, this prints `undefined` three times.
 
 ```javascript
 var x = y;
@@ -31,19 +31,7 @@ var z = z;
 console.log(x, y, z);
 ```
 
-This is because of JavaScript's `var` hoisting, which makes the above code work more like this:
-
-```javascript
-var x = undefined;
-var y = undefined;
-var z = undefined;
-x = y;
-y = x;
-z = z;
-console.log(x, y, z);
-```
-
-The following code in Squiggle would throw an error trying to define `x`.
+The following Squiggle code will also print `undefined` three times, but the Squiggle compiler will warn you about the error so you can take notice and correct the problem.
 
 ```squiggle
 let x = y
@@ -51,6 +39,8 @@ let y = x
 let z = z
 console.log(x, y, z)
 ```
+
+Previously Squiggle strictly enforced this at runtime by compiling variable references like `foo` into `$ref('foo', foo)`, but this made the compiled JS extremely hard to read, and [Babel][] has also moved away from this strategy.
 
 ## Destructuring
 
@@ -193,3 +183,5 @@ let dir =
 
 console.log(dir)
 ```
+
+[Babel]: http://babeljs.io/

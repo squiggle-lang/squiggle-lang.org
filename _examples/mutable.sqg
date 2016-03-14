@@ -1,0 +1,6 @@
+let {Object, console} = global
+let a = &["sup", "cool"]
+let o = &{key: "nothing", key2: "interesting"}
+Object.assign(a, {"0": "hi"})
+Object.assign(o, {key: "value"})
+console.log([a, o])

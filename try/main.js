@@ -112,6 +112,7 @@ var examples = {
   Basic: fs.readFileSync('_examples/basic.sqg', 'utf8'),
   Factorial: fs.readFileSync('_examples/factorial.sqg', 'utf8'),
   "Hello world": fs.readFileSync('_examples/hello.sqg', 'utf8'),
+  Mutable: fs.readFileSync('_examples/mutable.sqg', 'utf8'),
   "HTTP server": fs.readFileSync('_examples/server.sqg', 'utf8'),
 };
 

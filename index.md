@@ -47,7 +47,7 @@ npm install -g squiggle-lang
     <div class="feature">
         <h3>No use before definition</h3>
         <p>
-            It's illegal to use a variable before it's defined, eliminating an entire class of errors.
+            Squiggle warngs you about using a variable before it's defined, eliminating an entire class of errors.
         </p>
     </div>
     <div class="feature">
