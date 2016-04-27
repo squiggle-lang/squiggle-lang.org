@@ -1,3 +1,5 @@
+# NO LONGER IN DEVELOPMENT
+
 Website for <http://mockbrian.com/squiggle/>
 
 ## Code of conduct
