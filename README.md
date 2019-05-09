@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/743c903a-c773-4904-93bf-d0aad1e4e11b/deploy-status)](https://app.netlify.com/sites/squiggle-lang-org/deploys)
+
 # NO LONGER IN DEVELOPMENT
 
 Website for <http://mockbrian.com/squiggle/>
