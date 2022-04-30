@@ -1,6 +1,6 @@
 # NO LONGER IN DEVELOPMENT
 
-Website for <http://mockbrian.com/squiggle/>
+Website for Squiggle.
 
 ## Code of conduct
 
@@ -18,14 +18,14 @@ The following directions are for OS X. The project should work in Linux and Wind
 - `cd website-squiggle`
 - `bundle exec jekyll serve --trace`
 - If you modify the JS, run `./bin/build-js.sh`
-- Open [http://0.0.0.0:4000/squiggle/][site] in your browser
+- Open <http://0.0.0.0:4000/squiggle/> in your browser
 
 ## Deployment
 
-This website lives at [squiggle-lang.org][sqgl], so [@wavebeem][wave]
+This website lives at [squiggle.wavebeem.com][sqgl], so [@wavebeem][wave]
 performs deployments using `./bin/deploy.sh`.
 
-[sqgl]: http://squiggle-lang.org/
+[sqgl]: http://squiggle.wavebeem.com/
 [site]: http://0.0.0.0:4000/squiggle/
 [wave]: https://github.com/wavebeem
 [cove]: https://github.com/wavebeem/website-squiggle/blob/master/CODE_OF_CONDUCT.md
